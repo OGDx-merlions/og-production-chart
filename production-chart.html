@@ -1,0 +1,53 @@
+<!--
+    Relative paths assume component is being run from inside an app or another component, where dependencies are flat
+    siblings. When this component is run from its own repo (e.g. tests, examples), we assume the server is started with
+    'gulp serve' (or similar server setup) to enable correct finding of bower dependencies for local runs.
+-->
+<link rel="import" href="../polymer/polymer.html"/>
+
+<link rel="import" href="../px-d3-imports/px-d3-imports.html"/>
+<link rel="import" href="../px-rangepicker/px-rangepicker.html"/>
+
+<script src="d3-tip.js"></script>
+
+<link rel="import" href="css/production-chart-styles.html">
+
+<dom-module id="production-chart">
+  <template>
+    <style include="production-chart-styles"></style>
+    <div class="flex flex--col chart-container">
+      <div class="flex flex--row">
+        <div class="u-1/4">
+          <px-rangepicker
+            hide-time
+            show-buttons
+            date-format="YYYY/MM/DD"
+            time-format="HH:mm:ss"
+            time-zone="UTC"
+            range='{"from":"2017-04-03T03:37:25.000Z","to":"2017-10-26T03:37:25.000Z"}'>
+          </px-rangepicker>
+        </div>
+        <div class="flex flex--right u-3/4 legend">
+          <div class="flex flex--row">
+            <div class="flex flex__item flex--col u-pr++ zeta legend-unit actual" id="legend-actual">
+              <span class="flex flex--top muted">Actual</span> 
+              <span class="flex flex--top">{{actualDispVal}} {{unit}}</span>
+            </div>
+            <div class="flex flex__item flex--col u-pr++ zeta legend-unit target" id="legend-target">
+              <span class="flex flex--top muted">Target</span> 
+              <span class="flex flex--top">{{targetDispVal}} {{unit}}</span>
+            </div>
+            <div class="flex flex__item flex--col u-pr++ zeta legend-unit design" id="legend-design">
+              <span class="flex flex--top muted">Design Capacity</span> 
+              <span class="flex flex--top">{{designDispVal}} {{unit}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flex flex--col">
+        <div id="chart"></div>
+      </div>
+    </div>
+  </template>
+</dom-module>
+<script src="dist/production-chart.js"></script>

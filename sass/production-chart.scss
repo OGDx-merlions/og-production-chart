@@ -1,0 +1,103 @@
+/*
+ * Copyright (c) 2014 GE Global Research. All rights reserved.
+ *
+ * The copyright to the computer software herein is the property of
+ * GE Global Research. The software may be used and/or copied only
+ * with the written permission of GE Global Research or in accordance
+ * with the terms and conditions stipulated in the agreement/contract
+ * under which the software has been supplied.
+ */
+
+//
+// Sass for the for the og-production-chart component
+//
+// @author
+//
+
+
+
+// Settings
+@import "px-colors-design/_settings.colors.scss";
+
+// Tools
+
+// Generic
+@import "px-normalize-design/_generic.normalize.scss";
+@import "px-box-sizing-design/_generic.box-sizing.scss";
+@import "px-helpers-design/_generic.helpers.scss";
+
+// Base
+@import "px-flexbox-design/_base.flexbox.scss";
+@import "px-viewport-design/_base.viewport.scss";
+
+$inuit-enable-margins : true;
+$inuit-enable-paddings--huge : true;
+@import 'px-spacing-design/_trumps.spacing.scss';
+
+@import "px-headings-design/_base.headings.scss";
+
+#chart {
+  .line {
+    stroke-width: 2;
+    fill: transparent;
+  }
+  .d3-tip {
+    line-height: 1;
+    padding: 6px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    border-radius: 4px;
+    font-size: 12px;
+  }
+  
+  /* Creates a small triangle extender for the tooltip */
+  .d3-tip:after {
+    box-sizing: border-box;
+    display: inline;
+    font-size: 10px;
+    width: 100%;
+    line-height: 1;
+    color: rgba(0, 0, 0, 0.8);
+    content: "\25BC";
+    position: absolute;
+    text-align: center;
+  }
+  
+  /* Style northward tooltips specifically */
+  .d3-tip.n:after {
+    margin: -2px 0 0 0;
+    top: 100%;
+    left: 0;
+  }
+
+  .yaxis-label {
+    text-anchor: middle;
+    font-size: 0.65rem;
+  }
+}
+
+.legend {
+  .legend-unit {
+    padding-left: 0.2rem;
+    line-height: 1;
+  }
+  .actual {
+    border-left: 0.3rem solid #88bde6;
+  }
+  .target {
+    border-left: 0.3rem solid red;
+  }
+  .design {
+    border-left: 0.3rem solid #eddd46;
+  }
+}
+
+// Meta
+
+// Objects
+
+// Component
+
+// Trumps
+@import "px-spacing-responsive-design/_trumps.spacing-responsive.scss";
+@import "px-widths-responsive-design/_trumps.widths-responsive.scss";
