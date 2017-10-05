@@ -1,8 +1,8 @@
 (function() {
   Polymer({
 
-		is: 'production-chart', 
-		
+		is: 'production-chart',
+
 		listeners: {
 			"legend-actual.tap": "_toggleActual",
 			"legend-target.tap": "_toggleTarget"
@@ -53,7 +53,7 @@
 		attached() {
 			this.draw();
 		},
-		
+
 		draw() {
 			let d3 = Px.d3;
 			let me = this;
@@ -62,17 +62,17 @@
 			let margin = {top: 20, right: 20, bottom: 30, left: 50},
 					width = this.width - margin.left - margin.right,
 					height = this.height - margin.top - margin.bottom;
-			
+
 			// parse the date / time
 			let parseTime = d3.timeParse("%d-%b-%y");
 
 			let tooltipTimeFormat = d3.timeFormat("%A, %b %d");
 			let tooltipTimeFormat2 = d3.timeFormat("%Y");
-			
+
 			// set the ranges
 			let x = d3.scaleTime().range([0, width]);
 			let y = d3.scaleLinear().range([height, 0]);
-			
+
 			let actualArea = d3.area()
 			.x(function(d) { return x(d.date); })
 			.y(function(d) { return y(d[me.axisKeys[0]]); });
@@ -84,7 +84,7 @@
 			let area = d3.area()
 					.x(function(d) { return x(d.date); })
 					.y1(function(d) { return y(d[me.axisKeys[2]]); });
-			
+
 			// append the svg obgect to the body of the page
 			// appends a 'group' element to 'svg'
 			// moves the 'group' element to the top left margin
@@ -103,12 +103,12 @@
 					d[key] = +d[key];
 				});
 			});
-		
+
 			// Scale the range of the data
 			x.domain(d3.extent(data, function(d) { return d.date; })).nice();
 			y.domain([0, d3.max(data, function(d) {
 				return Math.max(d.actual, d.target, d.design); })]).nice();
-			
+
 			actualArea.y1(y(0));
 			area.y0(y(2));
 
@@ -120,19 +120,19 @@
 				});
 
     	svg.call(toolTip);
-			
+
 			svg.append("path")
 					.datum(data)
 					.attr("fill", "#eddd46")
 					.attr("d", area);
-		
+
 			if(!this.hideActual) {
 				svg.append("path")
 					.datum(data)
 					.attr("class", "actual-area")
 					.style("fill", "#88bde6")
 					.attr("d", actualArea);
-				
+
 				svg.selectAll(".dot")
 					.data(data)
 					.enter()
@@ -145,7 +145,7 @@
 						.on('mouseover', function(d, i) {
 							d3.select(this)
 								.attr('r', 5);
-							d.msg = tooltipTimeFormat(d.date) + "<br>" 
+							d.msg = tooltipTimeFormat(d.date) + "<br>"
 								+ "Actual of <b>" + d.actual + "</b><br>" + "produced in "
 								+ tooltipTimeFormat2(d.date);
 							toolTip.show(d);
@@ -156,7 +156,7 @@
 							toolTip.hide(d);
 						});
 			}
-		
+
 			if(!this.hideTarget) {
 				svg.append("path")
 						.data([data])
@@ -176,7 +176,7 @@
 						.on('mouseover', function(d, i) {
 							d3.select(this)
 								.attr('r', 5);
-							d.msg = tooltipTimeFormat(d.date) + "<br>" 
+							d.msg = tooltipTimeFormat(d.date) + "<br>"
 								+ "Target of <b>" + d.target + "</b><br>" + "produced in "
 								+ tooltipTimeFormat2(d.date);
 							toolTip.show(d);
@@ -185,14 +185,14 @@
 							d3.select(this)
 								.attr('r', 3);
 							toolTip.hide(d);
-						});	
+						});
 			}
-		
+
 			// Add the X Axis
 			svg.append("g")
 					.attr("transform", "translate(0," + height + ")")
 					.call(d3.axisBottom(x).ticks(data.length).tickFormat(d3.timeFormat('%b %d')));
-		
+
 			// Add the Y Axis
 			svg.append("g")
 					.call(d3.axisLeft(y).ticks(6));
@@ -203,7 +203,9 @@
 				.attr("x",0 - (height / 2))
 				.attr("dy", "1em")
 				.attr("class", "yaxis-label")
-				.text(this.unit); 
+				.text(this.unit);
+
+      this.fire("chart-drawn", {});
 		},
 		_toggleActual() {
 			this.hideActual = !this.hideActual;
