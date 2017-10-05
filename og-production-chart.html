@@ -15,13 +15,11 @@ REPLACE THIS TEXT WITH A COMPONENT DESCRIPTION
 
 ### Usage
 
-    <og-production-chart
-      unit="Metric ton/day"
-      width="960"
-      height="300"
-      labels='["All","Train 1","Train 2"]'
-      data='[[{"date":"2017-04-24T16:00:00.000Z","actual":11960,"target":12950,"design":13960},{"date":"2017-04-25T16:00:00.000Z","actual":11889,"target":12938,"design":13960},{"date":"2017-04-26T16:00:00.000Z","actual":11897,"target":12959,"design":13960},{"date":"2017-04-27T16:00:00.000Z","actual":12905,"target":11906,"design":13960},{"date":"2017-04-28T16:00:00.000Z","actual":12882,"target":11950,"design":13960},{"date":"2017-04-29T16:00:00.000Z","actual":12944,"target":12906,"design":13960},{"date":"2017-04-30T16:00:00.000Z","actual":12954,"target":12913,"design":13960},{"date":"2017-05-01T16:00:00.000Z","actual":12928,"target":12954,"design":13960}],[{"date":"2017-04-24T16:00:00.000Z","actual":12960,"target":12950,"design":13960},{"date":"2017-04-25T16:00:00.000Z","actual":12889,"target":11938,"design":13960},{"date":"2017-04-26T16:00:00.000Z","actual":11897,"target":12959,"design":13960},{"date":"2017-04-27T16:00:00.000Z","actual":13905,"target":11906,"design":13960},{"date":"2017-04-28T16:00:00.000Z","actual":13882,"target":11950,"design":13960},{"date":"2017-04-29T16:00:00.000Z","actual":13944,"target":13906,"design":13960},{"date":"2017-04-30T16:00:00.000Z","actual":13954,"target":12913,"design":13960},{"date":"2017-05-01T16:00:00.000Z","actual":12928,"target":12454,"design":13960}],[{"date":"2017-04-24T16:00:00.000Z","actual":11960,"target":12950,"design":13960},{"date":"2017-04-25T16:00:00.000Z","actual":11889,"target":12938,"design":13960},{"date":"2017-04-26T16:00:00.000Z","actual":11897,"target":12959,"design":13960},{"date":"2017-04-27T16:00:00.000Z","actual":10905,"target":11906,"design":13960},{"date":"2017-04-28T16:00:00.000Z","actual":12882,"target":10950,"design":13960},{"date":"2017-04-29T16:00:00.000Z","actual":12944,"target":12906,"design":13960},{"date":"2017-04-30T16:00:00.000Z","actual":10954,"target":12913,"design":13960},{"date":"2017-05-01T16:00:00.000Z","actual":9928,"target":12954,"design":13960}]]'>
-    </og-production-chart>
+     <og-production-chart unit="Metric ton/day"
+       width="960" height="300"
+       legend-disp-val='[{"actual":"11960","target":"12950","design":"13960"},{"actual":"11889","target":"12938","design":"13960"},{"actual":"11897","target":"12959","design":"13960"}]'
+       labels='["All","Train 1","Train 2"]' data='[[{"date":"2017-04-24T16:00:00.000Z","actual":11960,"target":12950,"design":13960},{"date":"2017-04-25T16:00:00.000Z","actual":11889,"target":12938,"design":13960},{"date":"2017-04-26T16:00:00.000Z","actual":11897,"target":12959,"design":13960},{"date":"2017-04-27T16:00:00.000Z","actual":12905,"target":11906,"design":13960},{"date":"2017-04-28T16:00:00.000Z","actual":12882,"target":11950,"design":13960},{"date":"2017-04-29T16:00:00.000Z","actual":12944,"target":12906,"design":13960},{"date":"2017-04-30T16:00:00.000Z","actual":12954,"target":12913,"design":13960},{"date":"2017-05-01T16:00:00.000Z","actual":12928,"target":12954,"design":13960}],[{"date":"2017-04-24T16:00:00.000Z","actual":12960,"target":12950,"design":13960},{"date":"2017-04-25T16:00:00.000Z","actual":12889,"target":11938,"design":13960},{"date":"2017-04-26T16:00:00.000Z","actual":11897,"target":12959,"design":13960},{"date":"2017-04-27T16:00:00.000Z","actual":13905,"target":11906,"design":13960},{"date":"2017-04-28T16:00:00.000Z","actual":13882,"target":11950,"design":13960},{"date":"2017-04-29T16:00:00.000Z","actual":13944,"target":13906,"design":13960},{"date":"2017-04-30T16:00:00.000Z","actual":13954,"target":12913,"design":13960},{"date":"2017-05-01T16:00:00.000Z","actual":12928,"target":12454,"design":13960}],[{"date":"2017-04-24T16:00:00.000Z","actual":11960,"target":12950,"design":13960},{"date":"2017-04-25T16:00:00.000Z","actual":11889,"target":12938,"design":13960},{"date":"2017-04-26T16:00:00.000Z","actual":11897,"target":12959,"design":13960},{"date":"2017-04-27T16:00:00.000Z","actual":10905,"target":11906,"design":13960},{"date":"2017-04-28T16:00:00.000Z","actual":12882,"target":10950,"design":13960},{"date":"2017-04-29T16:00:00.000Z","actual":12944,"target":12906,"design":13960},{"date":"2017-04-30T16:00:00.000Z","actual":10954,"target":12913,"design":13960},{"date":"2017-05-01T16:00:00.000Z","actual":9928,"target":12954,"design":13960}]]'>
+     </og-production-chart>
 
 @element og-production-chart
 @blurb REPLACE THIS TEXT WITH A COMPONENT DESCRIPTION
@@ -32,23 +30,41 @@ REPLACE THIS TEXT WITH A COMPONENT DESCRIPTION
 <dom-module id="og-production-chart">
   <template>
     <style include="og-production-chart-styles"></style>
-    <px-tabs selected="{{selected}}">
-      <template is="dom-repeat" items="{{labels}}">
-        <px-tab>{{item}}</px-tab>
-      </template>
-    </px-tabs>
-    <iron-pages selected="{{selected}}">
-      <template is="dom-repeat" items="{{data}}" indexAs="idx">
-        <div class="chart-view">
-          <production-chart data="{{item}}" 
-            width="{{width}}" height="{{height}}"
-            actual-disp-val="{{actualDispVal}}" target-disp-val="{{targetDispVal}}"
-            design-disp-val="{{designDispVal}}" unit="{{unit}}">
-          </production-chart>
-        </div>
-      </template>
-    </iron-pages>
-    
+    <template is="dom-if" if="{{_isMultipleData(data)}}">
+      <px-tabs selected="{{selected}}">
+        <template is="dom-repeat" items="{{labels}}">
+          <px-tab>{{item}}</px-tab>
+        </template>
+      </px-tabs>
+      <iron-pages selected="{{selected}}">
+        <template is="dom-repeat" items="{{data}}" index-as="idx">
+          <div class="chart-view">
+            <production-chart data="{{item}}"
+              width="{{width}}" height="{{height}}"
+              actual-disp-val="{{item.legend.actual}}"
+              target-disp-val="{{item.legend.target}}"
+              design-disp-val="{{item.legend.design}}" unit="{{unit}}">
+            </production-chart>
+          </div>
+        </template>
+      </iron-pages>
+    </template>
+
+    <template is="dom-if" if="{{_isSingleData(data)}}">
+      <div class="chart-view">
+        <template is="dom-repeat" items="{{data}}" index-as="idx">
+          <div class="chart-view">
+            <production-chart data="{{item}}"
+              width="{{width}}" height="{{height}}"
+              actual-disp-val="{{item.legend.actual}}"
+              target-disp-val="{{item.legend.target}}"
+              design-disp-val="{{item.legend.design}}" unit="{{unit}}">
+            </production-chart>
+          </div>
+        </template>
+      </div>
+    </template>
+
   </template>
 </dom-module>
 <script src="dist/og-production-chart.js"></script>

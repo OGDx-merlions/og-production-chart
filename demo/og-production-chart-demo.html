@@ -37,10 +37,9 @@
       <!-- Component ---------------------------------------------------------->
       <px-demo-component>
         <og-production-chart
-          data="{{props.data.value}}" 
+          data="{{props.data.value}}"
           width="{{props.width.value}}" height="{{props.height.value}}"
-          actual-disp-val="{{props.actualDispVal.value}}" target-disp-val="{{props.targetDispVal.value}}"
-          design-disp-val="{{props.designDispVal.value}}" unit="{{props.unit.value}}">
+          legend-disp-val="{{props.legendDispVal.value}}" unit="{{props.unit.value}}">
         </og-production-chart>
       </px-demo-component>
       <!-- END Component ------------------------------------------------------>
@@ -216,18 +215,15 @@
         defaultValue: 300,
         inputType: 'text'
       },
-      actualDispVal: {
-				type: Number,
-        inputType: 'text'
+      legendDispVal: {
+				type: Array,
+        defaultValue: [
+          {"actual":"11960","target":"12950","design":"13960"},
+          {"actual":"11889","target":"12938","design":"13960"},
+          {"actual":"11897","target":"12959","design":"13960"}
+        ],
+        inputType: 'code:JSON'
       },
-      targetDispVal: {
-        type: Number,
-        inputType: 'text'
-      },
-      designDispVal: {
-				type: Number,
-        inputType: 'text'
-			},
       labels: {
         type: Array,
         defaultValue: ["All", "Train 1", "Train 2"],
