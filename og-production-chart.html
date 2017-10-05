@@ -51,18 +51,16 @@ REPLACE THIS TEXT WITH A COMPONENT DESCRIPTION
     </template>
 
     <template is="dom-if" if="{{_isSingleData(data)}}">
-      <div class="chart-view">
-        <template is="dom-repeat" items="{{data}}" index-as="idx">
-          <div class="chart-view">
-            <production-chart data="{{item}}"
-              width="{{width}}" height="{{height}}"
-              actual-disp-val="{{item.legend.actual}}"
-              target-disp-val="{{item.legend.target}}"
-              design-disp-val="{{item.legend.design}}" unit="{{unit}}">
-            </production-chart>
-          </div>
-        </template>
-      </div>
+      <template is="dom-repeat" items="{{data}}" index-as="idx">
+        <div class="chart-view">
+          <production-chart data="{{item}}"
+            width="{{width}}" height="{{height}}"
+            actual-disp-val="{{item.legend.actual}}"
+            target-disp-val="{{item.legend.target}}"
+            design-disp-val="{{item.legend.design}}" unit="{{unit}}">
+          </production-chart>
+        </div>
+      </template>
     </template>
 
   </template>
