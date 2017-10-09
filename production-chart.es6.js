@@ -145,8 +145,8 @@
 				return Math.max(d.actual, d.target, d.forecast, d.design); })]).nice();
 
 			actualArea.y1(y(0));
-			forecastArea.y1(y(2));
-			area.y0(y(3));
+			forecastArea.y1(y(0));
+			area.y0(y(0));
 
 			var toolTip = d3.tip(d3.select(this.$.chart))
 				.attr("class", "d3-tip")
@@ -162,37 +162,17 @@
 					.attr("fill", "#eddd46")
 					.attr("d", area);
 
+      let forecastData = data.filter((_data) => {
+        return _data.forecast > 0;
+      });
 			if(!this.hideForecast) {
 				svg.append("path")
-					.datum(data)
+					.datum(forecastData)
 					.attr("class", "forecast-area")
 					.style("fill", "#7bbc00")
 					.attr("d", forecastArea);
-
-				svg.selectAll(".dot")
-					.data(data)
-					.enter()
-						.append("circle")
-						.attr("r", 3)
-						.attr("cx", (d, i) => x(d.date))
-						.attr("cy", (d) => y(d.forecast))
-						.attr("fill", "#7bbc00")
-						.attr("class", "forecast-circle")
-						.on('mouseover', function(d, i) {
-							d3.select(this)
-								.attr('r', 5);
-							d.msg = tooltipTimeFormat(d.date) + "<br>"
-								+ "Forecast of <b>" + d.actual + "</b><br>" + "produced in "
-								+ tooltipTimeFormat2(d.date);
-							toolTip.show(d);
-						})
-						.on('mouseout', function(d) {
-							d3.select(this)
-								.attr('r', 3);
-							toolTip.hide(d);
-						});
 			}
-			
+
 			if(!this.hideActual) {
 				svg.append("path")
 					.datum(data)
@@ -255,6 +235,31 @@
 						});
 			}
 
+      if(!this.hideForecast) {
+        svg.selectAll(".dot")
+					.data(forecastData)
+					.enter()
+						.append("circle")
+						.attr("r", 3)
+						.attr("cx", (d, i) => x(d.date))
+						.attr("cy", (d) => y(d.forecast))
+						.attr("fill", "#7bbc00")
+						.attr("class", "forecast-circle")
+						.on('mouseover', function(d, i) {
+							d3.select(this)
+								.attr('r', 5);
+							d.msg = tooltipTimeFormat(d.date) + "<br>"
+								+ "Forecast of <b>" + d.forecast + "</b><br>" + "produced in "
+								+ tooltipTimeFormat2(d.date);
+							toolTip.show(d);
+						})
+						.on('mouseout', function(d) {
+							d3.select(this)
+								.attr('r', 3);
+							toolTip.hide(d);
+						});
+      }
+
 			// Add the X Axis
 			svg.append("g")
 					.attr("transform", "translate(0," + height + ")")
@@ -316,7 +321,7 @@
 				});
 			}
 		},
-		
+
 		_redraw(newData, oldData) {
 			if(oldData && oldData.length) {
 				Polymer.dom(this.$.chart).node.innerHTML = "";
