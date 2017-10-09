@@ -41,6 +41,12 @@ $inuit-enable-paddings--huge : true;
     stroke-width: 2;
     fill: transparent;
   }
+  .forecast-line {
+    stroke-width: 2;
+    stroke: #7bbc00;
+    stroke-dasharray: 2,2;
+    fill: transparent;
+  }
   .d3-tip {
     line-height: 1;
     padding: 6px;
@@ -49,7 +55,7 @@ $inuit-enable-paddings--huge : true;
     border-radius: 4px;
     font-size: 12px;
   }
-  
+
   /* Creates a small triangle extender for the tooltip */
   .d3-tip:after {
     box-sizing: border-box;
@@ -62,7 +68,7 @@ $inuit-enable-paddings--huge : true;
     position: absolute;
     text-align: center;
   }
-  
+
   /* Style northward tooltips specifically */
   .d3-tip.n:after {
     margin: -2px 0 0 0;
