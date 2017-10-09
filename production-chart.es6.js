@@ -112,7 +112,7 @@
 					.x(function(d) { return x(d.date); })
 					.y(function(d) { return y(d[me.axisKeys[1]]); });
 
-			let forecastArea = d3.area()
+			let forecastLine = d3.line()
 					.x(function(d) { return x(d.date); })
 					.y(function(d) { return y(d[me.axisKeys[2]]); });
 
@@ -145,7 +145,7 @@
 				return Math.max(d.actual, d.target, d.forecast, d.design); })]).nice();
 
 			actualArea.y1(y(0));
-			forecastArea.y1(y(0));
+			//forecastArea.y1(y(0));
 			area.y0(y(0));
 
 			var toolTip = d3.tip(d3.select(this.$.chart))
@@ -165,13 +165,6 @@
       let forecastData = data.filter((_data) => {
         return _data.forecast > 0;
       });
-			if(!this.hideForecast) {
-				svg.append("path")
-					.datum(forecastData)
-					.attr("class", "forecast-area")
-					.style("fill", "#7bbc00")
-					.attr("d", forecastArea);
-			}
 
 			if(!this.hideActual) {
 				svg.append("path")
@@ -236,6 +229,11 @@
 			}
 
       if(!this.hideForecast) {
+        svg.append("path")
+					.datum(forecastData)
+					.attr("class", "forecast-line")
+					.attr("d", forecastLine);
+
         svg.selectAll(".dot")
 					.data(forecastData)
 					.enter()
@@ -310,12 +308,12 @@
 		_toggleForecast() {
 			this.hideForecast = !this.hideForecast;
 			if(this.hideForecast) {
-				this.querySelector(".forecast-area").style.display = "none";
+				this.querySelector(".forecast-line").style.display = "none";
 				this.querySelectorAll(".forecast-circle").forEach((elt) => {
 					elt.style.display = "none";
 				});
 			} else {
-				this.querySelector(".forecast-area").style.display = "block";
+				this.querySelector(".forecast-line").style.display = "block";
 				this.querySelectorAll(".forecast-circle").forEach((elt) => {
 					elt.style.display = "block";
 				});
