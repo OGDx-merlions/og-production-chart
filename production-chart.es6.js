@@ -5,7 +5,8 @@
 
 		listeners: {
 			"legend-actual.tap": "_toggleActual",
-			"legend-target.tap": "_toggleTarget"
+			"legend-target.tap": "_toggleTarget",
+			"legend-forecast.tap": "_toggleForecast"
 		},
 
     properties: {
@@ -26,6 +27,28 @@
 			designDispVal: {
 				type: Number
 			},
+			forecastDispVal: {
+				type: Number
+			},
+			actualLegendLabel: {
+				type: String
+			},
+			targetLegendLabel: {
+				type: String
+			},
+			forecastLegendLabel: {
+				type: String
+			},
+			designCapacityLegendLabel: {
+				type: String
+			},
+			legendLabels: {
+				type: Array,
+        value() {
+					return [];
+				},
+				observer: '_setLegendLabels'
+      },
 			unit: {
 				type: String,
 				value: "Metric Ton/day"
@@ -34,7 +57,7 @@
 				type: Array,
 				value() {
 					return [
-						"actual", "target", "design"
+						"actual", "target", "forecast", "design"
 					]
 				}
 			},
@@ -42,6 +65,14 @@
 				type: Array,
 				value() {
 					return [];
+				},
+				observer: '_redraw'
+			},
+			dateRange: {
+				type: Object,
+				notify: true,
+				value() {
+					return {}
 				}
 			}
 		},
@@ -64,7 +95,7 @@
 					height = this.height - margin.top - margin.bottom;
 
 			// parse the date / time
-			let parseTime = d3.timeParse("%d-%b-%y");
+			let parseTime = d3.timeParse("%Y-%m-%dT%H:%M:%S.%LZ");
 
 			let tooltipTimeFormat = d3.timeFormat("%A, %b %d");
 			let tooltipTimeFormat2 = d3.timeFormat("%Y");
@@ -81,9 +112,13 @@
 					.x(function(d) { return x(d.date); })
 					.y(function(d) { return y(d[me.axisKeys[1]]); });
 
+			let forecastArea = d3.area()
+					.x(function(d) { return x(d.date); })
+					.y(function(d) { return y(d[me.axisKeys[2]]); });
+
 			let area = d3.area()
 					.x(function(d) { return x(d.date); })
-					.y1(function(d) { return y(d[me.axisKeys[2]]); });
+					.y1(function(d) { return y(d[me.axisKeys[3]]); });
 
 			// append the svg obgect to the body of the page
 			// appends a 'group' element to 'svg'
@@ -98,7 +133,7 @@
 								"translate(" + margin.left + "," + margin.top + ")");
 			// Get the data
 			data.forEach(function(d) {
-				d.date = parseTime(d.date);
+				d.date = d.date.getTime ? d.date : parseTime(d.date);
 				me.axisKeys.forEach((key)=>{
 					d[key] = +d[key];
 				});
@@ -107,10 +142,11 @@
 			// Scale the range of the data
 			x.domain(d3.extent(data, function(d) { return d.date; })).nice();
 			y.domain([0, d3.max(data, function(d) {
-				return Math.max(d.actual, d.target, d.design); })]).nice();
+				return Math.max(d.actual, d.target, d.forecast, d.design); })]).nice();
 
 			actualArea.y1(y(0));
-			area.y0(y(2));
+			forecastArea.y1(y(2));
+			area.y0(y(3));
 
 			var toolTip = d3.tip(d3.select(this.$.chart))
 				.attr("class", "d3-tip")
@@ -126,6 +162,37 @@
 					.attr("fill", "#eddd46")
 					.attr("d", area);
 
+			if(!this.hideForecast) {
+				svg.append("path")
+					.datum(data)
+					.attr("class", "forecast-area")
+					.style("fill", "#7bbc00")
+					.attr("d", forecastArea);
+
+				svg.selectAll(".dot")
+					.data(data)
+					.enter()
+						.append("circle")
+						.attr("r", 3)
+						.attr("cx", (d, i) => x(d.date))
+						.attr("cy", (d) => y(d.forecast))
+						.attr("fill", "#7bbc00")
+						.attr("class", "forecast-circle")
+						.on('mouseover', function(d, i) {
+							d3.select(this)
+								.attr('r', 5);
+							d.msg = tooltipTimeFormat(d.date) + "<br>"
+								+ "Forecast of <b>" + d.actual + "</b><br>" + "produced in "
+								+ tooltipTimeFormat2(d.date);
+							toolTip.show(d);
+						})
+						.on('mouseout', function(d) {
+							d3.select(this)
+								.attr('r', 3);
+							toolTip.hide(d);
+						});
+			}
+			
 			if(!this.hideActual) {
 				svg.append("path")
 					.datum(data)
@@ -160,7 +227,7 @@
 			if(!this.hideTarget) {
 				svg.append("path")
 						.data([data])
-						.attr("class", "line")
+						.attr("class", "target-line")
 						.style("stroke", "red")
 						.attr("d", targetChart);
 
@@ -224,15 +291,44 @@
 		_toggleTarget() {
 			this.hideTarget = !this.hideTarget;
 			if(this.hideTarget) {
-				this.querySelector(".line").style.display = "none";
+				this.querySelector(".target-line").style.display = "none";
 				this.querySelectorAll(".target-circle").forEach((elt) => {
 					elt.style.display = "none";
 				});
 			} else {
-				this.querySelector(".line").style.display = "block";
+				this.querySelector(".target-line").style.display = "block";
 				this.querySelectorAll(".target-circle").forEach((elt) => {
 					elt.style.display = "block";
 				});
+			}
+		},
+		_toggleForecast() {
+			this.hideForecast = !this.hideForecast;
+			if(this.hideForecast) {
+				this.querySelector(".forecast-area").style.display = "none";
+				this.querySelectorAll(".forecast-circle").forEach((elt) => {
+					elt.style.display = "none";
+				});
+			} else {
+				this.querySelector(".forecast-area").style.display = "block";
+				this.querySelectorAll(".forecast-circle").forEach((elt) => {
+					elt.style.display = "block";
+				});
+			}
+		},
+		
+		_redraw(newData, oldData) {
+			if(oldData && oldData.length) {
+				Polymer.dom(this.$.chart).node.innerHTML = "";
+				this.draw();
+			}
+		},
+		_setLegendLabels(labels) {
+			if(labels && labels.length) {
+				this.set("actualLegendLabel", labels[0]);
+				this.set("targetLegendLabel", labels[1]);
+				this.set("forecastLegendLabel", labels[2]);
+				this.set("designCapacityLegendLabel", labels[3]);
 			}
 		}
   });

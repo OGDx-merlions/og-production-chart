@@ -37,8 +37,9 @@
       <!-- Component ---------------------------------------------------------->
       <px-demo-component>
         <og-production-chart
-          data="{{props.data.value}}"
+          data="{{props.data.value}}" date-range="{{props.dateRange.value}}"
           width="{{props.width.value}}" height="{{props.height.value}}"
+          legend-labels="{{props.legendLabels.value}}" labels="{{props.labels.value}}"
           legend-disp-val="{{props.legendDispVal.value}}" unit="{{props.unit.value}}">
         </og-production-chart>
       </px-demo-component>
@@ -215,12 +216,17 @@
         defaultValue: 300,
         inputType: 'text'
       },
+      legendLabels: {
+        type: Array,
+        defaultValue: ["Actual", "Target", "Forecast", "Design Capacity"],
+        inputType: 'code:JSON'
+      },
       legendDispVal: {
 				type: Array,
         defaultValue: [
-          {"actual":"11960","target":"12950","design":"13960"},
-          {"actual":"11889","target":"12938","design":"13960"},
-          {"actual":"11897","target":"12959","design":"13960"}
+          {"actual":"11960","target":"12950","forecast":"12950","design":"13960"},
+          {"actual":"11889","target":"12938","forecast":"12950","design":"13960"},
+          {"actual":"11897","target":"12959","forecast":"12950","design":"13960"}
         ],
         inputType: 'code:JSON'
       },
@@ -229,35 +235,39 @@
         defaultValue: ["All", "Train 1", "Train 2"],
         inputType: 'code:JSON'
       },
+      dateRange: {
+        type: Object,
+        defaultValue: {"from":"2017-04-03T03:37:25.000Z","to":"2017-05-26T03:37:25.000Z"}
+      },
       data: {
         type: Array,
         defaultValue: [[
-						{"date":"25-Apr-17","actual":"11960","target":"12950","design":"13960"},
-						{"date":"26-Apr-17","actual":"11889","target":"12938","design":"13960"},
-						{"date":"27-Apr-17","actual":"11897","target":"12959","design":"13960"},
-						{"date":"28-Apr-17","actual":"12905","target":"11906","design":"13960"},
-						{"date":"29-Apr-17","actual":"12882","target":"11950","design":"13960"},
-						{"date":"30-Apr-17","actual":"12944","target":"12906","design":"13960"},
-						{"date":"1-May-17","actual":"12954","target":"12913","design":"13960"},
-						{"date":"2-May-17","actual":"12928","target":"12954","design":"13960"}
+						{"date":"2017-04-25T00:00:00.000Z","actual":"11960","target":"12950","forecast":"12950","design":"13960"},
+						{"date":"2017-04-26T00:00:00.000Z","actual":"11889","target":"12938","forecast":"12850","design":"13960"},
+						{"date":"2017-04-27T00:00:00.000Z","actual":"11897","target":"12959","forecast":"12750","design":"13960"},
+						{"date":"2017-04-28T00:00:00.000Z","actual":"12905","target":"11906","forecast":"12850","design":"13960"},
+						{"date":"2017-04-29T00:00:00.000Z","actual":"12882","target":"11950","forecast":"12850","design":"13960"},
+						{"date":"2017-04-30T00:00:00.000Z","actual":"12944","target":"12906","forecast":"12950","design":"13960"},
+						{"date":"2017-05-01T00:00:00.000Z","actual":"12954","target":"12913","forecast":"12650","design":"13960"},
+						{"date":"2017-05-02T00:00:00.000Z","actual":"12928","target":"12954","forecast":"12750","design":"13960"}
 					],[
-						{"date":"25-Apr-17","actual":"12960","target":"12950","design":"13960"},
-						{"date":"26-Apr-17","actual":"12889","target":"11938","design":"13960"},
-						{"date":"27-Apr-17","actual":"11897","target":"12959","design":"13960"},
-						{"date":"28-Apr-17","actual":"13905","target":"11906","design":"13960"},
-						{"date":"29-Apr-17","actual":"13882","target":"11950","design":"13960"},
-						{"date":"30-Apr-17","actual":"13944","target":"13906","design":"13960"},
-						{"date":"1-May-17","actual":"13954","target":"12913","design":"13960"},
-						{"date":"2-May-17","actual":"12928","target":"12454","design":"13960"}
+						{"date":"2017-04-25T00:00:00.000Z","actual":"12960","target":"12950","forecast":"12950","design":"13960"},
+						{"date":"2017-04-26T00:00:00.000Z","actual":"12889","target":"11938","forecast":"12950","design":"13960"},
+						{"date":"2017-04-27T00:00:00.000Z","actual":"11897","target":"12959","forecast":"12950","design":"13960"},
+						{"date":"2017-04-28T00:00:00.000Z","actual":"13905","target":"11906","forecast":"12950","design":"13960"},
+						{"date":"2017-04-29T00:00:00.000Z","actual":"13882","target":"11950","forecast":"12950","design":"13960"},
+						{"date":"2017-04-30T00:00:00.000Z","actual":"13944","target":"13906","forecast":"12950","design":"13960"},
+						{"date":"2017-05-01T00:00:00.000Z","actual":"13954","target":"12913","forecast":"12950","design":"13960"},
+						{"date":"2017-05-02T00:00:00.000Z","actual":"12928","target":"12454","forecast":"12950","design":"13960"}
 					],[
-						{"date":"25-Apr-17","actual":"11960","target":"12950","design":"13960"},
-						{"date":"26-Apr-17","actual":"11889","target":"12938","design":"13960"},
-						{"date":"27-Apr-17","actual":"11897","target":"12959","design":"13960"},
-						{"date":"28-Apr-17","actual":"10905","target":"11906","design":"13960"},
-						{"date":"29-Apr-17","actual":"12882","target":"10950","design":"13960"},
-						{"date":"30-Apr-17","actual":"12944","target":"12906","design":"13960"},
-						{"date":"1-May-17","actual":"10954","target":"12913","design":"13960"},
-						{"date":"2-May-17","actual":"9928","target":"12954","design":"13960"}
+						{"date":"2017-04-25T00:00:00.000Z","actual":"11960","target":"12950","forecast":"12950","design":"13960"},
+						{"date":"2017-04-26T00:00:00.000Z","actual":"11889","target":"12938","forecast":"12950","design":"13960"},
+						{"date":"2017-04-27T00:00:00.000Z","actual":"11897","target":"12959","forecast":"12950","design":"13960"},
+						{"date":"2017-04-28T00:00:00.000Z","actual":"10905","target":"11906","forecast":"12950","design":"13960"},
+						{"date":"2017-04-29T00:00:00.000Z","actual":"12882","target":"10950","forecast":"12950","design":"13960"},
+						{"date":"2017-04-30T00:00:00.000Z","actual":"12944","target":"12906","forecast":"12950","design":"13960"},
+						{"date":"2017-05-01T00:00:00.000Z","actual":"10954","target":"12913","forecast":"12950","design":"13960"},
+						{"date":"2017-05-02T00:00:00.000Z","actual":"9928","target":"12954","forecast":"12950","design":"13960"}
 					]],
         inputType: 'code:JSON'
       }

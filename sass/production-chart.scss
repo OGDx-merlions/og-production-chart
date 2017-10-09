@@ -37,7 +37,7 @@ $inuit-enable-paddings--huge : true;
 @import "px-headings-design/_base.headings.scss";
 
 #chart {
-  .line {
+  .target-line {
     stroke-width: 2;
     fill: transparent;
   }
@@ -86,6 +86,9 @@ $inuit-enable-paddings--huge : true;
   }
   .target {
     border-left: 0.3rem solid red;
+  }
+  .forecast {
+    border-left: 0.3rem solid #7bbc00;
   }
   .design {
     border-left: 0.3rem solid #eddd46;
