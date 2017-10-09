@@ -7,6 +7,7 @@
 <link rel="import" href="../px-tabs/px-tabs.html"/>
 <link rel="import" href="../iron-pages/iron-pages.html"/>
 <link rel="import" href="production-chart.html"/>
+<link rel="import" href="../px-d3-imports/px-d3-imports.html"/>
 
 <link rel="import" href="css/og-production-chart-styles.html">
 
@@ -30,19 +31,21 @@ REPLACE THIS TEXT WITH A COMPONENT DESCRIPTION
 <dom-module id="og-production-chart">
   <template>
     <style include="og-production-chart-styles"></style>
-    <template is="dom-if" if="{{_isMultipleData(data)}}">
+    <template is="dom-if" if="{{_isMultipleData(filteredData)}}">
       <px-tabs selected="{{selected}}">
         <template is="dom-repeat" items="{{labels}}">
           <px-tab>{{item}}</px-tab>
         </template>
       </px-tabs>
       <iron-pages selected="{{selected}}">
-        <template is="dom-repeat" items="{{data}}" index-as="idx">
+        <template is="dom-repeat" items="{{filteredData}}" index-as="idx">
           <div class="chart-view">
-            <production-chart data="{{item}}"
+            <production-chart data="{{item}}" date-range="{{dateRange}}"
               width="{{width}}" height="{{height}}"
               actual-disp-val="{{item.legend.actual}}"
               target-disp-val="{{item.legend.target}}"
+              forecast-disp-val="{{item.legend.forecast}}"
+              legend-labels="{{legendLabels}}"
               design-disp-val="{{item.legend.design}}" unit="{{unit}}">
             </production-chart>
           </div>
@@ -50,13 +53,15 @@ REPLACE THIS TEXT WITH A COMPONENT DESCRIPTION
       </iron-pages>
     </template>
 
-    <template is="dom-if" if="{{_isSingleData(data)}}">
-      <template is="dom-repeat" items="{{data}}" index-as="idx">
+    <template is="dom-if" if="{{_isSingleData(filteredData)}}">
+      <template is="dom-repeat" items="{{filteredData}}" index-as="idx">
         <div class="chart-view">
-          <production-chart data="{{item}}"
+          <production-chart data="{{item}}" date-range="{{dateRange}}"
             width="{{width}}" height="{{height}}"
             actual-disp-val="{{item.legend.actual}}"
             target-disp-val="{{item.legend.target}}"
+            forecast-disp-val="{{item.legend.forecast}}"
+            legend-labels="{{legendLabels}}"
             design-disp-val="{{item.legend.design}}" unit="{{unit}}">
           </production-chart>
         </div>
