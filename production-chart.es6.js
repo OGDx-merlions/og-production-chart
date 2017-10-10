@@ -42,6 +42,22 @@
 			designCapacityLegendLabel: {
 				type: String
 			},
+			hideActualLegend: {
+				type: Boolean,
+        value: false
+			},
+			hideTargetLegend: {
+				type: Boolean,
+        value: false
+			},
+			hideForecastLegend: {
+				type: Boolean,
+        value: false
+			},
+			hideDesignCapacityLegend: {
+				type: Boolean,
+        value: false
+			},
 			legendLabels: {
 				type: Array,
         value() {
@@ -120,23 +136,6 @@
 					.x(function(d) { return x(d.date); })
 					.y1(function(d) { return y(d[me.axisKeys[3]]); });
 
-      let areaAboveForecastLine = d3.area()
-        .x(forecastLine.x())
-        .y0(forecastLine.y())
-        .y1(0);
-      let areaBelowForecastLine = d3.area()
-        .x(forecastLine.x())
-        .y0(forecastLine.y())
-        .y1(actualArea.y());
-      let areaAboveActual = d3.area()
-        .x(actualArea.x())
-        .y0(actualArea.y())
-        .y1(0);
-      let areaBelowActual = d3.area()
-        .x(actualArea.x())
-        .y0(actualArea.y())
-        .y1(forecastLine.y());
-
 			// append the svg obgect to the body of the page
 			// appends a 'group' element to 'svg'
 			// moves the 'group' element to the top left margin
@@ -152,7 +151,7 @@
 			data.forEach(function(d) {
 				d.date = d.date.getTime ? d.date : parseTime(d.date);
 				me.axisKeys.forEach((key)=>{
-					d[key] = +d[key];
+					d[key] = d[key] ? (+d[key]) : 0;
 				});
 			});
 
@@ -164,7 +163,6 @@
 				return Math.max(d.actual, d.target, d.forecast, d.design); })]).nice();
 
 			actualArea.y1(y(0));
-			//forecastArea.y1(y(0));
 			area.y0(y(0));
 
 			var toolTip = d3.tip(d3.select(this.$.chart))
@@ -176,23 +174,34 @@
 
     	svg.call(toolTip);
 
-			svg.append("path")
-					.datum(data)
-					.attr("fill", "#eddd46")
-					.attr("d", area);
-
-      let actualData = data.filter((_data) => {
+      let actualData = [], designData = [], forecastData = [], targetData = [];
+      data.forEach((_data) => {
         if(_data.actual == _data.forecast) {
           today = _data.date;
         }
-        return _data.actual > 0;
+        if(_data.actual > 0) {actualData.push(_data)}
+        if(_data.target > 0) {targetData.push(_data)}
+        if(_data.forecast > 0) {forecastData.push(_data)}
+        if(_data.design > 0) {designData.push(_data)}
       });
 
-      let forecastData = data.filter((_data) => {
-        return _data.forecast > 0;
-      });
+      if(!today) {
+        today = new Date();
+      }
 
-			if(!this.hideActual) {
+      this.set("hideActualLegend", actualData.length === 0);
+      this.set("hideTargetLegend", targetData.length === 0);
+      this.set("hideForecastLegend", forecastData.length === 0);
+      this.set("hideDesignCapacityLegend", designData.length === 0);
+
+			if(designData.length) {
+        svg.append("path")
+  					.datum(data)
+  					.attr("fill", "#eddd46")
+  					.attr("d", area);
+      }
+
+			if(!this.hideActual && actualData.length) {
 				svg.append("path")
 					.datum(data)
 					.attr("class", "actual-area")
@@ -223,7 +232,23 @@
 						});
 			}
 
-      if(!this.hideForecast) {
+      if(!this.hideForecast && forecastData.length > 0) {
+        let areaAboveForecastLine = d3.area()
+          .x(forecastLine.x())
+          .y0(forecastLine.y())
+          .y1(0);
+        let areaBelowForecastLine = d3.area()
+          .x(forecastLine.x())
+          .y0(forecastLine.y())
+          .y1(actualArea.y());
+        let areaAboveActual = d3.area()
+          .x(actualArea.x())
+          .y0(actualArea.y())
+          .y1(0);
+        let areaBelowActual = d3.area()
+          .x(actualArea.x())
+          .y0(actualArea.y())
+          .y1(forecastLine.y());
         let defs = svg.append('defs');
 
         defs.append('clipPath')
@@ -253,7 +278,7 @@
           .attr('clip-path', 'url(#clip-forecast)');
       }
 
-			if(!this.hideTarget) {
+			if(!this.hideTarget && targetData.length) {
 				svg.append("path")
 						.data([data])
 						.attr("class", "target-line")
@@ -284,7 +309,7 @@
 						});
 			}
 
-      if(!this.hideForecast) {
+      if(!this.hideForecast && forecastData.length) {
         svg.append("path")
 					.datum(forecastData)
 					.attr("class", "forecast-line")
@@ -408,6 +433,10 @@
 				this.set("forecastLegendLabel", labels[2]);
 				this.set("designCapacityLegendLabel", labels[3]);
 			}
-		}
+		},
+    _compute(prop) {
+      console.log(prop)
+      return prop;
+    }
   });
 })();

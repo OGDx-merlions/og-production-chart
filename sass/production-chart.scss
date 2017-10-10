@@ -36,6 +36,12 @@ $inuit-enable-paddings--huge : true;
 
 @import "px-headings-design/_base.headings.scss";
 
+:host {
+  div[hidden] {
+    display: none;
+  }
+}
+
 #chart {
   .target-line {
     stroke-width: 2;
