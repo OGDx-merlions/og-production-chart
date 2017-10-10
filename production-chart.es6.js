@@ -135,10 +135,7 @@
 			let area = d3.area()
 					.x(function(d) { return x(d.date); })
 					.y1(function(d) { return y(d[me.axisKeys[3]]); });
-
-			// append the svg obgect to the body of the page
-			// appends a 'group' element to 'svg'
-			// moves the 'group' element to the top left margin
+					
 			let svg = d3.select(this.$.chart).append("svg")
 					// .attr("width", width + margin.left + margin.right)
 					// .attr("height", height + margin.top + margin.bottom)
@@ -147,7 +144,7 @@
 				.append("g")
 					.attr("transform",
 								"translate(" + margin.left + "," + margin.top + ")");
-			// Get the data
+			
 			data.forEach(function(d) {
 				d.date = d.date.getTime ? d.date : parseTime(d.date);
 				me.axisKeys.forEach((key)=>{
@@ -155,15 +152,18 @@
 				});
 			});
 
-      let today;
+			let today;
+			
+			let yMax = d3.max(data, function(d) {
+				return Math.max(d.actual, d.target, d.forecast, d.design); });
+			let yMin = yMax/2;
 
-			// Scale the range of the data
 			x.domain(d3.extent(data, function(d) { return d.date; })).nice(d3.timeDay);
-			y.domain([0, d3.max(data, function(d) {
-				return Math.max(d.actual, d.target, d.forecast, d.design); })]).nice();
+			y.domain([yMin, yMax]).nice();
 
-			actualArea.y1(y(0));
-			area.y0(y(0));
+			console.log(y.domain()[0])
+			actualArea.y1(y(y.domain()[0]));
+			area.y0(y(y.domain()[0]));
 
 			var toolTip = d3.tip(d3.select(this.$.chart))
 				.attr("class", "d3-tip")
@@ -435,7 +435,6 @@
 			}
 		},
     _compute(prop) {
-      console.log(prop)
       return prop;
     }
   });
