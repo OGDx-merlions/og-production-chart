@@ -105,8 +105,8 @@
 			let y = d3.scaleLinear().range([height, 0]);
 
 			let actualArea = d3.area()
-			.x(function(d) { return x(d.date); })
-			.y(function(d) { return y(d[me.axisKeys[0]]); });
+    			.x(function(d) { return x(d.date); })
+    			.y(function(d) { return y(d[me.axisKeys[0]]); });
 
 			let targetChart = d3.line()
 					.x(function(d) { return x(d.date); })
@@ -119,6 +119,23 @@
 			let area = d3.area()
 					.x(function(d) { return x(d.date); })
 					.y1(function(d) { return y(d[me.axisKeys[3]]); });
+
+      let areaAboveForecastLine = d3.area()
+        .x(forecastLine.x())
+        .y0(forecastLine.y())
+        .y1(0);
+      let areaBelowForecastLine = d3.area()
+        .x(forecastLine.x())
+        .y0(forecastLine.y())
+        .y1(actualArea.y());
+      let areaAboveActual = d3.area()
+        .x(actualArea.x())
+        .y0(actualArea.y())
+        .y1(0);
+      let areaBelowActual = d3.area()
+        .x(actualArea.x())
+        .y0(actualArea.y())
+        .y1(forecastLine.y());
 
 			// append the svg obgect to the body of the page
 			// appends a 'group' element to 'svg'
@@ -196,6 +213,36 @@
 							toolTip.hide(d);
 						});
 			}
+
+      if(!this.hideForecast) {
+        let defs = svg.append('defs');
+
+        defs.append('clipPath')
+          .attr('id', 'clip-forecast')
+          .append('path')
+          .datum(forecastData)
+          .attr("class", "forecast-area forecast-positive")
+          .attr('d', areaAboveForecastLine);
+
+        defs.append('clipPath')
+          .attr('id', 'clip-actual')
+          .append('path')
+          .datum(forecastData)
+          .attr("class", "forecast-area forecast-negative")
+          .attr('d', areaAboveActual);
+
+        svg.append('path')
+          .datum(forecastData)
+          .attr('d', areaBelowForecastLine)
+          .attr("class", "forecast-area forecast-negative")
+          .attr('clip-path', 'url(#clip-actual)');
+
+        svg.append('path')
+          .datum(forecastData)
+          .attr('d', areaBelowActual)
+          .attr("class", "forecast-area forecast-positive")
+          .attr('clip-path', 'url(#clip-forecast)');
+      }
 
 			if(!this.hideTarget) {
 				svg.append("path")
@@ -312,9 +359,15 @@
 				this.querySelectorAll(".forecast-circle").forEach((elt) => {
 					elt.style.display = "none";
 				});
+        this.querySelectorAll(".forecast-area").forEach((elt) => {
+					elt.style.display = "none";
+				});
 			} else {
 				this.querySelector(".forecast-line").style.display = "block";
 				this.querySelectorAll(".forecast-circle").forEach((elt) => {
+					elt.style.display = "block";
+				});
+				this.querySelectorAll(".forecast-area").forEach((elt) => {
 					elt.style.display = "block";
 				});
 			}

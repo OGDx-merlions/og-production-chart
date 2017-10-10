@@ -43,9 +43,15 @@ $inuit-enable-paddings--huge : true;
   }
   .forecast-line {
     stroke-width: 2;
-    stroke: #7bbc00;
+    stroke: $yellow-green10;
     stroke-dasharray: 2,2;
     fill: transparent;
+  }
+  .forecast-negative {
+    fill: $red1;
+  }
+  .forecast-positive {
+    fill: $yellow-green1;
   }
   .d3-tip {
     line-height: 1;
