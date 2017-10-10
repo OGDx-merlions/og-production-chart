@@ -156,8 +156,10 @@
 				});
 			});
 
+      let today;
+
 			// Scale the range of the data
-			x.domain(d3.extent(data, function(d) { return d.date; })).nice();
+			x.domain(d3.extent(data, function(d) { return d.date; })).nice(d3.timeDay);
 			y.domain([0, d3.max(data, function(d) {
 				return Math.max(d.actual, d.target, d.forecast, d.design); })]).nice();
 
@@ -179,6 +181,13 @@
 					.attr("fill", "#eddd46")
 					.attr("d", area);
 
+      let actualData = data.filter((_data) => {
+        if(_data.actual == _data.forecast) {
+          today = _data.date;
+        }
+        return _data.actual > 0;
+      });
+
       let forecastData = data.filter((_data) => {
         return _data.forecast > 0;
       });
@@ -191,7 +200,7 @@
 					.attr("d", actualArea);
 
 				svg.selectAll(".dot")
-					.data(data)
+					.data(actualData)
 					.enter()
 						.append("circle")
 						.attr("r", 3)
@@ -288,7 +297,7 @@
 						.attr("r", 3)
 						.attr("cx", (d, i) => x(d.date))
 						.attr("cy", (d) => y(d.forecast))
-						.attr("fill", "#7bbc00")
+						.attr("fill", "#8098ff")
 						.attr("class", "forecast-circle")
 						.on('mouseover', function(d, i) {
 							d3.select(this)
@@ -308,11 +317,24 @@
 			// Add the X Axis
 			svg.append("g")
 					.attr("transform", "translate(0," + height + ")")
-					.call(d3.axisBottom(x).ticks(data.length).tickFormat(d3.timeFormat('%b %d')));
+					.call(d3.axisBottom(x).tickFormat(d3.timeFormat('%d %b %y')));
 
 			// Add the Y Axis
 			svg.append("g")
 					.call(d3.axisLeft(y).ticks(6));
+
+      svg.append("svg:line")
+        .attr("class", "today")
+        .attr("x1", x(today))
+        .attr("y1", height+18)
+        .attr("x2", x(today))
+        .attr("y2", -3);
+
+      svg.append("text")
+        .attr("class", "today-text")
+        .attr("x", x(today)-10)
+        .attr("y", height+28)
+        .text("Today");
 
 			svg.append("text")
 				.attr("transform", "rotate(-90)")

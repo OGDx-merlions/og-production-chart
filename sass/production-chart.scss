@@ -43,15 +43,15 @@ $inuit-enable-paddings--huge : true;
   }
   .forecast-line {
     stroke-width: 2;
-    stroke: $yellow-green10;
+    stroke: $blue5;
     stroke-dasharray: 2,2;
     fill: transparent;
   }
   .forecast-negative {
-    fill: $red1;
+    fill: $blue3;
   }
   .forecast-positive {
-    fill: $yellow-green1;
+    fill: $blue5;
   }
   .d3-tip {
     line-height: 1;
@@ -86,6 +86,13 @@ $inuit-enable-paddings--huge : true;
     text-anchor: middle;
     font-size: 0.65rem;
   }
+  .today {
+    stroke-width: 1;
+    stroke: black;
+  }
+  .today-text {
+    font-size: 0.75rem;
+  }
 }
 
 .legend {
@@ -97,10 +104,10 @@ $inuit-enable-paddings--huge : true;
     border-left: 0.3rem solid #88bde6;
   }
   .target {
-    border-left: 0.3rem solid red;
+    border-left: 0.3rem solid $red1;
   }
   .forecast {
-    border-left: 0.3rem solid #7bbc00;
+    border-left: 0.3rem solid $blue5;
   }
   .design {
     border-left: 0.3rem solid #eddd46;
