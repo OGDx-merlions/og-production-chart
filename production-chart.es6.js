@@ -161,7 +161,6 @@
 			x.domain(d3.extent(data, function(d) { return d.date; })).nice(d3.timeDay);
 			y.domain([yMin, yMax]).nice();
 
-			console.log(y.domain()[0])
 			actualArea.y1(y(y.domain()[0]));
 			area.y0(y(y.domain()[0]));
 
