@@ -118,7 +118,7 @@
 
 			// set the ranges
 			let x = d3.scaleTime().range([0, width]);
-			let y = d3.scaleLinear().range([height, 0]);
+			let y = d3.scaleLinear().range([height, 0]).clamp(true);
 
 			let actualArea = d3.area()
     			.x(function(d) { return x(d.date); })
@@ -159,10 +159,12 @@
 			let yMin = yMax/2;
 
 			x.domain(d3.extent(data, function(d) { return d.date; })).nice(d3.timeDay);
-			y.domain([yMin, yMax]).nice();
+			y.domain([yMin, yMax]).nice(6);
+			
+			let yScaledMin = y(y.domain()[0]);
 
-			actualArea.y1(y(y.domain()[0]));
-			area.y0(y(y.domain()[0]));
+			actualArea.y1(yScaledMin);
+			area.y0(yScaledMin);
 
 			var toolTip = d3.tip(d3.select(this.$.chart))
 				.attr("class", "d3-tip")
@@ -202,7 +204,7 @@
 
 			if(!this.hideActual && actualData.length) {
 				svg.append("path")
-					.datum(data)
+					.datum(actualData)
 					.attr("class", "actual-area")
 					.style("fill", "#88bde6")
 					.attr("d", actualArea);
@@ -235,7 +237,7 @@
         let areaAboveForecastLine = d3.area()
           .x(forecastLine.x())
           .y0(forecastLine.y())
-          .y1(0);
+          .y1(yScaledMin);
         let areaBelowForecastLine = d3.area()
           .x(forecastLine.x())
           .y0(forecastLine.y())
@@ -243,7 +245,7 @@
         let areaAboveActual = d3.area()
           .x(actualArea.x())
           .y0(actualArea.y())
-          .y1(0);
+          .y1(yScaledMin);
         let areaBelowActual = d3.area()
           .x(actualArea.x())
           .y0(actualArea.y())
