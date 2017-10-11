@@ -52,7 +52,7 @@ $axis-color: #95a5ae;
   .forecast-line {
     stroke-width: 2;
     stroke: $blue5;
-    stroke-dasharray: 2,2;
+    //stroke-dasharray: 2,2;
     fill: transparent;
   }
   .forecast-negative {
