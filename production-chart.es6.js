@@ -206,17 +206,17 @@
 				svg.append("path")
 					.datum(actualData)
 					.attr("class", "actual-area")
-					.style("fill", "#88bde6")
+					.style("fill", "#5abef6")
 					.attr("d", actualArea);
 
 				svg.selectAll(".dot")
 					.data(actualData)
 					.enter()
 						.append("circle")
-						.attr("r", 3)
+						.attr("r", 2)
 						.attr("cx", (d, i) => x(d.date))
 						.attr("cy", (d) => y(d.actual))
-						.attr("fill", "#88bde6")
+						.attr("fill", "#5abef6")
 						.attr("class", "actual-circle")
 						.on('mouseover', function(d, i) {
 							d3.select(this)
@@ -228,7 +228,7 @@
 						})
 						.on('mouseout', function(d) {
 							d3.select(this)
-								.attr('r', 3);
+								.attr('r', 2);
 							toolTip.hide(d);
 						});
 			}
@@ -290,7 +290,7 @@
 					.data(data)
 					.enter()
 						.append("circle")
-						.attr("r", 3)
+						.attr("r", 2)
 						.attr("cx", (d, i) => x(d.date))
 						.attr("cy", (d) => y(d.target))
 						.attr("fill", "red")
@@ -305,7 +305,7 @@
 						})
 						.on('mouseout', function(d) {
 							d3.select(this)
-								.attr('r', 3);
+								.attr('r', 2);
 							toolTip.hide(d);
 						});
 			}
@@ -320,10 +320,10 @@
 					.data(forecastData)
 					.enter()
 						.append("circle")
-						.attr("r", 3)
+						.attr("r", 2)
 						.attr("cx", (d, i) => x(d.date))
 						.attr("cy", (d) => y(d.forecast))
-						.attr("fill", "#8098ff")
+						.attr("fill", "rgba(164, 117, 237, 0.8)")
 						.attr("class", "forecast-circle")
 						.on('mouseover', function(d, i) {
 							d3.select(this)
@@ -335,7 +335,7 @@
 						})
 						.on('mouseout', function(d) {
 							d3.select(this)
-								.attr('r', 3);
+								.attr('r', 2);
 							toolTip.hide(d);
 						});
       }
@@ -343,10 +343,19 @@
 			// Add the X Axis
 			svg.append("g")
 					.attr("transform", "translate(0," + height + ")")
+					.attr("class", "x-axis")
 					.call(d3.axisBottom(x).tickFormat(d3.timeFormat('%d %b %y')));
+					
+			svg.append("g")			
+				.attr("class", "y-grid")
+				.call(d3.axisLeft(y)
+						.ticks(5)
+						.tickSize(-width)
+						.tickFormat(""));
 
 			// Add the Y Axis
 			svg.append("g")
+					.attr("class", "y-axis")
 					.call(d3.axisLeft(y).ticks(6));
 
       svg.append("svg:line")
@@ -354,13 +363,27 @@
         .attr("x1", x(today))
         .attr("y1", height+18)
         .attr("x2", x(today))
-        .attr("y2", -3);
+        .attr("y2", -7);
 
       svg.append("text")
         .attr("class", "today-text")
+        .attr("x", (x(x.domain()[0]) + x(today))/2)
+        .attr("y", -9)
+				.text("Historical");
+				
+			svg.append("text")
+        .attr("class", "today-text")
         .attr("x", x(today)-10)
-        .attr("y", height+28)
-        .text("Today");
+        .attr("y", -9)
+				.text("Today");
+				
+			if(!this.hideForecast && forecastData.length > 0) {
+				svg.append("text")
+					.attr("class", "today-text")
+					.attr("x", (x(x.domain()[1]) * 0.8))
+					.attr("y", -9)
+					.text("Forecast");
+			}
 
 			svg.append("text")
 				.attr("transform", "rotate(-90)")
