@@ -60,18 +60,6 @@
 					return ["Actual", "Target", "Forecast", "Design Capacity"];
 				}
       },
-      /**
-      * The Actual, Target, Forecast and design values to be displayed in the legend
-      *
-      * @property legendDispVal
-      [{"actual": 1302, "target": 1212, "forecast": 1222, "design": 1400}]
-      */
-			legendDispVal: {
-				type: Array,
-        value() {
-					return [];
-				}
-			},
 			/**
 			* This property is an Array of tab data.
 			Member of each tab data looks like this
@@ -107,13 +95,6 @@
 				value: 0
 			}
 		},
-
-    _setLegend(data) {
-      let me = this;
-      data.forEach((_item, idx) => {
-        _item.legend = me.legendDispVal[idx];
-      });
-    },
 
     attached() {
       this.rangeParse = d3.timeParse("%Y-%m-%dT%H:%M:%S.%LZ");
@@ -153,7 +134,6 @@
           return date.getTime() >= from.getTime() 
             && date.getTime() <= to.getTime();
         });
-        _tmp.legend = this.legendDispVal[idx];
         filtered.push(_tmp);
       });
       return filtered;

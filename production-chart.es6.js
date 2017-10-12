@@ -175,10 +175,19 @@
 
     	svg.call(toolTip);
 
-      let actualData = [], designData = [], forecastData = [], targetData = [];
+			let actualData = [], designData = [], forecastData = [], targetData = [];
+			let todayActual = 0, todayTarget = 0, todayForecast = 0, todayDesign = 0;
       data.forEach((_data) => {
         if(_data.actual == _data.forecast) {
-          today = _data.date;
+					today = _data.date;
+					this.actualDispVal = _data.actual;
+					this.targetDispVal = _data.target;
+					this.forecastDispVal = _data.forecast;
+					this.designDispVal = _data.design;
+					todayActual = this.actualDispVal;
+					todayTarget = this.targetDispVal;
+					todayForecast = this.forecastDispVal;
+					todayDesign = this.designDispVal;
         }
         if(_data.actual > 0) {actualData.push(_data)}
         if(_data.target > 0) {targetData.push(_data)}
@@ -193,13 +202,44 @@
       this.set("hideActualLegend", actualData.length === 0);
       this.set("hideTargetLegend", targetData.length === 0);
       this.set("hideForecastLegend", forecastData.length === 0);
-      this.set("hideDesignCapacityLegend", designData.length === 0);
+			this.set("hideDesignCapacityLegend", designData.length === 0);
+			
+			let updateLegendVal = (d) => {
+				this.actualDispVal = d.actual;
+				this.targetDispVal = d.target;
+				this.forecastDispVal = d.forecast;
+				this.designDispVal = d.design;
+			};
+
+			let revertLegendValToToday = () => {
+				this.actualDispVal = todayActual;
+				this.targetDispVal = todayTarget;
+				this.forecastDispVal = todayForecast;
+				this.designDispVal = todayDesign;
+			};
 
 			if(designData.length) {
         svg.append("path")
   					.datum(data)
   					.attr("fill", "#eddd46")
-  					.attr("d", area);
+						.attr("d", area)
+						.style("pointer-events", "none");
+				
+				svg.selectAll(".dot")
+						.data(data)
+						.enter()
+							.append("circle")
+							.attr("r", 0)
+							.attr("cx", (d, i) => x(d.date))
+							.attr("cy", (d) => y(d.design))
+							.attr("fill", "transparent")
+							.attr("class", "design-circle")
+							.on('mouseover', function(d, i) {
+								updateLegendVal(d);
+							})
+							.on('mouseout', function(d) {
+								revertLegendValToToday();
+							});
       }
 
 			if(!this.hideActual && actualData.length) {
@@ -207,7 +247,8 @@
 					.datum(actualData)
 					.attr("class", "actual-area")
 					.style("fill", "#5abef6")
-					.attr("d", actualArea);
+					.attr("d", actualArea)
+					.style("pointer-events", "none");
 
 				svg.selectAll(".dot")
 					.data(actualData)
@@ -224,11 +265,13 @@
 							d.msg = tooltipTimeFormat(d.date) + "<br>"
 								+ "Actual of <b>" + d.actual + "</b><br>" + "produced in "
 								+ tooltipTimeFormat2(d.date);
+							updateLegendVal(d);
 							toolTip.show(d);
 						})
 						.on('mouseout', function(d) {
 							d3.select(this)
 								.attr('r', 2);
+							revertLegendValToToday();
 							toolTip.hide(d);
 						});
 			}
@@ -257,26 +300,30 @@
           .append('path')
           .datum(forecastData)
           .attr("class", "forecast-area forecast-positive")
-          .attr('d', areaAboveForecastLine);
+          .attr('d', areaAboveForecastLine)
+					.style("pointer-events", "none");
 
         defs.append('clipPath')
           .attr('id', 'clip-actual')
           .append('path')
           .datum(forecastData)
           .attr("class", "forecast-area forecast-negative")
-          .attr('d', areaAboveActual);
+          .attr('d', areaAboveActual)
+					.style("pointer-events", "none");
 
         svg.append('path')
           .datum(forecastData)
           .attr('d', areaBelowForecastLine)
           .attr("class", "forecast-area forecast-negative")
-          .attr('clip-path', 'url(#clip-actual)');
+          .attr('clip-path', 'url(#clip-actual)')
+					.style("pointer-events", "none");
 
         svg.append('path')
           .datum(forecastData)
           .attr('d', areaBelowActual)
           .attr("class", "forecast-area forecast-positive")
-          .attr('clip-path', 'url(#clip-forecast)');
+          .attr('clip-path', 'url(#clip-forecast)')
+					.style("pointer-events", "none");
       }
 
 			if(!this.hideTarget && targetData.length) {
@@ -284,7 +331,8 @@
 						.data([data])
 						.attr("class", "target-line")
 						.style("stroke", "red")
-						.attr("d", targetChart);
+						.attr("d", targetChart)
+						.style("pointer-events", "none");
 
 				svg.selectAll(".dot")
 					.data(data)
@@ -301,11 +349,13 @@
 							d.msg = tooltipTimeFormat(d.date) + "<br>"
 								+ "Target of <b>" + d.target + "</b><br>" + "produced in "
 								+ tooltipTimeFormat2(d.date);
+							updateLegendVal(d);
 							toolTip.show(d);
 						})
 						.on('mouseout', function(d) {
 							d3.select(this)
 								.attr('r', 2);
+							revertLegendValToToday();
 							toolTip.hide(d);
 						});
 			}
@@ -331,11 +381,13 @@
 							d.msg = tooltipTimeFormat(d.date) + "<br>"
 								+ "Forecast of <b>" + d.forecast + "</b><br>" + "produced in "
 								+ tooltipTimeFormat2(d.date);
+							updateLegendVal(d);
 							toolTip.show(d);
 						})
 						.on('mouseout', function(d) {
 							d3.select(this)
 								.attr('r', 2);
+							revertLegendValToToday();
 							toolTip.hide(d);
 						});
       }

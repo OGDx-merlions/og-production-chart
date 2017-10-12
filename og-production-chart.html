@@ -47,9 +47,6 @@ REPLACE THIS TEXT WITH A COMPONENT DESCRIPTION
           <div class="chart-view">
             <production-chart data="{{item}}" date-range="{{dateRange}}"
               width="{{width}}" height="{{height}}"
-              actual-disp-val="{{item.legend.actual}}"
-              target-disp-val="{{item.legend.target}}"
-              forecast-disp-val="{{item.legend.forecast}}"
               legend-labels="{{legendLabels}}"
               design-disp-val="{{item.legend.design}}" unit="{{unit}}">
             </production-chart>
@@ -63,11 +60,7 @@ REPLACE THIS TEXT WITH A COMPONENT DESCRIPTION
         <div class="chart-view">
           <production-chart data="{{item}}" date-range="{{dateRange}}"
             width="{{width}}" height="{{height}}"
-            actual-disp-val="{{item.legend.actual}}"
-            target-disp-val="{{item.legend.target}}"
-            forecast-disp-val="{{item.legend.forecast}}"
-            legend-labels="{{legendLabels}}"
-            design-disp-val="{{item.legend.design}}" unit="{{unit}}">
+            legend-labels="{{legendLabels}}" unit="{{unit}}">
           </production-chart>
         </div>
       </template>
