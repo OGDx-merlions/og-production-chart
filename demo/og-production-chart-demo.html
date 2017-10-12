@@ -40,7 +40,7 @@
           data="{{props.data.value}}" date-range="{{props.dateRange.value}}"
           width="{{props.width.value}}" height="{{props.height.value}}"
           legend-labels="{{props.legendLabels.value}}" labels="{{props.labels.value}}"
-          legend-disp-val="{{props.legendDispVal.value}}" unit="{{props.unit.value}}">
+          unit="{{props.unit.value}}">
         </og-production-chart>
       </px-demo-component>
       <!-- END Component ------------------------------------------------------>
@@ -219,15 +219,6 @@
       legendLabels: {
         type: Array,
         defaultValue: ["Actual", "Target", "Forecast", "Design Capacity"],
-        inputType: 'code:JSON'
-      },
-      legendDispVal: {
-				type: Array,
-        defaultValue: [
-          {"actual":"11960","target":"12950","forecast":"12950","design":"13960"},
-          {"actual":"11889","target":"12938","forecast":"12950","design":"13960"},
-          {"actual":"11897","target":"12959","forecast":"12950","design":"13960"}
-        ],
         inputType: 'code:JSON'
       },
       labels: {
