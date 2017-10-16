@@ -205,10 +205,10 @@
 			this.set("hideDesignCapacityLegend", designData.length === 0);
 			
 			let updateLegendVal = (d) => {
-				this.actualDispVal = d.actual;
-				this.targetDispVal = d.target;
-				this.forecastDispVal = d.forecast;
-				this.designDispVal = d.design;
+				this.actualDispVal = d.actual.toFixed(2);
+				this.targetDispVal = d.target.toFixed(2);
+				this.forecastDispVal = d.forecast.toFixed(2);
+				this.designDispVal = d.design.toFixed(2);
 			};
 
 			let revertLegendValToToday = () => {
