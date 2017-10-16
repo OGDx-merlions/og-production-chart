@@ -35,7 +35,7 @@
 							"tickFormat": ".3s",
 							"hideGrid": true,
 							"dotRadius": 0,
-							"start": 600
+							"start": 0
 						}
 					};
 				}
