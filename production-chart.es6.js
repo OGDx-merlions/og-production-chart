@@ -120,7 +120,6 @@
 		},
 
 		attached() {
-			
 		},
 
 		draw() {
@@ -135,6 +134,7 @@
 			this.axisConfig = this.axisConfig ? this.axisConfig : {};
 			this.axisConfig.x = this.axisConfig.x ? this.axisConfig.x : {}; 
 			this.axisConfig.y = this.axisConfig.y ? this.axisConfig.y : {};
+			this.chartType = this.chartType || "line";
 
 			let defaultDotRadius = this.axisConfig.y.dotRadius;
 			if(!defaultDotRadius) {
