@@ -17,7 +17,7 @@
     <style include="production-chart-styles"></style>
     <div class="flex flex--col chart-container">
       <div class="flex flex--row">
-        <div class="u-1/4">
+        <div class="u-1/1 u-1/4-desk">
           <px-rangepicker
             hide-time
             show-buttons
@@ -27,7 +27,7 @@
             range="{{dateRange}}">
           </px-rangepicker>
         </div>
-        <div class="flex flex--right u-3/4 legend">
+        <div class="flex flex--right u-1/1 u-3/4-desk legend">
           <div class="flex flex--row">
             <div class="flex flex__item flex--col u-pr++ zeta legend-unit actual" id="legend-actual" hidden$="{{_compute(hideActualLegend)}}">
               <span class="flex flex--top muted">{{actualLegendLabel}}</span>

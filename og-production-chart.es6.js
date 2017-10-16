@@ -86,6 +86,40 @@
           return {};
         }
       },
+      /**
+       * Array of chart Types.
+       * Eg: ["line", "area", "line"]
+       * @property chartTypes
+       */
+      chartTypes: {
+				type: Array,
+				value: () => {
+          return [];
+        }
+      },
+      /**
+       * Array of Axis Configurations
+       * Eg: [{
+						"x": {
+							"tickFormat": "",
+							"inputTimeFormat": "%Y-%m-%dT%H:%M:%S.%LZ",
+							"tickTimeFormat": "%d %b %y",
+						},
+						"y": {
+							"tickFormat": ".3s",
+							"hideGrid": true,
+							"dotRadius": 0,
+							"start": 600
+						}
+					}, null, null]
+       * @property axisConfigs
+       */
+			axisConfigs: {
+				type: Array,
+				value: () => {
+					return [];
+				}
+			},
       filteredData: {
         type: Array,
         computed: '_filterDates(data, dateRange)'
@@ -125,6 +159,8 @@
       const from = this.rangeParse(dateRange.from);
       const to = this.rangeParse(dateRange.to);
       let filtered = [];
+      this.chartTypes = this.chartTypes ? this.chartTypes : [];
+      this.axisConfigs = this.axisConfigs ? this.axisConfigs : [];
       data.forEach((arr, idx)=> {
         let _tmp = arr.filter((_obj) => {
           if(!_obj.date) {
@@ -134,6 +170,11 @@
           return date.getTime() >= from.getTime() 
             && date.getTime() <= to.getTime();
         });
+        _tmp.chartType = this.chartTypes.length > idx ? this.chartTypes[idx] : "";
+        _tmp.chartType = _tmp.chartType ? _tmp.chartType : "";
+
+        _tmp.axisConfigs = this.axisConfigs.length > idx ? this.axisConfigs[idx] : "";
+        _tmp.axisConfigs = _tmp.axisConfigs ? _tmp.axisConfigs : "";
         filtered.push(_tmp);
       });
       return filtered;

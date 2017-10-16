@@ -55,6 +55,12 @@ $axis-color: #95a5ae;
     //stroke-dasharray: 2,2;
     fill: transparent;
   }
+  .actual-line {
+    stroke-width: 2;
+  }
+  .design-line {
+    stroke-width: 2;
+  }
   .forecast-negative {
     fill: $blue3;
   }
@@ -133,10 +139,12 @@ $axis-color: #95a5ae;
   .legend-unit {
     padding-left: 0.2rem;
     line-height: 1;
-    min-width: 11rem;
+    @media (min-width: 860px) {
+      min-width: 11rem;
+    }
   }
   .actual {
-    border-left: 0.3rem solid #5abef6;
+    border-left: 0.3rem solid #5fbcf8;
   }
   .target {
     border-left: 0.3rem solid $red1;

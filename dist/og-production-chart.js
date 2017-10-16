@@ -31,9 +31,29 @@
 			`{"from":"2017-04-03T03:37:25.000Z","to":"2017-10-26T03:37:25.000Z"}`
       *
       * @property dateRange
-      */dateRange:{type:Object,value:function value(){return{}}},filteredData:{type:Array,computed:"_filterDates(data, dateRange)"},selected:{type:Number,value:0}},attached:function attached(){this.rangeParse=d3.timeParse("%Y-%m-%dT%H:%M:%S.%LZ");this._notifyAttached()},_notifyAttached:function _notifyAttached(){/**
+      */dateRange:{type:Object,value:function value(){return{}}},/**
+       * Array of chart Types.
+       * Eg: ["line", "area", "line"]
+       * @property chartTypes
+       */chartTypes:{type:Array,value:function value(){return[]}},/**
+       * Array of Axis Configurations
+       * Eg: [{
+						"x": {
+							"tickFormat": "",
+							"inputTimeFormat": "%Y-%m-%dT%H:%M:%S.%LZ",
+							"tickTimeFormat": "%d %b %y",
+						},
+						"y": {
+							"tickFormat": ".3s",
+							"hideGrid": true,
+							"dotRadius": 0,
+							"start": 600
+						}
+					}, null, null]
+       * @property axisConfigs
+       */axisConfigs:{type:Array,value:function value(){return[]}},filteredData:{type:Array,computed:"_filterDates(data, dateRange)"},selected:{type:Number,value:0}},attached:function attached(){this.rangeParse=d3.timeParse("%Y-%m-%dT%H:%M:%S.%LZ");this._notifyAttached()},_notifyAttached:function _notifyAttached(){/**
        * Event fired when the component is attached
        *
        * @event attached
-       */this.fire("attached",{})},_isMultipleData:function _isMultipleData(data){return data.length>1},_isSingleData:function _isSingleData(data){return data.length===1},_filterDates:function _filterDates(data,dateRange){var _this=this;if(!data||!data.length||!dateRange){return data}var d3=Px.d3;var from=this.rangeParse(dateRange.from);var to=this.rangeParse(dateRange.to);var filtered=[];data.forEach(function(arr,idx){var _tmp=arr.filter(function(_obj){if(!_obj.date){return false}var date=_obj.date.getTime?_obj.date:_this.rangeParse(_obj.date);return date.getTime()>=from.getTime()&&date.getTime()<=to.getTime()});filtered.push(_tmp)});return filtered}})})();
+       */this.fire("attached",{})},_isMultipleData:function _isMultipleData(data){return data.length>1},_isSingleData:function _isSingleData(data){return data.length===1},_filterDates:function _filterDates(data,dateRange){var _this=this;if(!data||!data.length||!dateRange){return data}var d3=Px.d3;var from=this.rangeParse(dateRange.from);var to=this.rangeParse(dateRange.to);var filtered=[];this.chartTypes=this.chartTypes?this.chartTypes:[];this.axisConfigs=this.axisConfigs?this.axisConfigs:[];data.forEach(function(arr,idx){var _tmp=arr.filter(function(_obj){if(!_obj.date){return false}var date=_obj.date.getTime?_obj.date:_this.rangeParse(_obj.date);return date.getTime()>=from.getTime()&&date.getTime()<=to.getTime()});_tmp.chartType=_this.chartTypes.length>idx?_this.chartTypes[idx]:"";_tmp.chartType=_tmp.chartType?_tmp.chartType:"";_tmp.axisConfigs=_this.axisConfigs.length>idx?_this.axisConfigs[idx]:"";_tmp.axisConfigs=_tmp.axisConfigs?_tmp.axisConfigs:"";filtered.push(_tmp)});return filtered}})})();
 //# sourceMappingURL=og-production-chart.js.map

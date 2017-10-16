@@ -18,6 +18,28 @@
 				type: Number,
 				value: 300
 			},
+			chartType: {
+				type: String,
+				value: "line"
+			},
+			axisConfig: {
+				type: Object,
+				value: () => {
+					return {
+						"x": {
+							"tickFormat": "",
+							"inputTimeFormat": "%Y-%m-%dT%H:%M:%S.%LZ",
+							"tickTimeFormat": "%d %b %y",
+						},
+						"y": {
+							"tickFormat": ".3s",
+							"hideGrid": true,
+							"dotRadius": 0,
+							"start": 600
+						}
+					};
+				}
+			},
 			actualDispVal: {
 				type: Number
 			},
@@ -98,7 +120,7 @@
 		},
 
 		attached() {
-			this.draw();
+			
 		},
 
 		draw() {
@@ -110,8 +132,24 @@
 					width = this.width - margin.left - margin.right,
 					height = this.height - margin.top - margin.bottom;
 
+			this.axisConfig = this.axisConfig ? this.axisConfig : {};
+			this.axisConfig.x = this.axisConfig.x ? this.axisConfig.x : {}; 
+			this.axisConfig.y = this.axisConfig.y ? this.axisConfig.y : {};
+
+			let defaultDotRadius = this.axisConfig.y.dotRadius;
+			if(!defaultDotRadius) {
+				if(defaultDotRadius != 0) {
+					defaultDotRadius = 2;
+				} else {
+					defaultDotRadius = 0;
+				}
+			}
+			defaultDotRadius = +defaultDotRadius
+
 			// parse the date / time
-			let parseTime = d3.timeParse("%Y-%m-%dT%H:%M:%S.%LZ");
+			let inTimeFormat = this.axisConfig.x.inputTimeFormat ? 
+				this.axisConfig.x.inputTimeFormat : "%Y-%m-%dT%H:%M:%S.%LZ";
+			let parseTime = d3.timeParse(inTimeFormat);
 
 			let tooltipTimeFormat = d3.timeFormat("%A, %b %d");
 			let tooltipTimeFormat2 = d3.timeFormat("%Y");
@@ -121,6 +159,10 @@
 			let y = d3.scaleLinear().range([height, 0]).clamp(true);
 
 			let actualArea = d3.area()
+    			.x(function(d) { return x(d.date); })
+					.y(function(d) { return y(d[me.axisKeys[0]]); });
+					
+			let actualLine = d3.line()
     			.x(function(d) { return x(d.date); })
     			.y(function(d) { return y(d[me.axisKeys[0]]); });
 
@@ -135,6 +177,10 @@
 			let area = d3.area()
 					.x(function(d) { return x(d.date); })
 					.y1(function(d) { return y(d[me.axisKeys[3]]); });
+			
+			let designLine = d3.line()
+					.x(function(d) { return x(d.date); })
+					.y(function(d) { return y(d[me.axisKeys[3]]); });
 					
 			let svg = d3.select(this.$.chart).append("svg")
 					// .attr("width", width + margin.left + margin.right)
@@ -156,7 +202,13 @@
 			
 			let yMax = d3.max(data, function(d) {
 				return Math.max(d.actual, d.target, d.forecast, d.design); });
-			let yMin = yMax/2;
+			let yMin = this.axisConfig.y.start;
+			if(!yMin) {
+				if(yMin != 0) {
+					yMin = yMax/2;
+				}
+			}
+			yMin = +yMin;
 
 			x.domain(d3.extent(data, function(d) { return d.date; })).nice(d3.timeDay);
 			y.domain([yMin, yMax]).nice(6);
@@ -180,10 +232,10 @@
       data.forEach((_data) => {
         if(_data.actual == _data.forecast) {
 					today = _data.date;
+					this.designDispVal = _data.design;
 					this.actualDispVal = _data.actual;
 					this.targetDispVal = _data.target;
 					this.forecastDispVal = _data.forecast;
-					this.designDispVal = _data.design;
 					todayActual = this.actualDispVal;
 					todayTarget = this.targetDispVal;
 					todayForecast = this.forecastDispVal;
@@ -219,14 +271,24 @@
 			};
 
 			if(designData.length) {
-        svg.append("path")
-  					.datum(data)
-  					.attr("fill", "#eddd46")
+        if(this.chartType === "line") {
+					svg.append("path")
+						.data([designData])
+						.attr("class", "design-line")
+						.style("stroke", "#eddd46")
+						.style("fill", "transparent")
+						.attr("d", designLine)
+						.style("pointer-events", "none");
+				} else {
+					svg.append("path")
+						.datum(designData)
+						.attr("fill", "#eddd46")
 						.attr("d", area)
 						.style("pointer-events", "none");
+				}
 				
 				svg.selectAll(".dot")
-						.data(data)
+						.data(designData)
 						.enter()
 							.append("circle")
 							.attr("r", 0)
@@ -243,25 +305,35 @@
       }
 
 			if(!this.hideActual && actualData.length) {
-				svg.append("path")
-					.datum(actualData)
-					.attr("class", "actual-area")
-					.style("fill", "#5abef6")
-					.attr("d", actualArea)
-					.style("pointer-events", "none");
+				if(this.chartType === "line") {
+					svg.append("path")
+						.data([actualData])
+						.attr("class", "actual-area actual-line")
+						.style("stroke", "#5fbcf8")
+						.style("fill", "transparent")
+						.attr("d", actualLine)
+						.style("pointer-events", "none");
+				} else {
+					svg.append("path")
+						.datum(actualData)
+						.attr("class", "actual-area")
+						.style("fill", "#5fbcf8")
+						.attr("d", actualArea)
+						.style("pointer-events", "none");
+				}
 
 				svg.selectAll(".dot")
 					.data(actualData)
 					.enter()
 						.append("circle")
-						.attr("r", 2)
+						.attr("r", defaultDotRadius)
 						.attr("cx", (d, i) => x(d.date))
 						.attr("cy", (d) => y(d.actual))
-						.attr("fill", "#5abef6")
+						.attr("fill", "#5fbcf8")
 						.attr("class", "actual-circle")
 						.on('mouseover', function(d, i) {
 							d3.select(this)
-								.attr('r', 5);
+								.attr('r', defaultDotRadius + 3);
 							d.msg = tooltipTimeFormat(d.date) + "<br>"
 								+ "Actual of <b>" + d.actual + "</b><br>" + "produced in "
 								+ tooltipTimeFormat2(d.date);
@@ -270,82 +342,86 @@
 						})
 						.on('mouseout', function(d) {
 							d3.select(this)
-								.attr('r', 2);
+								.attr('r', defaultDotRadius);
 							revertLegendValToToday();
 							toolTip.hide(d);
 						});
 			}
 
       if(!this.hideForecast && forecastData.length > 0) {
-        let areaAboveForecastLine = d3.area()
-          .x(forecastLine.x())
-          .y0(forecastLine.y())
-          .y1(yScaledMin);
-        let areaBelowForecastLine = d3.area()
-          .x(forecastLine.x())
-          .y0(forecastLine.y())
-          .y1(actualArea.y());
-        let areaAboveActual = d3.area()
-          .x(actualArea.x())
-          .y0(actualArea.y())
-          .y1(yScaledMin);
-        let areaBelowActual = d3.area()
-          .x(actualArea.x())
-          .y0(actualArea.y())
-          .y1(forecastLine.y());
-        let defs = svg.append('defs');
-
-        defs.append('clipPath')
-          .attr('id', 'clip-forecast')
-          .append('path')
-          .datum(forecastData)
-          .attr("class", "forecast-area forecast-positive")
-          .attr('d', areaAboveForecastLine)
-					.style("pointer-events", "none");
-
-        defs.append('clipPath')
-          .attr('id', 'clip-actual')
-          .append('path')
-          .datum(forecastData)
-          .attr("class", "forecast-area forecast-negative")
-          .attr('d', areaAboveActual)
-					.style("pointer-events", "none");
-
-        svg.append('path')
-          .datum(forecastData)
-          .attr('d', areaBelowForecastLine)
-          .attr("class", "forecast-area forecast-negative")
-          .attr('clip-path', 'url(#clip-actual)')
-					.style("pointer-events", "none");
-
-        svg.append('path')
-          .datum(forecastData)
-          .attr('d', areaBelowActual)
-          .attr("class", "forecast-area forecast-positive")
-          .attr('clip-path', 'url(#clip-forecast)')
-					.style("pointer-events", "none");
+				if(this.chartType === "line") {
+					
+				} else {
+					let areaAboveForecastLine = d3.area()
+						.x(forecastLine.x())
+						.y0(forecastLine.y())
+						.y1(yScaledMin);
+					let areaBelowForecastLine = d3.area()
+						.x(forecastLine.x())
+						.y0(forecastLine.y())
+						.y1(actualArea.y());
+					let areaAboveActual = d3.area()
+						.x(actualArea.x())
+						.y0(actualArea.y())
+						.y1(yScaledMin);
+					let areaBelowActual = d3.area()
+						.x(actualArea.x())
+						.y0(actualArea.y())
+						.y1(forecastLine.y());
+					let defs = svg.append('defs');
+	
+					defs.append('clipPath')
+						.attr('id', 'clip-forecast')
+						.append('path')
+						.datum(forecastData)
+						.attr("class", "forecast-area forecast-positive")
+						.attr('d', areaAboveForecastLine)
+						.style("pointer-events", "none");
+	
+					defs.append('clipPath')
+						.attr('id', 'clip-actual')
+						.append('path')
+						.datum(forecastData)
+						.attr("class", "forecast-area forecast-negative")
+						.attr('d', areaAboveActual)
+						.style("pointer-events", "none");
+	
+					svg.append('path')
+						.datum(forecastData)
+						.attr('d', areaBelowForecastLine)
+						.attr("class", "forecast-area forecast-negative")
+						.attr('clip-path', 'url(#clip-actual)')
+						.style("pointer-events", "none");
+	
+					svg.append('path')
+						.datum(forecastData)
+						.attr('d', areaBelowActual)
+						.attr("class", "forecast-area forecast-positive")
+						.attr('clip-path', 'url(#clip-forecast)')
+						.style("pointer-events", "none");
+				}
       }
 
 			if(!this.hideTarget && targetData.length) {
 				svg.append("path")
-						.data([data])
+						.data([targetData])
 						.attr("class", "target-line")
 						.style("stroke", "red")
 						.attr("d", targetChart)
 						.style("pointer-events", "none");
 
 				svg.selectAll(".dot")
-					.data(data)
+					.data(targetData)
 					.enter()
 						.append("circle")
-						.attr("r", 2)
+						.attr("r", defaultDotRadius)
 						.attr("cx", (d, i) => x(d.date))
 						.attr("cy", (d) => y(d.target))
 						.attr("fill", "red")
 						.attr("class", "target-circle")
 						.on('mouseover', function(d, i) {
 							d3.select(this)
-								.attr('r', 5);
+								.attr('r', defaultDotRadius + 3);
 							d.msg = tooltipTimeFormat(d.date) + "<br>"
 								+ "Target of <b>" + d.target + "</b><br>" + "produced in "
 								+ tooltipTimeFormat2(d.date);
@@ -354,7 +430,7 @@
 						})
 						.on('mouseout', function(d) {
 							d3.select(this)
-								.attr('r', 2);
+								.attr('r', defaultDotRadius);
 							revertLegendValToToday();
 							toolTip.hide(d);
 						});
@@ -370,14 +446,14 @@
 					.data(forecastData)
 					.enter()
 						.append("circle")
-						.attr("r", 2)
+						.attr("r", defaultDotRadius)
 						.attr("cx", (d, i) => x(d.date))
 						.attr("cy", (d) => y(d.forecast))
 						.attr("fill", "rgba(164, 117, 237, 0.8)")
 						.attr("class", "forecast-circle")
 						.on('mouseover', function(d, i) {
 							d3.select(this)
-								.attr('r', 5);
+								.attr('r', defaultDotRadius + 3);
 							d.msg = tooltipTimeFormat(d.date) + "<br>"
 								+ "Forecast of <b>" + d.forecast + "</b><br>" + "produced in "
 								+ tooltipTimeFormat2(d.date);
@@ -386,29 +462,40 @@
 						})
 						.on('mouseout', function(d) {
 							d3.select(this)
-								.attr('r', 2);
+								.attr('r', defaultDotRadius);
 							revertLegendValToToday();
 							toolTip.hide(d);
 						});
       }
 
 			// Add the X Axis
+			let _xAxis = d3.axisBottom(x);
+			if(this.axisConfig.x.tickTimeFormat) {
+				_xAxis.tickFormat(d3.timeFormat(
+					this.axisConfig.x.tickTimeFormat || "%d %b %y"));
+			}
 			svg.append("g")
 					.attr("transform", "translate(0," + height + ")")
 					.attr("class", "x-axis")
-					.call(d3.axisBottom(x).tickFormat(d3.timeFormat('%d %b %y')));
+					.call(_xAxis);
 					
-			svg.append("g")			
-				.attr("class", "y-grid")
-				.call(d3.axisLeft(y)
-						.ticks(5)
-						.tickSize(-width)
-						.tickFormat(""));
+			if(!this.axisConfig.y.hideGrid) {
+				svg.append("g")			
+					.attr("class", "y-grid")
+					.call(d3.axisLeft(y)
+							.ticks(5)
+							.tickSize(-width)
+							.tickFormat(""));
+			}
 
 			// Add the Y Axis
+			let _yAxis = d3.axisLeft(y).ticks(6);
+			if(this.axisConfig.y.tickFormat) {
+				_yAxis.tickFormat(d3.format(this.axisConfig.y.tickFormat));
+			}
 			svg.append("g")
 					.attr("class", "y-axis")
-					.call(d3.axisLeft(y).ticks(6));
+					.call(_yAxis);
 
       svg.append("svg:line")
         .attr("class", "today")
@@ -497,10 +584,8 @@
 		},
 
 		_redraw(newData, oldData) {
-			if(oldData && oldData.length) {
-				Polymer.dom(this.$.chart).node.innerHTML = "";
-				this.draw();
-			}
+			Polymer.dom(this.$.chart).node.innerHTML = "";
+			this.draw();
 		},
 		_setLegendLabels(labels) {
 			if(labels && labels.length) {
