@@ -71,7 +71,8 @@
 				type: Array,
 				value() {
 					return [];
-				}
+				},
+        observer: "_setMetaData"
       },
       /**
 			* The Date to show in Datepicker. If provided, dateRange will be ignored
@@ -93,7 +94,8 @@
         type: Object,
         value() {
           return {};
-        }
+        },
+        observer: "_filterDates"
       },
       /**
        * Array of chart Types.
@@ -129,14 +131,16 @@
 					return [];
 				}
 			},
-      filteredData: {
-        type: Array,
-        computed: '_filterDates(data, dateRange)'
-      },
 			selected: {
 				type: Number,
 				value: 0
-			}
+			},
+      filteredData: {
+        type: Array,
+        value() {
+          return [];
+        }
+      }
 		},
 
     attached() {
@@ -160,11 +164,25 @@
     _isSingleData(data) {
       return data.length === 1;
     },
-    _filterDates(data, dateRange) {
-      if(!data || !data.length) {
-        return data;
+    _setMetaData(_new, _old) {
+      if(!_new || !_new.length) {
+        return _new;
       }
-      const d3 = Px.d3;
+      this.chartTypes = this.chartTypes ? this.chartTypes : [];
+      this.axisConfigs = this.axisConfigs ? this.axisConfigs : [];
+      _new.forEach((arr, idx)=> {
+        arr.chartType = this.chartTypes.length > idx ? this.chartTypes[idx] : "";
+        arr.chartType = arr.chartType ? arr.chartType : "";
+        arr.axisConfigs = this.axisConfigs.length > idx ? this.axisConfigs[idx] : "";
+        arr.axisConfigs = arr.axisConfigs ? arr.axisConfigs : "";
+      });
+      this.filteredData = _new;
+    },
+    _filterDates(dateRange, oldDateRange, data) {
+      data = data ? data : this.data;
+      if(!data) {
+        return;
+      }
       const from = dateRange ? this.rangeParse(dateRange.from) : null;
       const to = dateRange ? this.rangeParse(dateRange.to) : null;
       let filtered = [];
@@ -172,7 +190,7 @@
       this.axisConfigs = this.axisConfigs ? this.axisConfigs : [];
       data.forEach((arr, idx)=> {
         let _tmp = null;
-        if(dateRange) {
+        if(dateRange && from && to) {
           _tmp = arr.filter((_obj) => {
             if(!_obj.date) {
               return false;
@@ -186,12 +204,11 @@
         }
         _tmp.chartType = this.chartTypes.length > idx ? this.chartTypes[idx] : "";
         _tmp.chartType = _tmp.chartType ? _tmp.chartType : "";
-
         _tmp.axisConfigs = this.axisConfigs.length > idx ? this.axisConfigs[idx] : "";
         _tmp.axisConfigs = _tmp.axisConfigs ? _tmp.axisConfigs : "";
         filtered.push(_tmp);
       });
-      return filtered;
+      this.filteredData = filtered;
     }
   });
 })();

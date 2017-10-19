@@ -25,7 +25,7 @@
 			`{"date":"2017-05-01T16:00:00.000Z","actual":"11960","target":"12950","design":"13960"}`
       *
       * @property data
-      */data:{type:Array,value:function value(){return[]}},/**
+      */data:{type:Array,value:function value(){return[]},observer:"_setMetaData"},/**
 			* The Date to show in Datepicker. If provided, dateRange will be ignored
 			Eg: "2017-04-03T03:37:25.000Z"
       *
@@ -36,7 +36,7 @@
 			`{"from":"2017-04-03T03:37:25.000Z","to":"2017-10-26T03:37:25.000Z"}`
       *
       * @property dateRange
-      */dateRange:{type:Object,value:function value(){return{}}},/**
+      */dateRange:{type:Object,value:function value(){return{}},observer:"_filterDates"},/**
        * Array of chart Types.
        * Eg: ["line", "area", "line"]
        * @property chartTypes
@@ -56,9 +56,9 @@
 						}
 					}, null, null]
        * @property axisConfigs
-       */axisConfigs:{type:Array,value:function value(){return[]}},filteredData:{type:Array,computed:"_filterDates(data, dateRange)"},selected:{type:Number,value:0}},attached:function attached(){this.rangeParse=d3.timeParse("%Y-%m-%dT%H:%M:%S.%LZ");this._notifyAttached()},_notifyAttached:function _notifyAttached(){/**
+       */axisConfigs:{type:Array,value:function value(){return[]}},selected:{type:Number,value:0},filteredData:{type:Array,value:function value(){return[]}}},attached:function attached(){this.rangeParse=d3.timeParse("%Y-%m-%dT%H:%M:%S.%LZ");this._notifyAttached()},_notifyAttached:function _notifyAttached(){/**
        * Event fired when the component is attached
        *
        * @event attached
-       */this.fire("attached",{})},_isMultipleData:function _isMultipleData(data){return data.length>1},_isSingleData:function _isSingleData(data){return data.length===1},_filterDates:function _filterDates(data,dateRange){var _this=this;if(!data||!data.length){return data}var d3=Px.d3;var from=dateRange?this.rangeParse(dateRange.from):null;var to=dateRange?this.rangeParse(dateRange.to):null;var filtered=[];this.chartTypes=this.chartTypes?this.chartTypes:[];this.axisConfigs=this.axisConfigs?this.axisConfigs:[];data.forEach(function(arr,idx){var _tmp=null;if(dateRange){_tmp=arr.filter(function(_obj){if(!_obj.date){return false}var date=_obj.date.getTime?_obj.date:_this.rangeParse(_obj.date);return date.getTime()>=from.getTime()&&date.getTime()<=to.getTime()})}else{_tmp=arr}_tmp.chartType=_this.chartTypes.length>idx?_this.chartTypes[idx]:"";_tmp.chartType=_tmp.chartType?_tmp.chartType:"";_tmp.axisConfigs=_this.axisConfigs.length>idx?_this.axisConfigs[idx]:"";_tmp.axisConfigs=_tmp.axisConfigs?_tmp.axisConfigs:"";filtered.push(_tmp)});return filtered}})})();
+       */this.fire("attached",{})},_isMultipleData:function _isMultipleData(data){return data.length>1},_isSingleData:function _isSingleData(data){return data.length===1},_setMetaData:function _setMetaData(_new,_old){var _this=this;if(!_new||!_new.length){return _new}this.chartTypes=this.chartTypes?this.chartTypes:[];this.axisConfigs=this.axisConfigs?this.axisConfigs:[];_new.forEach(function(arr,idx){arr.chartType=_this.chartTypes.length>idx?_this.chartTypes[idx]:"";arr.chartType=arr.chartType?arr.chartType:"";arr.axisConfigs=_this.axisConfigs.length>idx?_this.axisConfigs[idx]:"";arr.axisConfigs=arr.axisConfigs?arr.axisConfigs:""});this.filteredData=_new},_filterDates:function _filterDates(dateRange,oldDateRange,data){var _this2=this;data=data?data:this.data;if(!data){return}var from=dateRange?this.rangeParse(dateRange.from):null;var to=dateRange?this.rangeParse(dateRange.to):null;var filtered=[];this.chartTypes=this.chartTypes?this.chartTypes:[];this.axisConfigs=this.axisConfigs?this.axisConfigs:[];data.forEach(function(arr,idx){var _tmp=null;if(dateRange&&from&&to){_tmp=arr.filter(function(_obj){if(!_obj.date){return false}var date=_obj.date.getTime?_obj.date:_this2.rangeParse(_obj.date);return date.getTime()>=from.getTime()&&date.getTime()<=to.getTime()})}else{_tmp=arr}_tmp.chartType=_this2.chartTypes.length>idx?_this2.chartTypes[idx]:"";_tmp.chartType=_tmp.chartType?_tmp.chartType:"";_tmp.axisConfigs=_this2.axisConfigs.length>idx?_this2.axisConfigs[idx]:"";_tmp.axisConfigs=_tmp.axisConfigs?_tmp.axisConfigs:"";filtered.push(_tmp)});this.filteredData=filtered}})})();
 //# sourceMappingURL=og-production-chart.js.map

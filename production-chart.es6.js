@@ -248,16 +248,23 @@
 					this.actualDispVal = _data.actual;
 					this.targetDispVal = _data.target;
 					this.forecastDispVal = _data.forecast;
-					todayActual = this.actualDispVal;
-					todayTarget = this.targetDispVal;
-					todayForecast = this.forecastDispVal;
-					todayDesign = this.designDispVal;
+					todayActual = this.actualDispVal.toFixed(2);
+					todayTarget = this.targetDispVal.toFixed(2);
+					todayForecast = this.forecastDispVal.toFixed(2);
+					todayDesign = this.designDispVal.toFixed(2);
         }
         if(_data.actual > 0) {actualData.push(_data)}
         if(_data.target > 0) {targetData.push(_data)}
         if(_data.forecast > 0) {forecastData.push(_data)}
         if(_data.design > 0) {designData.push(_data)}
       });
+      if(!todayActual && !todayTarget && !todayForecast && !todayDesign) {
+        let lastObj = data[data.length-1]
+        todayActual = lastObj.actualDispVal ? lastObj.actualDispVal.toFixed(2) : "";
+        todayTarget = lastObj.targetDispVal ? lastObj.targetDispVal.toFixed(2) : "";
+        todayForecast = lastObj.forecastDispVal ? lastObj.targetDispVal.toFixed(2) : "";
+        todayDesign = lastObj.designDispVal ? lastObj.targetDispVal.toFixed(2) : "";
+      }
 
       if(!today) {
         today = new Date();
