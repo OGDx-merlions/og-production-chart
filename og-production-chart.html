@@ -47,7 +47,7 @@ REPLACE THIS TEXT WITH A COMPONENT DESCRIPTION
           <div class="chart-view">
             <production-chart data="{{item}}" date-range="{{dateRange}}"
               width="{{width}}" height="{{height}}"
-              legend-labels="{{legendLabels}}" 
+              legend-labels="{{legendLabels}}" date-picker="{{datePicker}}"
               chart-type="{{item.chartType}}" axis-config="{{item.axisConfigs}}"
               unit="{{unit}}">
             </production-chart>
@@ -60,7 +60,7 @@ REPLACE THIS TEXT WITH A COMPONENT DESCRIPTION
       <template is="dom-repeat" items="{{filteredData}}" index-as="idx">
         <div class="chart-view">
           <production-chart data="{{item}}" date-range="{{dateRange}}"
-            width="{{width}}" height="{{height}}"
+            width="{{width}}" height="{{height}}" date-picker="{{datePicker}}"
             chart-type="{{item.chartType}}" axis-config="{{item.axisConfigs}}"
             legend-labels="{{legendLabels}}" unit="{{unit}}">
           </production-chart>

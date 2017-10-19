@@ -112,6 +112,10 @@
 				value() {
 					return {}
 				}
+			},
+			datePicker: {
+				type: String,
+				value: ""
 			}
 		},
 
@@ -119,7 +123,12 @@
 			this.scopeSubtree(this.$.chart, true);
 		},
 
-		attached() {
+		isDatePickerBased(datePicker) {
+			return datePicker ? true : false;
+		},
+
+		isDateRangeBased(datePicker) {
+			return datePicker ? false : true;
 		},
 
 		draw() {

@@ -7,6 +7,7 @@
 
 <link rel="import" href="../px-d3-imports/px-d3-imports.html"/>
 <link rel="import" href="../px-rangepicker/px-rangepicker.html"/>
+<link rel="import" href="../px-datetime-picker/px-datetime-picker.html"/>
 
 <script src="d3-tip.js"></script>
 
@@ -18,14 +19,25 @@
     <div class="flex flex--col chart-container">
       <div class="flex flex--row">
         <div class="u-1/1 u-1/4-desk">
-          <px-rangepicker
-            hide-time
-            show-buttons
-            date-format="YYYY/MM/DD"
-            time-format="HH:mm:ss"
-            time-zone="UTC"
-            range="{{dateRange}}">
-          </px-rangepicker>
+          <template is="dom-if" if="{{isDatePickerBased(datePicker)}}">
+            <px-datetime-picker
+              date-format="YYYY/MM/DD"
+              time-format="HH:mm:ss"
+              time-zone="UTC"
+              hide-time
+              date-time="{{datePicker}}">
+            </px-datetime-picker>
+          </template>
+          <template is="dom-if" if="{{isDateRangeBased(datePicker)}}">
+            <px-rangepicker
+              hide-time
+              show-buttons
+              date-format="YYYY/MM/DD"
+              time-format="HH:mm:ss"
+              time-zone="UTC"
+              range="{{dateRange}}">
+            </px-rangepicker>
+          </template>
         </div>
         <div class="flex flex--right u-1/1 u-3/4-desk legend">
           <div class="flex flex--row">

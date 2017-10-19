@@ -73,6 +73,15 @@
 					return [];
 				}
       },
+      /**
+			* The Date to show in Datepicker. If provided, dateRange will be ignored
+			Eg: "2017-04-03T03:37:25.000Z"
+      *
+      * @property datePicker
+      */
+      datePicker: {
+        type: String
+      },
 			/**
 			* The Date range to filter the data. Format as specified in the px-rangepicker
 			Eg:
@@ -152,7 +161,7 @@
       return data.length === 1;
     },
     _filterDates(data, dateRange) {
-      if(!data || !data.length || !dateRange) {
+      if(!data || !data.length || !dateRange || this.datePicker) {
         return data;
       }
       const d3 = Px.d3;

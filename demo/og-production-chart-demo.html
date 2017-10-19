@@ -40,6 +40,7 @@
           data="{{props.data.value}}" date-range="{{props.dateRange.value}}"
           width="{{props.width.value}}" height="{{props.height.value}}"
           legend-labels="{{props.legendLabels.value}}" labels="{{props.labels.value}}"
+          date-picker="{{props.datePicker.value}}"
           chart-types="{{props.chartTypes.value}}" axis-configs="{{props.axisConfigs.value}}"
           unit="{{props.unit.value}}">
         </og-production-chart>
@@ -231,6 +232,11 @@
         type: Object,
         defaultValue: {"from":"2016-04-03T03:37:25.000Z","to":"2018-05-26T03:37:25.000Z"},
         inputType: 'code:JSON'
+      },
+      datePicker: {
+        type: String,
+        //defaultValue: "2016-04-03T03:37:25.000Z",
+        inputType: 'text'
       },
       chartTypes: {
         type: Array,
