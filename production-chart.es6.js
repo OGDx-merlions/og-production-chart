@@ -244,10 +244,10 @@
       data.forEach((_data) => {
         if(_data.actual == _data.forecast) {
 					today = _data.date;
-					this.designDispVal = _data.design.toFixed(2);
-					this.actualDispVal = _data.actual.toFixed(2);
-					this.targetDispVal = _data.target.toFixed(2);
-					this.forecastDispVal = _data.forecast.toFixed(2);
+					this.designDispVal = _data.design.toFixed(0);
+					this.actualDispVal = _data.actual.toFixed(0);
+					this.targetDispVal = _data.target.toFixed(0);
+					this.forecastDispVal = _data.forecast.toFixed(0);
 					todayActual = this.actualDispVal;
 					todayTarget = this.targetDispVal;
 					todayForecast = this.forecastDispVal;
@@ -260,10 +260,10 @@
       });
       if(!todayActual && !todayTarget && !todayForecast && !todayDesign) {
         let lastObj = data[data.length-1]
-        todayActual = lastObj.actualDispVal ? lastObj.actualDispVal.toFixed(2) : "";
-        todayTarget = lastObj.targetDispVal ? lastObj.targetDispVal.toFixed(2) : "";
-        todayForecast = lastObj.forecastDispVal ? lastObj.targetDispVal.toFixed(2) : "";
-        todayDesign = lastObj.designDispVal ? lastObj.targetDispVal.toFixed(2) : "";
+        todayActual = lastObj.actualDispVal ? lastObj.actualDispVal.toFixed(0) : "";
+        todayTarget = lastObj.targetDispVal ? lastObj.targetDispVal.toFixed(0) : "";
+        todayForecast = lastObj.forecastDispVal ? lastObj.targetDispVal.toFixed(0) : "";
+        todayDesign = lastObj.designDispVal ? lastObj.targetDispVal.toFixed(0) : "";
       }
 
       if(!today) {
@@ -276,10 +276,10 @@
 			this.set("hideDesignCapacityLegend", designData.length === 0);
 
 			let updateLegendVal = (d) => {
-				this.actualDispVal = d.actual.toFixed(2);
-				this.targetDispVal = d.target.toFixed(2);
-				this.forecastDispVal = d.forecast.toFixed(2);
-				this.designDispVal = d.design.toFixed(2);
+				this.actualDispVal = d.actual.toFixed(0);
+				this.targetDispVal = d.target.toFixed(0);
+				this.forecastDispVal = d.forecast.toFixed(0);
+				this.designDispVal = d.design.toFixed(0);
 			};
 
 			let revertLegendValToToday = () => {
