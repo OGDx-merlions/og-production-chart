@@ -161,24 +161,29 @@
       return data.length === 1;
     },
     _filterDates(data, dateRange) {
-      if(!data || !data.length || !dateRange || this.datePicker) {
+      if(!data || !data.length) {
         return data;
       }
       const d3 = Px.d3;
-      const from = this.rangeParse(dateRange.from);
-      const to = this.rangeParse(dateRange.to);
+      const from = dateRange ? this.rangeParse(dateRange.from) : null;
+      const to = dateRange ? this.rangeParse(dateRange.to) : null;
       let filtered = [];
       this.chartTypes = this.chartTypes ? this.chartTypes : [];
       this.axisConfigs = this.axisConfigs ? this.axisConfigs : [];
       data.forEach((arr, idx)=> {
-        let _tmp = arr.filter((_obj) => {
-          if(!_obj.date) {
-            return false;
-          }
-          const date = _obj.date.getTime ? _obj.date : this.rangeParse(_obj.date);
-          return date.getTime() >= from.getTime() 
-            && date.getTime() <= to.getTime();
-        });
+        let _tmp = null;
+        if(dateRange) {
+          _tmp = arr.filter((_obj) => {
+            if(!_obj.date) {
+              return false;
+            }
+            const date = _obj.date.getTime ? _obj.date : this.rangeParse(_obj.date);
+            return date.getTime() >= from.getTime()
+              && date.getTime() <= to.getTime();
+          });
+        } else {
+          _tmp = arr;
+        }
         _tmp.chartType = this.chartTypes.length > idx ? this.chartTypes[idx] : "";
         _tmp.chartType = _tmp.chartType ? _tmp.chartType : "";
 

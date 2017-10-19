@@ -131,6 +131,10 @@
 			return datePicker ? false : true;
 		},
 
+    attached() {
+      console.log(this.axisConfig)
+    },
+
 		draw() {
 			let d3 = Px.d3;
 			let me = this;
@@ -141,7 +145,7 @@
 					height = this.height - margin.top - margin.bottom;
 
 			this.axisConfig = this.axisConfig ? this.axisConfig : {};
-			this.axisConfig.x = this.axisConfig.x ? this.axisConfig.x : {}; 
+			this.axisConfig.x = this.axisConfig.x ? this.axisConfig.x : {};
 			this.axisConfig.y = this.axisConfig.y ? this.axisConfig.y : {};
 			this.chartType = this.chartType || "line";
 
@@ -156,7 +160,7 @@
 			defaultDotRadius = +defaultDotRadius
 
 			// parse the date / time
-			let inTimeFormat = this.axisConfig.x.inputTimeFormat ? 
+			let inTimeFormat = this.axisConfig.x.inputTimeFormat ?
 				this.axisConfig.x.inputTimeFormat : "%Y-%m-%dT%H:%M:%S.%LZ";
 			let parseTime = d3.timeParse(inTimeFormat);
 
@@ -170,7 +174,7 @@
 			let actualArea = d3.area()
     			.x(function(d) { return x(d.date); })
 					.y(function(d) { return y(d[me.axisKeys[0]]); });
-					
+
 			let actualLine = d3.line()
     			.x(function(d) { return x(d.date); })
     			.y(function(d) { return y(d[me.axisKeys[0]]); });
@@ -186,11 +190,11 @@
 			let area = d3.area()
 					.x(function(d) { return x(d.date); })
 					.y1(function(d) { return y(d[me.axisKeys[3]]); });
-			
+
 			let designLine = d3.line()
 					.x(function(d) { return x(d.date); })
 					.y(function(d) { return y(d[me.axisKeys[3]]); });
-					
+
 			let svg = d3.select(this.$.chart).append("svg")
 					// .attr("width", width + margin.left + margin.right)
 					// .attr("height", height + margin.top + margin.bottom)
@@ -199,7 +203,7 @@
 				.append("g")
 					.attr("transform",
 								"translate(" + margin.left + "," + margin.top + ")");
-			
+
 			data.forEach(function(d) {
 				d.date = d.date.getTime ? d.date : parseTime(d.date);
 				me.axisKeys.forEach((key)=>{
@@ -208,7 +212,7 @@
 			});
 
 			let today;
-			
+
 			let yMax = d3.max(data, function(d) {
 				return Math.max(d.actual, d.target, d.forecast, d.design); });
 			let yMin = this.axisConfig.y.start;
@@ -221,7 +225,7 @@
 
 			x.domain(d3.extent(data, function(d) { return d.date; })).nice(d3.timeDay);
 			y.domain([yMin, yMax]).nice(6);
-			
+
 			let yScaledMin = y(y.domain()[0]);
 
 			actualArea.y1(yScaledMin);
@@ -264,7 +268,7 @@
       this.set("hideTargetLegend", targetData.length === 0);
       this.set("hideForecastLegend", forecastData.length === 0);
 			this.set("hideDesignCapacityLegend", designData.length === 0);
-			
+
 			let updateLegendVal = (d) => {
 				this.actualDispVal = d.actual.toFixed(2);
 				this.targetDispVal = d.target.toFixed(2);
@@ -295,7 +299,7 @@
 						.attr("d", area)
 						.style("pointer-events", "none");
 				}
-				
+
 				svg.selectAll(".dot")
 						.data(designData)
 						.enter()
@@ -359,7 +363,7 @@
 
       if(!this.hideForecast && forecastData.length > 0) {
 				if(this.chartType === "line") {
-					
+
 				} else {
 					let areaAboveForecastLine = d3.area()
 						.x(forecastLine.x())
@@ -378,7 +382,7 @@
 						.y0(actualArea.y())
 						.y1(forecastLine.y());
 					let defs = svg.append('defs');
-	
+
 					defs.append('clipPath')
 						.attr('id', 'clip-forecast')
 						.append('path')
@@ -386,7 +390,7 @@
 						.attr("class", "forecast-area forecast-positive")
 						.attr('d', areaAboveForecastLine)
 						.style("pointer-events", "none");
-	
+
 					defs.append('clipPath')
 						.attr('id', 'clip-actual')
 						.append('path')
@@ -394,14 +398,14 @@
 						.attr("class", "forecast-area forecast-negative")
 						.attr('d', areaAboveActual)
 						.style("pointer-events", "none");
-	
+
 					svg.append('path')
 						.datum(forecastData)
 						.attr('d', areaBelowForecastLine)
 						.attr("class", "forecast-area forecast-negative")
 						.attr('clip-path', 'url(#clip-actual)')
 						.style("pointer-events", "none");
-	
+
 					svg.append('path')
 						.datum(forecastData)
 						.attr('d', areaBelowActual)
@@ -487,9 +491,9 @@
 					.attr("transform", "translate(0," + height + ")")
 					.attr("class", "x-axis")
 					.call(_xAxis);
-					
+
 			if(!this.axisConfig.y.hideGrid) {
-				svg.append("g")			
+				svg.append("g")
 					.attr("class", "y-grid")
 					.call(d3.axisLeft(y)
 							.ticks(5)
@@ -518,13 +522,13 @@
         .attr("x", (x(x.domain()[0]) + x(today))/2)
         .attr("y", -9)
 				.text("Historical");
-				
+
 			svg.append("text")
         .attr("class", "today-text")
         .attr("x", x(today)-10)
         .attr("y", -9)
 				.text("Today");
-				
+
 			if(!this.hideForecast && forecastData.length > 0) {
 				svg.append("text")
 					.attr("class", "today-text")
