@@ -132,7 +132,6 @@
 		},
 
     attached() {
-      console.log(this.axisConfig)
     },
 
 		draw() {
