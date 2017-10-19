@@ -244,14 +244,14 @@
       data.forEach((_data) => {
         if(_data.actual == _data.forecast) {
 					today = _data.date;
-					this.designDispVal = _data.design;
-					this.actualDispVal = _data.actual;
-					this.targetDispVal = _data.target;
-					this.forecastDispVal = _data.forecast;
-					todayActual = this.actualDispVal.toFixed(2);
-					todayTarget = this.targetDispVal.toFixed(2);
-					todayForecast = this.forecastDispVal.toFixed(2);
-					todayDesign = this.designDispVal.toFixed(2);
+					this.designDispVal = _data.design.toFixed(2);
+					this.actualDispVal = _data.actual.toFixed(2);
+					this.targetDispVal = _data.target.toFixed(2);
+					this.forecastDispVal = _data.forecast.toFixed(2);
+					todayActual = this.actualDispVal;
+					todayTarget = this.targetDispVal;
+					todayForecast = this.forecastDispVal;
+					todayDesign = this.designDispVal;
         }
         if(_data.actual > 0) {actualData.push(_data)}
         if(_data.target > 0) {targetData.push(_data)}
