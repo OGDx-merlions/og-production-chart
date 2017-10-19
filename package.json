@@ -2,7 +2,7 @@
     "name": "og-production-chart",
     "author": "General Electric",
     "description": "A Px component",
-    "version": "1.5.2",
+    "version": "1.5.3",
     "extName": null,
     "repository": {
         "type": "git",
