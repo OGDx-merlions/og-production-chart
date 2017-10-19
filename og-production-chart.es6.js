@@ -183,6 +183,8 @@
       if(!data) {
         return;
       }
+      const d3 = Px.d3;
+      this.rangeParse = d3.timeParse("%Y-%m-%dT%H:%M:%S.%LZ");
       const from = dateRange ? this.rangeParse(dateRange.from) : null;
       const to = dateRange ? this.rangeParse(dateRange.to) : null;
       let filtered = [];
