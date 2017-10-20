@@ -57,7 +57,7 @@
 			legendLabels: {
 				type: Array,
         value() {
-					return ["Actual", "Target", "Forecast", "Design Capacity"];
+					return ["Actual", "Target", "Forecast", "Design"];
 				}
       },
 			/**

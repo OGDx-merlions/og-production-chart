@@ -425,7 +425,7 @@
 				svg.append("path")
 						.data([targetData])
 						.attr("class", "target-line")
-						.style("stroke", "red")
+						.style("stroke", "#f05c56")
 						.attr("d", targetChart)
 						.style("pointer-events", "none");
 
@@ -436,7 +436,7 @@
 						.attr("r", defaultDotRadius)
 						.attr("cx", (d, i) => x(d.date))
 						.attr("cy", (d) => y(d.target))
-						.attr("fill", "red")
+						.attr("fill", "#f05c56")
 						.attr("class", "target-circle")
 						.on('mouseover', function(d, i) {
 							d3.select(this)
