@@ -144,16 +144,16 @@ $axis-color: #95a5ae;
     }
   }
   .actual {
-    border-left: 0.3rem solid #5fbcf8;
+    border-left: 0.3rem solid;
   }
   .target {
-    border-left: 0.3rem solid #f05c56;
+    border-left: 0.3rem solid;
   }
   .forecast {
-    border-left: 0.3rem solid rgba(164, 117, 237, 0.8);
+    border-left: 0.3rem solid;
   }
   .design {
-    border-left: 0.3rem solid #eddd46;
+    border-left: 0.3rem solid;
   }
 }
 

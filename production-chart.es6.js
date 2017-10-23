@@ -35,7 +35,21 @@
 							"tickFormat": ".3s",
 							"hideGrid": true,
 							"dotRadius": 0,
-							"start": 0
+							"start": 0,
+							"series": {
+								"design": {
+									"color": "rgba(237, 221, 70, 0.7)"
+								},
+								"actual": {
+									"color": "#5fbcf8"
+								},
+								"target": {
+									"color": "#f05c56"
+								},
+								"forecast": {
+									"color": "rgba(164, 117, 237, 0.8)"
+								}
+							}
 						}
 					};
 				}
@@ -132,7 +146,7 @@
 		},
 
     attached() {
-    },
+		},
 
 		draw() {
 			let d3 = Px.d3;
@@ -143,9 +157,24 @@
 					width = this.width - margin.left - margin.right,
 					height = this.height - margin.top - margin.bottom;
 
-			this.axisConfig = this.axisConfig ? this.axisConfig : {};
-			this.axisConfig.x = this.axisConfig.x ? this.axisConfig.x : {};
-			this.axisConfig.y = this.axisConfig.y ? this.axisConfig.y : {};
+			this.axisConfig = this.axisConfig || {};
+			this.axisConfig.x = this.axisConfig.x || {};
+			this.axisConfig.y = this.axisConfig.y || {};
+			this.axisConfig.y.series = this.axisConfig.y.series || {};
+			this.axisConfig.y.series.design = this.axisConfig.y.series.design || {};
+			this.axisConfig.y.series.design.color = this.axisConfig.y.series.design.color || "rgba(237, 221, 70, 0.7)";
+			this.axisConfig.y.series.actual = this.axisConfig.y.series.actual || {};
+			this.axisConfig.y.series.actual.color = this.axisConfig.y.series.actual.color || "#5fbcf8";
+			this.axisConfig.y.series.target = this.axisConfig.y.series.target || {};
+			this.axisConfig.y.series.target.color = this.axisConfig.y.series.target.color || "#f05c56";
+			this.axisConfig.y.series.forecast = this.axisConfig.y.series.forecast || {};
+			this.axisConfig.y.series.forecast.color = this.axisConfig.y.series.forecast.color || "rgba(164, 117, 237, 0.8)";
+
+			this.actualCol = this.axisConfig.y.series.actual.color;
+			this.targetCol = this.axisConfig.y.series.target.color;
+			this.forecastCol = this.axisConfig.y.series.forecast.color;
+			this.designCol = this.axisConfig.y.series.design.color;
+
 			this.chartType = this.chartType || "line";
 
 			let defaultDotRadius = this.axisConfig.y.dotRadius;
@@ -294,14 +323,14 @@
 					svg.append("path")
 						.data([designData])
 						.attr("class", "design-line")
-						.style("stroke", "#eddd46")
+						.style("stroke", this.axisConfig.y.series.design.color)
 						.style("fill", "transparent")
 						.attr("d", designLine)
 						.style("pointer-events", "none");
 				} else {
 					svg.append("path")
 						.datum(designData)
-						.attr("fill", "#eddd46")
+						.attr("fill", this.axisConfig.y.series.design.color)
 						.attr("d", area)
 						.style("pointer-events", "none");
 				}
@@ -328,7 +357,7 @@
 					svg.append("path")
 						.data([actualData])
 						.attr("class", "actual-area actual-line")
-						.style("stroke", "#5fbcf8")
+						.style("stroke", this.axisConfig.y.series.actual.color)
 						.style("fill", "transparent")
 						.attr("d", actualLine)
 						.style("pointer-events", "none");
@@ -336,7 +365,7 @@
 					svg.append("path")
 						.datum(actualData)
 						.attr("class", "actual-area")
-						.style("fill", "#5fbcf8")
+						.style("fill", this.axisConfig.y.series.actual.color)
 						.attr("d", actualArea)
 						.style("pointer-events", "none");
 				}
@@ -348,7 +377,7 @@
 						.attr("r", defaultDotRadius)
 						.attr("cx", (d, i) => x(d.date))
 						.attr("cy", (d) => y(d.actual))
-						.attr("fill", "#5fbcf8")
+						.attr("fill", this.axisConfig.y.series.actual.color)
 						.attr("class", "actual-circle")
 						.on('mouseover', function(d, i) {
 							d3.select(this)
@@ -425,7 +454,7 @@
 				svg.append("path")
 						.data([targetData])
 						.attr("class", "target-line")
-						.style("stroke", "#f05c56")
+						.style("stroke", this.axisConfig.y.series.target.color)
 						.attr("d", targetChart)
 						.style("pointer-events", "none");
 
@@ -436,7 +465,7 @@
 						.attr("r", defaultDotRadius)
 						.attr("cx", (d, i) => x(d.date))
 						.attr("cy", (d) => y(d.target))
-						.attr("fill", "#f05c56")
+						.attr("fill", this.axisConfig.y.series.target.color)
 						.attr("class", "target-circle")
 						.on('mouseover', function(d, i) {
 							d3.select(this)
@@ -468,7 +497,7 @@
 						.attr("r", defaultDotRadius)
 						.attr("cx", (d, i) => x(d.date))
 						.attr("cy", (d) => y(d.forecast))
-						.attr("fill", "rgba(164, 117, 237, 0.8)")
+						.attr("fill", this.axisConfig.y.series.forecast.color)
 						.attr("class", "forecast-circle")
 						.on('mouseover', function(d, i) {
 							d3.select(this)

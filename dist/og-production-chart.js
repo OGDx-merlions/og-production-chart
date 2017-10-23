@@ -19,7 +19,7 @@
       *
       * @property legendLabels
       ["Actual", "Target", "Forecast", "Design Capacity"]
-      */legendLabels:{type:Array,value:function value(){return["Actual","Target","Forecast","Design Capacity"]}},/**
+      */legendLabels:{type:Array,value:function value(){return["Actual","Target","Forecast","Design"]}},/**
 			* This property is an Array of tab data.
 			Member of each tab data looks like this
 			`{"date":"2017-05-01T16:00:00.000Z","actual":"11960","target":"12950","design":"13960"}`

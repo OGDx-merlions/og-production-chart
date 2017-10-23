@@ -41,19 +41,23 @@
         </div>
         <div class="flex flex--right u-1/1 u-3/4-desk legend">
           <div class="flex flex--row">
-            <div class="flex flex__item flex--col u-pr++ zeta legend-unit actual" id="legend-actual" hidden$="{{_compute(hideActualLegend)}}">
+            <div class="flex flex__item flex--col u-pr++ zeta legend-unit actual" 
+              id="legend-actual" hidden$="{{_compute(hideActualLegend)}}" style$="border-color:{{actualCol}}">
               <span class="flex flex--top muted">{{actualLegendLabel}}</span>
               <span class="flex flex--top">{{actualDispVal}} {{unit}}</span>
             </div>
-            <div class="flex flex__item flex--col u-pr++ zeta legend-unit target" id="legend-target" hidden$="{{_compute(hideTargetLegend)}}">
+            <div class="flex flex__item flex--col u-pr++ zeta legend-unit target" 
+              id="legend-target" hidden$="{{_compute(hideTargetLegend)}}" style$="border-color:{{targetCol}}">
               <span class="flex flex--top muted">{{targetLegendLabel}}</span>
               <span class="flex flex--top">{{targetDispVal}} {{unit}}</span>
             </div>
-            <div class="flex flex__item flex--col u-pr++ zeta legend-unit forecast" id="legend-forecast" hidden$="{{_compute(hideForecastLegend)}}">
+            <div class="flex flex__item flex--col u-pr++ zeta legend-unit forecast" 
+              id="legend-forecast" hidden$="{{_compute(hideForecastLegend)}}" style$="border-color:{{forecastCol}}">
               <span class="flex flex--top muted">{{forecastLegendLabel}}</span>
               <span class="flex flex--top">{{forecastDispVal}} {{unit}}</span>
             </div>
-            <div class="flex flex__item flex--col u-pr++ zeta legend-unit design" id="legend-design" hidden$="{{_compute(hideDesignCapacityLegend)}}">
+            <div class="flex flex__item flex--col u-pr++ zeta legend-unit design" 
+              id="legend-design" hidden$="{{_compute(hideDesignCapacityLegend)}}" style$="border-color:{{designCol}}">
               <span class="flex flex--top muted">{{designCapacityLegendLabel}}</span>
               <span class="flex flex--top">{{designDispVal}} {{unit}}</span>
             </div>
