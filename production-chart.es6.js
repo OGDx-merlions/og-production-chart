@@ -30,6 +30,9 @@
 							"tickFormat": "",
 							"inputTimeFormat": "%Y-%m-%dT%H:%M:%S.%LZ",
 							"tickTimeFormat": "%d %b %y",
+              "todayLabel": "Today",
+              "historicalLabel": "Historical",
+              "forecastLabel": "Forecast"
 						},
 						"y": {
 							"tickFormat": ".3s",
@@ -38,7 +41,8 @@
 							"start": 0,
 							"series": {
 								"design": {
-									"color": "rgba(237, 221, 70, 0.7)"
+									"color": "rgba(237, 221, 70, 0.7)",
+                  "dashArray": "2,2"
 								},
 								"actual": {
 									"color": "#5fbcf8"
@@ -324,6 +328,7 @@
 						.data([designData])
 						.attr("class", "design-line")
 						.style("stroke", this.axisConfig.y.series.design.color)
+            .style("stroke-dasharray", this.axisConfig.y.series.design.dashArray || "0,0")
 						.style("fill", "transparent")
 						.attr("d", designLine)
 						.style("pointer-events", "none");
@@ -358,6 +363,7 @@
 						.data([actualData])
 						.attr("class", "actual-area actual-line")
 						.style("stroke", this.axisConfig.y.series.actual.color)
+            .style("stroke-dasharray", this.axisConfig.y.series.actual.dashArray || "0,0")
 						.style("fill", "transparent")
 						.attr("d", actualLine)
 						.style("pointer-events", "none");
@@ -455,6 +461,7 @@
 						.data([targetData])
 						.attr("class", "target-line")
 						.style("stroke", this.axisConfig.y.series.target.color)
+            .style("stroke-dasharray", this.axisConfig.y.series.target.dashArray || "0,0")
 						.attr("d", targetChart)
 						.style("pointer-events", "none");
 
@@ -488,6 +495,7 @@
         svg.append("path")
 					.datum(forecastData)
 					.attr("class", "forecast-line")
+          .style("stroke-dasharray", this.axisConfig.y.series.forecast.dashArray || "0,0")
 					.attr("d", forecastLine);
 
         svg.selectAll(".dot")
@@ -556,20 +564,20 @@
         .attr("class", "today-text")
         .attr("x", (x(x.domain()[0]) + x(today))/2)
         .attr("y", -9)
-				.text("Historical");
+				.text(this.axisConfig.x.historicalLabel || "Historical");
 
 			svg.append("text")
         .attr("class", "today-text")
         .attr("x", x(today)-10)
         .attr("y", -9)
-				.text("Today");
+				.text(this.axisConfig.x.todayLabel || "Today");
 
 			if(!this.hideForecast && forecastData.length > 0) {
 				svg.append("text")
 					.attr("class", "today-text")
 					.attr("x", (x(x.domain()[1]) * 0.8))
 					.attr("y", -9)
-					.text("Forecast");
+					.text(this.axisConfig.x.forecastLabel || "Forecast");
 			}
 
 			svg.append("text")

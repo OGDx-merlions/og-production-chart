@@ -250,12 +250,28 @@
 							"tickFormat": "",
 							"inputTimeFormat": "%Y-%m-%dT%H:%M:%S.%LZ",
 							"tickTimeFormat": "%d %b %y",
+              "forecastLabel": "Forecast after applying Scenario 3"
 						},
 						"y": {
 							"tickFormat": ".3s",
 							"hideGrid": true,
 							"dotRadius": 0,
-							"start": 660
+							"start": 660,
+              "series": {
+								"design": {
+									"color": "rgba(237, 221, 70, 0.7)",
+                  "dashArray": "5,5"
+								},
+								"actual": {
+									"color": "#5fbcf8"
+								},
+								"target": {
+									"color": "#f05c56"
+								},
+								"forecast": {
+									"color": "rgba(164, 117, 237, 0.8)"
+								}
+							}
 						}
 					}, null, null],
         inputType: 'code:JSON'
