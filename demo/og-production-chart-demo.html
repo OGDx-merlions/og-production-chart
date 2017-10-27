@@ -42,7 +42,7 @@
           legend-labels="{{props.legendLabels.value}}" labels="{{props.labels.value}}"
           date-picker="{{props.datePicker.value}}"
           chart-types="{{props.chartTypes.value}}" axis-configs="{{props.axisConfigs.value}}"
-          unit="{{props.unit.value}}">
+          unit="{{props.unit.value}}" margin="{{props.margin.value}}">
         </og-production-chart>
       </px-demo-component>
       <!-- END Component ------------------------------------------------------>
@@ -243,6 +243,11 @@
         defaultValue: ["line", "area", "line"],
         inputType: 'code:JSON'
       },
+			margin: {
+				type: Object,
+				defaultValue: {top: 20, right: 20, bottom: 30, left: 50},
+        inputType: 'code:JSON'
+			},
       axisConfigs: {
         type: Array,
         defaultValue: [{

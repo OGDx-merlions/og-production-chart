@@ -56,7 +56,13 @@
 						}
 					}, null, null]
        * @property axisConfigs
-       */axisConfigs:{type:Array,value:function value(){return[]}},selected:{type:Number,value:0},filteredData:{type:Array,value:function value(){return[]}}},attached:function attached(){this.rangeParse=d3.timeParse("%Y-%m-%dT%H:%M:%S.%LZ");this._notifyAttached()},_notifyAttached:function _notifyAttached(){/**
+       */axisConfigs:{type:Array,value:function value(){return[]}},/**
+			* Margins for the charts
+			Eg:
+			`{top: 20, right: 20, bottom: 30, left: 50}`
+      *
+      * @property margins
+      */margin:{type:Object,value:function value(){return{}}},selected:{type:Number,value:0},filteredData:{type:Array,value:function value(){return[]}}},attached:function attached(){this.rangeParse=d3.timeParse("%Y-%m-%dT%H:%M:%S.%LZ");this._notifyAttached()},_notifyAttached:function _notifyAttached(){/**
        * Event fired when the component is attached
        *
        * @event attached

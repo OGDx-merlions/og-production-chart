@@ -130,7 +130,20 @@
 				value: () => {
 					return [];
 				}
-			},
+      },
+      /**
+			* Margins for the charts
+			Eg:
+			`{top: 20, right: 20, bottom: 30, left: 50}`
+      *
+      * @property margins
+      */
+      margin: {
+        type: Object,
+        value() {
+          return {};
+        }
+      },
 			selected: {
 				type: Number,
 				value: 0
