@@ -597,6 +597,9 @@
 			let x= this.x, y=this.y, me = this, d3 = Px.d3;
 			// Add the X Axis
 			let _xAxis = d3.axisBottom(x);
+			if(this.axisConfig.x.ticks) {
+				_xAxis.ticks(this.axisConfig.x.ticks);
+			}
 			if(this.axisConfig.x.tickTimeFormat) {
 				if(typeof this.axisConfig.x.tickTimeFormat === "function") {
 					_xAxis.tickFormat(this.axisConfig.x.tickTimeFormat);
@@ -611,7 +614,10 @@
 					.call(_xAxis);
 
 			// Add the Y Axis
-			let _yAxis = d3.axisLeft(y).ticks(6);
+			let _yAxis = d3.axisLeft(y);
+			if(this.axisConfig.y.ticks) {
+				_yAxis.ticks(this.axisConfig.y.ticks);
+			}
 			if(this.axisConfig.y.tickFormat) {
 				_yAxis.tickFormat(d3.format(this.axisConfig.y.tickFormat));
 			}
@@ -621,8 +627,8 @@
 
 			this.svg.append("text")
 					.attr("transform", "rotate(-90)")
-					.attr("y", 0 - this.margin.left)
-					.attr("x",0 - (this.adjustedHeight / 2))
+					.attr("y", -4 - this.margin.left)
+					.attr("x", 0 - (this.adjustedHeight / 2))
 					.attr("dy", "1em")
 					.attr("class", "yaxis-label")
 					.text(this.unit);
@@ -740,9 +746,8 @@
 					this.revertLegendValToToday();
 				})
 				.on('mousemove', () => {
-					let m = d3.select('rect.overlay').node().getScreenCTM();
-					let mouse = d3.select('svg').node().createSVGPoint(); 
-					
+					let m = d3.select(this.$.chart).select('rect.overlay').node().getScreenCTM();
+					let mouse = d3.select(this.$.chart).select('#chart svg').node().createSVGPoint(); 
 					mouse.x = d3.event.clientX;
 					mouse.y = d3.event.clientY;
 					mouse = mouse.matrixTransform(m.inverse());
