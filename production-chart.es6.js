@@ -764,7 +764,7 @@
 						.attr('x1', x(x.domain()[0])).attr('y1', yVal)
 						.attr('x2', x(x.domain()[1])).attr('y2', yVal);
 					
-					this.toolTip.offset([this.height+(this.margin.bottom*3), xVal - (this.adjustedWidth/2.2)]);
+					this.toolTip.offset([mouse.y, xVal - (this.adjustedWidth/2.2)]);
 
 					this._toggleDots(d, me);
 					
