@@ -22,9 +22,49 @@
 				type: String,
 				value: "line"
 			},
+			tooltipConfig: {
+				type: Object,
+				notify: true,
+				value() {
+					return {
+						"lineColor": "#95a5ae",
+						"dashArray": "0,0",
+						"opacity": 0.5,
+						"x": {
+							"label": "Date",
+							"suffix": "",
+							"prefix": "",
+							"timeFormat": "%d %b %y"
+						},
+						"y": {
+							"design": {
+								"label": "Design",
+								"suffix": "",
+								"prefix": ""
+							},
+							"actual": {
+								"label": "Actual",
+								"suffix": "",
+								"prefix": ""
+							},
+							"target": {
+								"label": "Target",
+								"suffix": "",
+								"prefix": ""
+							},
+							"forecast": {
+								"label": "Forecast",
+								"suffix": "",
+								"prefix": ""
+							}
+						}
+					};
+				}
+			},
 			axisConfig: {
 				type: Object,
-				value: () => {
+				notify: true,
+				value() {
 					return {
 						"x": {
 							"tickFormat": "",
@@ -32,13 +72,14 @@
 							"tickTimeFormat": "%d %b %y",
               "todayLabel": "Today",
               "historicalLabel": "Historical",
-              "forecastLabel": "Forecast"
+							"forecastLabel": "Forecast",
+							"gridColor": "steelblue"
 						},
 						"y": {
 							"tickFormat": ".3s",
-							"hideGrid": true,
 							"dotRadius": 0,
 							"start": 0,
+							"gridColor": "steelblue",
 							"series": {
 								"design": {
 									"color": "rgba(237, 221, 70, 0.7)",
@@ -111,6 +152,7 @@
 			},
 			axisKeys: {
 				type: Array,
+				notify: true,
 				value() {
 					return [
 						"actual", "target", "forecast", "design"
@@ -137,6 +179,7 @@
 			},
 			margin: {
 				type: Object,
+				notify: true,
 				value() {
 					return {top: 20, right: 20, bottom: 30, left: 50};
 				}
@@ -145,6 +188,8 @@
 
 		ready() {
 			this.scopeSubtree(this.$.chart, true);
+			window.addEventListener("resize", this._resize.bind(this));
+			this._setDefaults();
 		},
 
 		draw() {
@@ -161,7 +206,7 @@
 			this._drawAxes(data);
 			this._drawTimelineSeparators(data);
 			this._drawGridLines(data);
-
+			this._drawTooltip(data, this);
       this.fire("chart-drawn", {});
 		},
 		_toggleActual() {
@@ -216,6 +261,7 @@
 		_redraw(newData, oldData) {
 			Polymer.dom(this.$.chart).node.innerHTML = "";
 			this.draw();
+			this._resize();
 		},
 		_setLegendLabels(labels) {
 			if(labels && labels.length) {
@@ -237,15 +283,25 @@
 			return datePicker ? false : true;
 		},
 
+		_resize() {
+			const size = this.desk ? "2vw" : "11px";
+			Px.d3.selectAll('text')
+				.style('font-size', size);
+			this.customStyle['--font-size'] = size;
+			this.updateStyles();
+		},
+
 		_setDefaults() {
 			// set the dimensions and margins of the graph
 			this.margin = this.margin || {top: 20, right: 20, bottom: 30, left: 50},
 			this.adjustedWidth = this.width - this.margin.left - this.margin.right,
 			this.adjustedHeight = this.height - this.margin.top - this.margin.bottom;
-
+			
 			this.axisConfig = this.axisConfig || {};
 			this.axisConfig.x = this.axisConfig.x || {};
 			this.axisConfig.y = this.axisConfig.y || {};
+			this.axisConfig.x.axisColor = this.axisConfig.x.axisColor || '#95a5ae';
+			this.axisConfig.y.axisColor = this.axisConfig.y.axisColor || '#95a5ae';
 			this.axisConfig.y.series = this.axisConfig.y.series || {};
 			this.axisConfig.y.series.design = this.axisConfig.y.series.design || {};
 			this.axisConfig.y.series.design.color = this.axisConfig.y.series.design.color || "rgba(237, 221, 70, 0.7)";
@@ -278,8 +334,25 @@
 
 			let d3 = Px.d3;
 			this.parseTime = d3.timeParse(this.axisConfig.x.inputTimeFormat);
-			this.tooltipTimeFormat = d3.timeFormat("%A, %b %d");
-			this.tooltipTimeFormat2 = d3.timeFormat("%Y");
+			this.tooltipConfig = this.tooltipConfig || {};
+			this.tooltipConfig.lineColor = this.tooltipConfig.lineColor || "#95a5ae";
+			this.tooltipConfig.dashArray = this.tooltipConfig.dashArray || "0,0";
+			this.tooltipConfig.opacity = this.tooltipConfig.opacity || "3,3";
+			this.tooltipConfig.dotRadius = this.tooltipConfig.dotRadius || 4;
+			this.tooltipConfig.x = this.tooltipConfig.x || {};
+			this.tooltipConfig.y = this.tooltipConfig.y || {};
+			this.tooltipConfig.design = this.tooltipConfig.design || {};
+			this.tooltipConfig.actual = this.tooltipConfig.actual || {};
+			this.tooltipConfig.target = this.tooltipConfig.target || {};
+			this.tooltipConfig.forecast = this.tooltipConfig.forecast || {};
+
+			this.customStyle['--x-grid-color'] = this.axisConfig.x.gridColor || this.axisConfig.x.axisColor;
+			this.customStyle['--y-grid-color'] = this.axisConfig.y.gridColor || this.axisConfig.y.axisColor;
+			this.customStyle['--font-size'] = "11px";
+			this.updateStyles();
+
+			this.set("axisConfig", this.axisConfig);
+			this.set("tooltipConfig", this.tooltipConfig);
 		},
 
 		_massageData(data) {
@@ -328,19 +401,12 @@
 			let d3 = Px.d3;
 			this.svg = d3.select(this.$.chart).append("svg")
 					.attr("viewBox", "0 0 "+this.width+" "+this.height)
+					.attr("width", "100%")
+					.attr("height", "100%")
 					.attr("preserveAspectRatio", "xMidYMid meet")
 				.append("g")
 					.attr("transform",
-								"translate(" + this.margin.left + "," + this.margin.top + ")");
-			
-			this.toolTip = d3.tip(d3.select(this.$.chart))
-				.attr("class", "d3-tip")
-				.offset([-8, 0])
-				.html(function(d) {
-					return d.msg;
-				});
-
-			this.svg.call(this.toolTip);
+					 			"translate(" + this.margin.left + "," + this.margin.top + ")");
 		},
 		_prepareAxes(data) {
 			let d3 = Px.d3;
@@ -364,20 +430,6 @@
 			this.set("hideTargetLegend", this.targetData.length === 0);
 			this.set("hideForecastLegend", this.forecastData.length === 0);
 			this.set("hideDesignCapacityLegend", this.designData.length === 0);
-
-			this.updateLegendVal = (d) => {
-				this.actualDispVal = d.actual.toFixed(0);
-				this.targetDispVal = d.target.toFixed(0);
-				this.forecastDispVal = d.forecast.toFixed(0);
-				this.designDispVal = d.design.toFixed(0);
-			};
-
-			this.revertLegendValToToday = () => {
-				this.actualDispVal = this.todayActual;
-				this.targetDispVal = this.todayTarget;
-				this.forecastDispVal = this.todayForecast;
-				this.designDispVal = this.todayDesign;
-			};
 		},
 		_drawDesign(data) {
 			let x= this.x, y=this.y, me = this, d3 = Px.d3;
@@ -406,26 +458,11 @@
 				} else {
 					this.svg.append("path")
 						.datum(this.designData)
+						.style("stroke", this.axisConfig.y.series.design.color)
 						.attr("fill", this.axisConfig.y.series.design.color)
 						.attr("d", area)
 						.style("pointer-events", "none");
 				}
-
-				this.svg.selectAll(".dot")
-						.data(this.designData)
-						.enter()
-							.append("circle")
-							.attr("r", 0)
-							.attr("cx", (d, i) => x(d.date))
-							.attr("cy", (d) => y(d.design))
-							.attr("fill", "transparent")
-							.attr("class", "design-circle")
-							.on('mouseover', function(d, i) {
-								this.updateLegendVal(d);
-							})
-							.on('mouseout', function(d) {
-								this.revertLegendValToToday();
-							});
 			}
 		},
 		_drawTarget(data) {
@@ -442,31 +479,6 @@
 						.style("stroke-dasharray", this.axisConfig.y.series.target.dashArray || "0,0")
 						.attr("d", targetChart)
 						.style("pointer-events", "none");
-
-				this.svg.selectAll(".dot")
-					.data(this.targetData)
-					.enter()
-						.append("circle")
-						.attr("r", this.defaultDotRadius)
-						.attr("cx", (d, i) => x(d.date))
-						.attr("cy", (d) => y(d.target))
-						.attr("fill", this.axisConfig.y.series.target.color)
-						.attr("class", "target-circle")
-						.on('mouseover', function(d, i) {
-							d3.select(this)
-								.attr('r', this.defaultDotRadius + 3);
-							d.msg = this.tooltipTimeFormat(d.date) + "<br>"
-								+ "Target of <b>" + d.target + "</b><br>" + "produced in "
-								+ this.tooltipTimeFormat2(d.date);
-							this.updateLegendVal(d);
-							this.toolTip.show(d);
-						})
-						.on('mouseout', function(d) {
-							d3.select(this)
-								.attr('r', this.defaultDotRadius);
-							this.revertLegendValToToday();
-							this.toolTip.hide(d);
-						});
 			}
 		},
 		_drawActual(data) {
@@ -494,35 +506,11 @@
 					this.svg.append("path")
 						.datum(this.actualData)
 						.attr("class", "actual-area")
+						.style("stroke", this.axisConfig.y.series.actual.color)
 						.style("fill", this.axisConfig.y.series.actual.color)
 						.attr("d", this.actualArea)
 						.style("pointer-events", "none");
 				}
-
-				this.svg.selectAll(".dot")
-					.data(this.actualData)
-					.enter()
-						.append("circle")
-						.attr("r", this.defaultDotRadius)
-						.attr("cx", (d, i) => x(d.date))
-						.attr("cy", (d) => y(d.actual))
-						.attr("fill", this.axisConfig.y.series.actual.color)
-						.attr("class", "actual-circle")
-						.on('mouseover', function(d, i) {
-							d3.select(this)
-								.attr('r', this.defaultDotRadius + 3);
-							d.msg = this.tooltipTimeFormat(d.date) + "<br>"
-								+ "Actual of <b>" + d.actual + "</b><br>" + "produced in "
-								+ this.tooltipTimeFormat2(d.date);
-							this.updateLegendVal(d);
-							this.toolTip.show(d);
-						})
-						.on('mouseout', function(d) {
-							d3.select(this)
-								.attr('r', this.defaultDotRadius);
-							this.revertLegendValToToday();
-							this.toolTip.hide(d);
-						});
 			}
 		},
 		_drawForecast(data) {
@@ -588,31 +576,6 @@
 						.style("stroke-dasharray", this.axisConfig.y.series.forecast.dashArray || "0,0")
 						.attr("d", forecastLine);
 				}
-				
-				this.svg.selectAll(".dot")
-					.data(this.forecastData)
-					.enter()
-						.append("circle")
-						.attr("r", this.defaultDotRadius)
-						.attr("cx", (d, i) => x(d.date))
-						.attr("cy", (d) => y(d.forecast))
-						.attr("fill", this.axisConfig.y.series.forecast.color)
-						.attr("class", "forecast-circle")
-						.on('mouseover', function(d, i) {
-							d3.select(this)
-								.attr('r', this.defaultDotRadius + 3);
-							d.msg = this.tooltipTimeFormat(d.date) + "<br>"
-								+ "Forecast of <b>" + d.forecast + "</b><br>" + "produced in "
-								+ this.tooltipTimeFormat2(d.date);
-							this.updateLegendVal(d);
-							this.toolTip.show(d);
-						})
-						.on('mouseout', function(d) {
-							d3.select(this)
-								.attr('r', this.defaultDotRadius);
-							this.revertLegendValToToday();
-							this.toolTip.hide(d);
-						});
 			}
 		},
 		_drawAxes(data) {
@@ -620,22 +583,17 @@
 			// Add the X Axis
 			let _xAxis = d3.axisBottom(x);
 			if(this.axisConfig.x.tickTimeFormat) {
-				_xAxis.tickFormat(d3.timeFormat(
-					this.axisConfig.x.tickTimeFormat || "%d %b %y"));
+				if(typeof this.axisConfig.x.tickTimeFormat === "function") {
+					_xAxis.tickFormat(this.axisConfig.x.tickTimeFormat);
+				} else {
+					_xAxis.tickFormat(d3.timeFormat(
+						this.axisConfig.x.tickTimeFormat));
+				}
 			}
 			this.svg.append("g")
 					.attr("transform", "translate(0," + this.adjustedHeight + ")")
 					.attr("class", "x-axis")
 					.call(_xAxis);
-
-			if(!this.axisConfig.y.hideGrid) {
-				this.svg.append("g")
-					.attr("class", "y-grid")
-					.call(d3.axisLeft(y)
-							.ticks(5)
-							.tickSize(-this.adjustedWidth)
-							.tickFormat(""));
-			}
 
 			// Add the Y Axis
 			let _yAxis = d3.axisLeft(y).ticks(6);
@@ -686,6 +644,170 @@
 		},
 		_drawGridLines(data) {
 			let x= this.x, y=this.y, me = this, d3 = Px.d3;
-		}
+      if(!this.axisConfig.x.hideGrid) {
+        this.svg.append("g")
+					.attr("class", "grid x-grid")
+          .call(d3.axisBottom(x)
+              .ticks(this.axisConfig.x.totalGridLines || 5)
+              .tickSize(this.adjustedHeight)
+              .tickFormat(""));
+      }
+
+      if(!this.axisConfig.y.hideGrid) {
+        this.svg.append("g")
+					.attr("class", "grid y-grid")
+          .call(d3.axisLeft(y)
+              .ticks(this.axisConfig.y.totalGridLines || 5)
+              .tickSize(-this.adjustedWidth)
+              .tickFormat(""));
+      }
+		},
+		_drawTooltip(data, scope) {
+			let x= this.x, y=this.y, me = scope, d3 = Px.d3;
+
+			this.toolTip = d3.tip(d3.select(this.$.chart))
+				.attr("class", "d3-tip")
+				.html((d) => {
+					return d;
+				});
+			this.updateLegendVal = (d) => {
+				this.actualDispVal = d.actual.toFixed(0);
+				this.targetDispVal = d.target.toFixed(0);
+				this.forecastDispVal = d.forecast.toFixed(0);
+				this.designDispVal = d.design.toFixed(0);
+			};
+			this.revertLegendValToToday = () => {
+				this.actualDispVal = this.todayActual;
+				this.targetDispVal = this.todayTarget;
+				this.forecastDispVal = this.todayForecast;
+				this.designDispVal = this.todayDesign;
+			};
+
+			let focus = this.svg.append('g')
+				.style('display', 'none')
+				.style("pointer-events", "none"),
+					bisectDate = d3.bisector(function(d) { return d.date; }).left;
+
+			let getMsg = (d) => {
+				let arr = [];
+				let appendTextIfValid = (cfg, val, arr) => {
+					if(cfg && cfg.label) {
+						arr.push(`${cfg.label} : ${cfg.prefix || ''}${val}${cfg.suffix || ''}`);
+					}
+					return arr;
+				};
+				const fmt = d3.timeFormat(this.tooltipConfig.x.timeFormat || "%d %b %y");
+				appendTextIfValid(this.tooltipConfig.x, fmt(d.date), arr);
+				appendTextIfValid(this.tooltipConfig.y.actual, d.actual, arr);
+				appendTextIfValid(this.tooltipConfig.y.target, d.target, arr);
+				appendTextIfValid(this.tooltipConfig.y.forecast, d.forecast, arr);
+				appendTextIfValid(this.tooltipConfig.y.design, d.design, arr);
+				return arr.join("<br>");
+			};
+			focus.append('line')
+				.attr('id', 'focusLineX')
+				.attr('class', 'focusLine');
+			focus.append('line')
+				.attr('id', 'focusLineY')
+				.attr('class', 'focusLine')
+				.call(this.toolTip);
+			this.svg.append('rect')
+				.attr('class', 'overlay')
+				.attr('width', this.adjustedWidth)
+				.attr('height', this.adjustedHeight)
+				.on('mouseover', () => { 
+					focus.style('display', null);
+				})
+				.on('mouseout', () => { 
+					focus.style('display', 'none');
+					this.svg.selectAll(".tooltip-circle").remove();
+					this.toolTip.hide();
+					this.revertLegendValToToday();
+				})
+				.on('mousemove', () => {
+					let m = d3.select('rect.overlay').node().getScreenCTM();
+					let mouse = d3.select('svg').node().createSVGPoint(); 
+					
+					mouse.x = d3.event.clientX;
+					mouse.y = d3.event.clientY;
+					mouse = mouse.matrixTransform(m.inverse());
+					const [mouseX, mouseY] = [mouse.x, mouse.y];
+					let mouseDate = x.invert(mouseX);
+					let i = bisectDate(data, mouseDate);
+
+					let d0 = data[i - 1] || data[0];
+					let d1 = data[i];
+					let d = d0 && d1 && (mouseDate - d0.date > d1.date - mouseDate) ? d1 : d0;
+
+					let xVal = x(d.date);
+					let yVal = y(y.invert(mouseY));
+
+					focus.select('#focusLineX')
+						.attr('x1', xVal).attr('y1', y(y.domain()[0]))
+						.attr('x2', xVal).attr('y2', y(y.domain()[1]));
+					focus.select('#focusLineY')
+						.attr('x1', x(x.domain()[0])).attr('y1', yVal)
+						.attr('x2', x(x.domain()[1])).attr('y2', yVal);
+					
+					this.toolTip.offset([this.height+(this.margin.bottom*3), xVal - (this.adjustedWidth/2.2)]);
+
+					this._toggleDots(d, me);
+					
+					this.toolTip.show(getMsg(d));
+					this.updateLegendVal(d);
+				});
+			
+		},
+		_toggleDots(data, scope) {
+			let x= this.x, y=this.y, me = scope, d3 = Px.d3, radius = 5;
+			this.svg.selectAll(".tooltip-circle").remove();
+			if(this.designData.length) {
+				this.svg.selectAll(".dot")
+					.data([data])
+					.enter()
+						.append("circle")
+						.attr("r", data.design ? radius : 0)
+						.attr("cx", (d, i) => x(d.date))
+						.attr("cy", (d) => y(d.design))
+						.attr("fill", me.axisConfig.y.series.design.color)
+						.attr("class", "tooltip-circle design-circle");
+			}
+
+			if(!this.hideTarget && this.targetData.length) {
+				this.svg.selectAll(".dot")
+					.data([data])
+					.enter()
+						.append("circle")
+						.attr("r", data.target ? radius : 0)
+						.attr("cx", (d, i) => x(d.date))
+						.attr("cy", (d) => y(d.target))
+						.attr("fill", me.axisConfig.y.series.target.color)
+						.attr("class", "tooltip-circle target-circle");
+			}
+
+			if(!this.hideActual && this.actualData.length) {
+				this.svg.selectAll(".dot")
+					.data([data])
+					.enter()
+						.append("circle")
+						.attr("r", data.actual ? radius : 0)
+						.attr("cx", (d, i) => x(d.date))
+						.attr("cy", (d) => y(d.actual))
+						.attr("fill", me.axisConfig.y.series.actual.color)
+						.attr("class", "tooltip-circle actual-circle");
+			}
+
+			if(!this.hideForecast && this.forecastData.length > 0) {
+				this.svg.selectAll(".dot")
+					.data([data])
+					.enter()
+						.append("circle")
+						.attr("r", data.forecast ? radius : 0)
+						.attr("cx", (d, i) => x(d.date))
+						.attr("cy", (d) => y(d.forecast))
+						.attr("fill", me.axisConfig.y.series.forecast.color)
+						.attr("class", "tooltip-circle forecast-circle");
+			}
+		} 
   });
 })();

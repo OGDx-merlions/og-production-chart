@@ -35,7 +35,8 @@
     "px-theme": "^3.0.0",
     "px-spacing-design": "^1.0.2",
     "px-helpers-design": "^1.0.7",
-    "px-headings-design": "^1.0.3"
+    "px-headings-design": "^1.0.3",
+    "iron-media-query": "^2.0.0"
   },
   "resolutions": {
     "webcomponentsjs": "^0.7.0"

@@ -240,7 +240,7 @@
       },
       chartTypes: {
         type: Array,
-        defaultValue: ["line", "area", "line"],
+        defaultValue: ["area", "area", "line"],
         inputType: 'code:JSON'
       },
 			margin: {
@@ -254,13 +254,21 @@
 						"x": {
 							"tickFormat": "",
 							"inputTimeFormat": "%Y-%m-%dT%H:%M:%S.%LZ",
-							"tickTimeFormat": "%d %b %y",
-              "forecastLabel": "Forecast after applying Scenario 3"
+							"tickTimeFormat": function(d) {
+								if(d.getMonth() === 0) {
+									return Px.d3.timeFormat("%b %y")(d);
+								} else {
+									return Px.d3.timeFormat("%b")(d);
+								}
+							},
+              "forecastLabel": "Forecast after applying Scenario 3",
+              "hideGrid": true
 						},
 						"y": {
 							"tickFormat": ".3s",
-							"hideGrid": true,
-							"dotRadius": 0,
+							"hideGrid": false,
+              "dotRadius": 0,
+              "gridColor": "steelblue",
 							"start": 660,
               "series": {
 								"design": {
@@ -268,7 +276,7 @@
                   "dashArray": "5,5"
 								},
 								"actual": {
-									"color": "#5fbcf8"
+									"color": "rgba(95, 188, 248, 0.6)"
 								},
 								"target": {
 									"color": "#f05c56"
@@ -278,7 +286,7 @@
 								}
 							}
 						}
-					}, null, null],
+					}, {}, {}],
         inputType: 'code:JSON'
       },
       data: {

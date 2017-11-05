@@ -8,6 +8,7 @@
 <link rel="import" href="../px-d3-imports/px-d3-imports.html"/>
 <link rel="import" href="../px-rangepicker/px-rangepicker.html"/>
 <link rel="import" href="../px-datetime-picker/px-datetime-picker.html"/>
+<link rel="import" href="../iron-media-query/iron-media-query.html"/>
 
 <script src="d3-tip.js"></script>
 
@@ -16,9 +17,10 @@
 <dom-module id="production-chart">
   <template>
     <style include="production-chart-styles"></style>
+    <iron-media-query query="(min-width: 600px)" query-matches="{{desk}}"></iron-media-query>
     <div class="flex flex--col chart-container">
-      <div class="flex flex--row">
-        <div class="u-1/1 u-1/4-desk">
+      <div class="flex flex--wrap">
+        <div class="u-1/4-desk u-1/1-lap u-1/1-palm u-1/1-portable">
           <template is="dom-if" if="{{isDatePickerBased(datePicker)}}">
             <px-datetime-picker
               date-format="YYYY/MM/DD"
@@ -39,27 +41,27 @@
             </px-rangepicker>
           </template>
         </div>
-        <div class="flex flex--right u-1/1 u-3/4-desk legend">
-          <div class="flex flex--row">
+        <div class="legend u-3/4-desk u-1/1-lap u-1/1-palm u-1/1-portable">
+          <div class="flex flex--row u-portable-pt+ u-lap-pt+ u-palm-pt+">
             <div class="flex flex__item flex--col u-pr++ zeta legend-unit actual" 
               id="legend-actual" hidden$="{{_compute(hideActualLegend)}}" style$="border-color:{{actualCol}}">
-              <span class="flex flex--top muted">{{actualLegendLabel}}</span>
-              <span class="flex flex--top">{{actualDispVal}} {{unit}}</span>
+              <span class="flex flex--top muted text">{{actualLegendLabel}}</span>
+              <span class="flex flex--top text">{{actualDispVal}} {{unit}}</span>
             </div>
             <div class="flex flex__item flex--col u-pr++ zeta legend-unit target" 
               id="legend-target" hidden$="{{_compute(hideTargetLegend)}}" style$="border-color:{{targetCol}}">
-              <span class="flex flex--top muted">{{targetLegendLabel}}</span>
-              <span class="flex flex--top">{{targetDispVal}} {{unit}}</span>
+              <span class="flex flex--top muted text">{{targetLegendLabel}}</span>
+              <span class="flex flex--top text">{{targetDispVal}} {{unit}}</span>
             </div>
             <div class="flex flex__item flex--col u-pr++ zeta legend-unit forecast" 
               id="legend-forecast" hidden$="{{_compute(hideForecastLegend)}}" style$="border-color:{{forecastCol}}">
-              <span class="flex flex--top muted">{{forecastLegendLabel}}</span>
-              <span class="flex flex--top">{{forecastDispVal}} {{unit}}</span>
+              <span class="flex flex--top muted text">{{forecastLegendLabel}}</span>
+              <span class="flex flex--top text">{{forecastDispVal}} {{unit}}</span>
             </div>
             <div class="flex flex__item flex--col u-pr++ zeta legend-unit design" 
               id="legend-design" hidden$="{{_compute(hideDesignCapacityLegend)}}" style$="border-color:{{designCol}}">
-              <span class="flex flex--top muted">{{designCapacityLegendLabel}}</span>
-              <span class="flex flex--top">{{designDispVal}} {{unit}}</span>
+              <span class="flex flex--top muted text">{{designCapacityLegendLabel}}</span>
+              <span class="flex flex--top text">{{designDispVal}} {{unit}}</span>
             </div>
           </div>
         </div>
