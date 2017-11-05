@@ -86,7 +86,8 @@
                   "dashArray": "2,2"
 								},
 								"actual": {
-									"color": "#5fbcf8"
+									"color": "#5fbcf8",
+									"historicalHighlightColor": "gray"
 								},
 								"target": {
 									"color": "#f05c56"
@@ -199,6 +200,7 @@
 			this._prepareChartingArea();
 			this._prepareAxes(data);
 			this._setLegendDefaults();
+			this._highlightHistorical();
 			this._drawDesign(data);
 			this._drawActual(data);
 			this._drawForecast(data);
@@ -430,6 +432,19 @@
 			this.set("hideTargetLegend", this.targetData.length === 0);
 			this.set("hideForecastLegend", this.forecastData.length === 0);
 			this.set("hideDesignCapacityLegend", this.designData.length === 0);
+		},
+		_highlightHistorical(data) {
+			let x= this.x, y=this.y, me = this, d3 = Px.d3;
+
+			this.svg.append("rect")
+				.attr("fill", 
+					this.axisConfig.y.series.actual.historicalHighlightColor 
+						|| 'rgba(226, 222, 222, 0.6)')
+				.attr("x1", 0)
+				.attr("y1", 0)
+				.attr("width", x(this.today))
+				.attr("height", this.adjustedHeight)
+				.style("pointer-events", "none");
 		},
 		_drawDesign(data) {
 			let x= this.x, y=this.y, me = this, d3 = Px.d3;
