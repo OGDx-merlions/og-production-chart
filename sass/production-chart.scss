@@ -84,10 +84,11 @@ $chart-font-size: var(--font-size, 11px);
   .d3-tip {
     line-height: 1;
     padding: 6px;
-    background: rgba(0, 0, 0, 0.8);
-    color: #fff;
+    background: var(--tooltip-background, rgba(255,255,255,1));
+    border: 1px solid var(--tooltip-border, black);
     border-radius: 4px;
     font-size: 12px;
+    font-weight: bold;
     pointer-events: none;
   }
 
@@ -98,8 +99,8 @@ $chart-font-size: var(--font-size, 11px);
     font-size: 10px;
     width: 100%;
     line-height: 1;
-    color: rgba(0, 0, 0, 0.8);
-    content: "\25BC";
+    //color: rgba(0, 0, 0, 0.8);
+    //content: "\25BC";
     pointer-events: none;
     //position: relative;
     //text-align: center;

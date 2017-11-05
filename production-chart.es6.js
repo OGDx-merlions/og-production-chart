@@ -29,12 +29,14 @@
 					return {
 						"lineColor": "#95a5ae",
 						"dashArray": "0,0",
-						"opacity": 0.5,
+						"backgroundColor": "rgba(255,255,255,1)",
+						"stroke": "black",
 						"x": {
 							"label": "Date",
 							"suffix": "",
 							"prefix": "",
-							"timeFormat": "%d %b %y"
+							"timeFormat": "%d %b %y",
+							"color": "gray"
 						},
 						"y": {
 							"design": {
@@ -263,7 +265,7 @@
 		_redraw(newData, oldData) {
 			Polymer.dom(this.$.chart).node.innerHTML = "";
 			this.draw();
-			this._resize();
+			this._resize.bind(this)();
 		},
 		_setLegendLabels(labels) {
 			if(labels && labels.length) {
@@ -339,9 +341,11 @@
 			this.tooltipConfig = this.tooltipConfig || {};
 			this.tooltipConfig.lineColor = this.tooltipConfig.lineColor || "#95a5ae";
 			this.tooltipConfig.dashArray = this.tooltipConfig.dashArray || "0,0";
-			this.tooltipConfig.opacity = this.tooltipConfig.opacity || "3,3";
+			this.tooltipConfig.backgroundColor = this.tooltipConfig.backgroundColor || "rgba(255,255,255,1)";
+			this.tooltipConfig.stroke = this.tooltipConfig.stroke || "black";
 			this.tooltipConfig.dotRadius = this.tooltipConfig.dotRadius || 4;
 			this.tooltipConfig.x = this.tooltipConfig.x || {};
+			this.tooltipConfig.x.color = this.tooltipConfig.x.color || "gray";
 			this.tooltipConfig.y = this.tooltipConfig.y || {};
 			this.tooltipConfig.design = this.tooltipConfig.design || {};
 			this.tooltipConfig.actual = this.tooltipConfig.actual || {};
@@ -351,6 +355,8 @@
 			this.customStyle['--x-grid-color'] = this.axisConfig.x.gridColor || this.axisConfig.x.axisColor;
 			this.customStyle['--y-grid-color'] = this.axisConfig.y.gridColor || this.axisConfig.y.axisColor;
 			this.customStyle['--font-size'] = "11px";
+			this.customStyle['--tooltip-background'] = this.tooltipConfig.backgroundColor;
+			this.customStyle['--tooltip-border'] = this.tooltipConfig.stroke;
 			this.updateStyles();
 
 			this.set("axisConfig", this.axisConfig);
@@ -711,18 +717,24 @@
 
 			let getMsg = (d) => {
 				let arr = [];
-				let appendTextIfValid = (cfg, val, arr) => {
+				let appendTextIfValid = (cfg, val, arr, col) => {
 					if(cfg && cfg.label) {
-						arr.push(`${cfg.label} : ${cfg.prefix || ''}${val}${cfg.suffix || ''}`);
+						arr.push(`<span style="color: ${cfg.color || col}">
+							${cfg.label} : ${cfg.prefix || ''}</span>${val}${cfg.suffix || ''}`);
 					}
 					return arr;
 				};
 				const fmt = d3.timeFormat(this.tooltipConfig.x.timeFormat || "%d %b %y");
-				appendTextIfValid(this.tooltipConfig.x, fmt(d.date), arr);
-				appendTextIfValid(this.tooltipConfig.y.actual, d.actual, arr);
-				appendTextIfValid(this.tooltipConfig.y.target, d.target, arr);
-				appendTextIfValid(this.tooltipConfig.y.forecast, d.forecast, arr);
-				appendTextIfValid(this.tooltipConfig.y.design, d.design, arr);
+				appendTextIfValid(this.tooltipConfig.x, fmt(d.date), 
+					arr, this.tooltipConfig.x.color);
+				appendTextIfValid(this.tooltipConfig.y.actual, d.actual, 
+					arr, this.axisConfig.y.series.actual.color);
+				appendTextIfValid(this.tooltipConfig.y.target, d.target, 
+					arr, this.axisConfig.y.series.target.color);
+				appendTextIfValid(this.tooltipConfig.y.forecast, d.forecast, 
+					arr, this.axisConfig.y.series.forecast.color);
+				appendTextIfValid(this.tooltipConfig.y.design, d.design, 
+					arr, this.axisConfig.y.series.design.color);
 				return arr.join("<br>");
 			};
 			focus.append('line')
