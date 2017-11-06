@@ -186,16 +186,34 @@
 				value() {
 					return {top: 20, right: 20, bottom: 30, left: 50};
 				}
+			},
+			wide: {
+				type: Boolean,
+				observer: "_resize",
+				notify: true,
+				reflectToAttribute: true
+			},
+			medium: {
+				type: Boolean,
+				observer: "_resize",
+				notify: true,
+				reflectToAttribute: true
+			},
+			small: {
+				type: Boolean,
+				observer: "_resize",
+				notify: true,
+				reflectToAttribute: true
 			}
 		},
 
-		ready() {
+		ready: function() {
 			this.scopeSubtree(this.$.chart, true);
 			window.addEventListener("resize", this._resize.bind(this));
-			this._setDefaults();
+			this._resize.bind(this)();
 		},
 
-		draw() {
+		draw: function() {
 			this._setDefaults();
 			let data = this._massageData(this.data);
 			this._segregateData(data);
@@ -244,7 +262,9 @@
 		_toggleForecast() {
 			this.hideForecast = !this.hideForecast;
 			if(this.hideForecast) {
-				this.querySelector(".forecast-line").style.display = "none";
+				if (this.querySelector(".forecast-line")) {
+					this.querySelector(".forecast-line").style.display = "none";
+				}
 				this.querySelectorAll(".forecast-circle").forEach((elt) => {
 					elt.style.display = "none";
 				});
@@ -252,7 +272,9 @@
 					elt.style.display = "none";
 				});
 			} else {
-				this.querySelector(".forecast-line").style.display = "block";
+				if (this.querySelector(".forecast-line")) {
+					this.querySelector(".forecast-line").style.display = "block";
+				}
 				this.querySelectorAll(".forecast-circle").forEach((elt) => {
 					elt.style.display = "block";
 				});
@@ -262,12 +284,11 @@
 			}
 		},
 
-		_redraw(newData, oldData) {
+		_redraw: function(newData, oldData) {
 			Polymer.dom(this.$.chart).node.innerHTML = "";
 			this.draw();
-			this._resize.bind(this)();
 		},
-		_setLegendLabels(labels) {
+		_setLegendLabels: function(labels) {
 			if(labels && labels.length) {
 				this.set("actualLegendLabel", labels[0]);
 				this.set("targetLegendLabel", labels[1]);
@@ -275,20 +296,22 @@
 				this.set("designCapacityLegendLabel", labels[3]);
 			}
 		},
-    _compute(prop) {
+    _compute: function(prop) {
       return prop;
 		},
 		
-		isDatePickerBased(datePicker) {
+		isDatePickerBased: function(datePicker) {
 			return datePicker ? true : false;
 		},
 
-		isDateRangeBased(datePicker) {
+		isDateRangeBased: function(datePicker) {
 			return datePicker ? false : true;
 		},
 
-		_resize() {
-			const size = this.desk ? "2vw" : "11px";
+		_resize: function() {
+			let size = "10px";
+			if(this.medium) {size = "1.7vw";}
+			else if(this.small) {size = "2.9vw";}
 			Px.d3.selectAll('text')
 				.style('font-size', size);
 			this.customStyle['--font-size'] = size;
@@ -298,6 +321,8 @@
 		_setDefaults() {
 			// set the dimensions and margins of the graph
 			this.margin = this.margin || {top: 20, right: 20, bottom: 30, left: 50},
+			this.margin.left =  this.margin.left + 30;
+			this.margin.top =  this.margin.top + 30;
 			this.adjustedWidth = this.width - this.margin.left - this.margin.right,
 			this.adjustedHeight = this.height - this.margin.top - this.margin.bottom;
 			
@@ -633,7 +658,7 @@
 
 			this.svg.append("text")
 					.attr("transform", "rotate(-90)")
-					.attr("y", -4 - this.margin.left)
+					.attr("y", -this.margin.left)
 					.attr("x", 0 - (this.adjustedHeight / 2))
 					.attr("dy", "1em")
 					.attr("class", "yaxis-label")
@@ -663,7 +688,7 @@
 			if(!this.hideForecast && this.forecastData.length > 0) {
 				this.svg.append("text")
 					.attr("class", "today-text")
-					.attr("x", (x(x.domain()[1]) * 0.8))
+					.attr("x", x(this.today) + 100)
 					.attr("y", -9)
 					.text(this.axisConfig.x.forecastLabel || "Forecast");
 			}
@@ -780,8 +805,8 @@
 					focus.select('#focusLineY')
 						.attr('x1', x(x.domain()[0])).attr('y1', yVal)
 						.attr('x2', x(x.domain()[1])).attr('y2', yVal);
-					
-					this.toolTip.offset([mouse.y, xVal - (this.adjustedWidth/2.2)]);
+					let w = this.svg.node().getBBox().width;
+					this.toolTip.offset([mouse.y, xVal/2 - w/4]);
 
 					this._toggleDots(d, me);
 					

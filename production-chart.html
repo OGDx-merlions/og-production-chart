@@ -17,7 +17,9 @@
 <dom-module id="production-chart">
   <template>
     <style include="production-chart-styles"></style>
-    <iron-media-query query="(min-width: 600px)" query-matches="{{desk}}"></iron-media-query>
+    <iron-media-query query="(min-width: 1025px)" query-matches="{{wide}}"></iron-media-query>
+    <iron-media-query query="(min-width: 962px) and (max-width: 1024px)" query-matches="{{medium}}"></iron-media-query>
+    <iron-media-query query="(max-width: 961px)" query-matches="{{small}}"></iron-media-query>
     <div class="flex flex--col chart-container">
       <div class="flex flex--wrap">
         <div class="u-1/4-desk u-1/1-lap u-1/1-palm u-1/1-portable">
