@@ -320,7 +320,12 @@
 
 		_setDefaults() {
 			// set the dimensions and margins of the graph
-			this.margin = this.margin || {top: 20, right: 20, bottom: 30, left: 50},
+			this.margin = this.margin || {top: 20, right: 20, bottom: 30, left: 50};
+      this.margin.top = this.margin.top ? this.margin.top : 20;
+      this.margin.right = this.margin.right ? this.margin.right : 20;
+      this.margin.bottom = this.margin.bottom ? this.margin.bottom : 30;
+      this.margin.left = this.margin.left ? this.margin.left : 50;
+      
 			this.margin.left =  this.margin.left + 30;
 			this.margin.top =  this.margin.top + 30;
 			this.adjustedWidth = this.width - this.margin.left - this.margin.right,
@@ -752,14 +757,22 @@
 				const fmt = d3.timeFormat(this.tooltipConfig.x.timeFormat || "%d %b %y");
 				appendTextIfValid(this.tooltipConfig.x, fmt(d.date), 
 					arr, this.tooltipConfig.x.color);
-				appendTextIfValid(this.tooltipConfig.y.actual, d.actual, 
-					arr, this.axisConfig.y.series.actual.color);
-				appendTextIfValid(this.tooltipConfig.y.target, d.target, 
-					arr, this.axisConfig.y.series.target.color);
-				appendTextIfValid(this.tooltipConfig.y.forecast, d.forecast, 
-					arr, this.axisConfig.y.series.forecast.color);
-				appendTextIfValid(this.tooltipConfig.y.design, d.design, 
-					arr, this.axisConfig.y.series.design.color);
+				if(this.actualData.length) {
+					appendTextIfValid(this.tooltipConfig.y.actual, d.actual, 
+						arr, this.axisConfig.y.series.actual.color);
+				}
+				if(this.targetData.length) {
+					appendTextIfValid(this.tooltipConfig.y.target, d.target, 
+						arr, this.axisConfig.y.series.target.color);
+				}
+				if(this.forecastData.length) {
+					appendTextIfValid(this.tooltipConfig.y.forecast, d.forecast, 
+						arr, this.axisConfig.y.series.forecast.color);
+				}
+				if(this.designData.length) {
+					appendTextIfValid(this.tooltipConfig.y.design, d.design, 
+						arr, this.axisConfig.y.series.design.color);
+				}
 				return arr.join("<br>");
 			};
 			focus.append('line')
