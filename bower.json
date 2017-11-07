@@ -1,6 +1,6 @@
 {
   "name": "og-production-chart",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "main": [
     "og-production-chart.html"
   ],
