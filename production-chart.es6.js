@@ -679,20 +679,20 @@
 				.attr("y2", -7);
 
 			this.svg.append("text")
-				.attr("class", "today-text")
+				.attr("class", "period-text")
 				.attr("x", (x(x.domain()[0]) + x(this.today))/2)
 				.attr("y", -9)
 				.text(this.axisConfig.x.historicalLabel || "Historical");
 
 			this.svg.append("text")
-				.attr("class", "today-text")
+				.attr("class", "period-text today-text")
 				.attr("x", x(this.today)-10)
 				.attr("y", -9)
 				.text(this.axisConfig.x.todayLabel || "Today");
 
 			if(!this.hideForecast && this.forecastData.length > 0) {
 				this.svg.append("text")
-					.attr("class", "today-text")
+					.attr("class", "period-text")
 					.attr("x", x(this.today) + 100)
 					.attr("y", -9)
 					.text(this.axisConfig.x.forecastLabel || "Forecast");

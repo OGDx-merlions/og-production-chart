@@ -122,9 +122,12 @@ $chart-font-size: var(--font-size, 11px);
     stroke-width: 1;
     stroke: $axis-color;
   }
-  .today-text {
+  .period-text {
     font-size: $chart-font-size;
     fill: $axis-color;
+  }
+  .today-text {
+    font-weight: bold;
   }
 
   .x-axis, .y-axis {
