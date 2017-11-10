@@ -309,27 +309,35 @@
 		},
 
 		_resize: function() {
-			let size = "10px";
-			if(this.medium) {size = "1.7vw";}
-			else if(this.small) {size = "2.9vw";}
+      let size = "10px";
+			if(this.medium) {
+				size = "1.3vw";
+				this.axisConfig.x.ticks = this.axisConfig.x.ticksMedium ? 
+					this.axisConfig.x.ticksMedium : this.axisConfig.x.ticks;
+				this.axisConfig.y.ticks = this.axisConfig.y.ticksMedium ? 
+					this.axisConfig.y.ticksMedium : this.axisConfig.y.ticks;
+			} else if(this.small) {
+				size = "2.5vw";
+				this.axisConfig.x.ticks = this.axisConfig.x.ticksSmall ? 
+					this.axisConfig.x.ticksSmall : this.axisConfig.x.ticks;
+				this.axisConfig.y.ticks = this.axisConfig.y.ticksSmall ? 
+					this.axisConfig.y.ticksSmall : this.axisConfig.y.ticks;
+      }
+      this.notifyPath('axisConfig.*');
 			Px.d3.selectAll('text')
 				.style('font-size', size);
 			this.customStyle['--font-size'] = size;
-			this.updateStyles();
+      this.updateStyles();
+      
+      this.svg.selectAll('.x-axis').remove();
+			this.svg.selectAll('.y-axis').remove();
+			this.svg.selectAll('.yaxis-label').remove();
+			this._drawAxes();
 		},
 
 		_setDefaults() {
 			// set the dimensions and margins of the graph
-			this.margin = this.margin || {top: 20, right: 20, bottom: 30, left: 50};
-      this.margin.top = this.margin.top ? this.margin.top : 20;
-      this.margin.right = this.margin.right ? this.margin.right : 20;
-      this.margin.bottom = this.margin.bottom ? this.margin.bottom : 30;
-      this.margin.left = this.margin.left ? this.margin.left : 50;
-      
-			this.margin.left =  this.margin.left + 30;
-			this.margin.top =  this.margin.top + 30;
-			this.adjustedWidth = this.width - this.margin.left - this.margin.right,
-			this.adjustedHeight = this.height - this.margin.top - this.margin.bottom;
+			this._setDefaultMargin();
 			
 			this.axisConfig = this.axisConfig || {};
 			this.axisConfig.x = this.axisConfig.x || {};
@@ -390,7 +398,33 @@
 			this.updateStyles();
 
 			this.set("axisConfig", this.axisConfig);
-			this.set("tooltipConfig", this.tooltipConfig);
+      this.set("tooltipConfig", this.tooltipConfig);
+      
+      this.notifyPath('axisConfig');
+      this.notifyPath('axisConfig.*');
+      this.notifyPath('tooltipConfig');
+      this.notifyPath('tooltipConfig.*');
+    },
+    
+    _setDefaultMargin() {
+			this.margin = this.margin || {top: 20, right: 20, bottom: 30, left: 50};
+      this.margin.top = this.margin.top ? this.margin.top : 20;
+      this.margin.right = this.margin.right ? this.margin.right : 20;
+      this.margin.bottom = this.margin.bottom ? this.margin.bottom : 30;
+      this.margin.left = this.margin.left ? this.margin.left : 50;
+      
+			this.margin.left =  this.margin.left + 30;
+			this.margin.top =  this.margin.top + 30;
+			this.adjustedWidth = this.width - this.margin.left - this.margin.right,
+			this.adjustedHeight = this.height - this.margin.top - this.margin.bottom;
+			
+			this.set("margin", this.margin);
+			this.notifyPath('margin');
+      this.notifyPath('margin.top');
+      this.notifyPath('margin.right');
+      this.notifyPath('margin.bottom');
+      this.notifyPath('margin.left');
+			this.notifyPath('margin.*');
 		},
 
 		_massageData(data) {
@@ -630,9 +664,13 @@
 			}
 		},
 		_drawAxes(data) {
-			let x= this.x, y=this.y, me = this, d3 = Px.d3;
+      let x= this.x, y=this.y, me = this, d3 = Px.d3;
+      if(!this.margin.top) {
+        this._setDefaultMargin();
+      }
 			// Add the X Axis
-			let _xAxis = d3.axisBottom(x);
+      this.xAxis = d3.axisBottom(x);
+      let _xAxis = this.xAxis;
 			if(this.axisConfig.x.ticks) {
 				_xAxis.ticks(this.axisConfig.x.ticks);
 			}
@@ -649,8 +687,9 @@
 					.attr("class", "x-axis")
 					.call(_xAxis);
 
-			// Add the Y Axis
-			let _yAxis = d3.axisLeft(y);
+      // Add the Y Axis
+      this.yAxis = d3.axisLeft(y);
+			let _yAxis = this.yAxis;
 			if(this.axisConfig.y.ticks) {
 				_yAxis.ticks(this.axisConfig.y.ticks);
 			}
