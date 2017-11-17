@@ -50,6 +50,7 @@ REPLACE THIS TEXT WITH A COMPONENT DESCRIPTION
               width="{{width}}" height="{{height}}"
               legend-labels="{{legendLabels}}" date-picker="{{datePicker}}"
               chart-type="{{item.chartType}}" axis-config="{{item.axisConfigs}}"
+              tooltip-config="[[item.tooltipConfigs]]"
               unit="{{unit}}" margin="{{margin}}">
             </production-chart>
           </div>
@@ -63,6 +64,7 @@ REPLACE THIS TEXT WITH A COMPONENT DESCRIPTION
           <production-chart data="{{item}}" date-range="{{dateRange}}"
             width="{{width}}" height="{{height}}" date-picker="{{datePicker}}"
             chart-type="{{item.chartType}}" axis-config="{{item.axisConfigs}}"
+            tooltip-config="[[item.tooltipConfigs]]"
             legend-labels="{{legendLabels}}" unit="{{unit}}" margin="{{margin}}">
           </production-chart>
         </div>

@@ -375,7 +375,7 @@
 				this.axisConfig.x.inputTimeFormat : "%Y-%m-%dT%H:%M:%S.%LZ";
 
 			let d3 = Px.d3;
-			this.parseTime = d3.timeParse(this.axisConfig.x.inputTimeFormat);
+      this.parseTime = d3.timeParse(this.axisConfig.x.inputTimeFormat);
 			this.tooltipConfig = this.tooltipConfig || {};
 			this.tooltipConfig.lineColor = this.tooltipConfig.lineColor || "#95a5ae";
 			this.tooltipConfig.dashArray = this.tooltipConfig.dashArray || "0,0";
@@ -792,7 +792,7 @@
 							${cfg.label} : ${cfg.prefix || ''}</span>${val}${cfg.suffix || ''}`);
 					}
 					return arr;
-				};
+        };
 				const fmt = d3.timeFormat(this.tooltipConfig.x.timeFormat || "%d %b %y");
 				appendTextIfValid(this.tooltipConfig.x, fmt(d.date), 
 					arr, this.tooltipConfig.x.color);

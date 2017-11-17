@@ -132,6 +132,51 @@
 				}
       },
       /**
+       * Array of Tooltip Configurations
+       * Eg: [{
+						"lineColor": "#95a5ae",
+						"dashArray": "0,0",
+						"backgroundColor": "rgba(255,255,255,1)",
+						"stroke": "black",
+						"x": {
+							"label": "Date",
+							"suffix": "",
+							"prefix": "",
+							"timeFormat": "%d %b %y",
+							"color": "gray"
+						},
+						"y": {
+							"design": {
+								"label": "Design",
+								"suffix": "",
+								"prefix": ""
+							},
+							"actual": {
+								"label": "Actual",
+								"suffix": "",
+								"prefix": ""
+							},
+							"target": {
+								"label": "Target",
+								"suffix": "",
+								"prefix": ""
+							},
+							"forecast": {
+								"label": "Forecast",
+								"suffix": "",
+								"prefix": ""
+							}
+						}
+					}, null, null]
+       * @property tooltipConfigs
+       */
+			tooltipConfigs: {
+				type: Array,
+				value() {
+					return [];
+				}
+      },
+      /**
 			* Margins for the charts
 			Eg:
 			`{top: 20, right: 20, bottom: 30, left: 50}`
@@ -183,11 +228,15 @@
       }
       this.chartTypes = this.chartTypes ? this.chartTypes : [];
       this.axisConfigs = this.axisConfigs ? this.axisConfigs : [];
+      this.tooltipConfigs = this.tooltipConfigs ? this.tooltipConfigs : [];
       _new.forEach((arr, idx)=> {
         arr.chartType = this.chartTypes.length > idx ? this.chartTypes[idx] : "";
         arr.chartType = arr.chartType ? arr.chartType : "";
         arr.axisConfigs = this.axisConfigs.length > idx ? this.axisConfigs[idx] : "";
         arr.axisConfigs = arr.axisConfigs ? arr.axisConfigs : "";
+
+        arr.tooltipConfigs = this.tooltipConfigs.length > idx ? this.tooltipConfigs[idx] : null;
+        arr.tooltipConfigs = arr.tooltipConfigs ? arr.tooltipConfigs : null;
       });
       this.filteredData = _new;
     },
@@ -203,6 +252,7 @@
       let filtered = [];
       this.chartTypes = this.chartTypes ? this.chartTypes : [];
       this.axisConfigs = this.axisConfigs ? this.axisConfigs : [];
+      this.tooltipConfigs = this.tooltipConfigs ? this.tooltipConfigs : [];
       data.forEach((arr, idx)=> {
         let _tmp = null;
         if(dateRange && from && to) {
@@ -220,7 +270,9 @@
         _tmp.chartType = this.chartTypes.length > idx ? this.chartTypes[idx] : "";
         _tmp.chartType = _tmp.chartType ? _tmp.chartType : "";
         _tmp.axisConfigs = this.axisConfigs.length > idx ? this.axisConfigs[idx] : "";
+        _tmp.tooltipConfigs = this.tooltipConfigs.length > idx ? this.tooltipConfigs[idx] : null;
         _tmp.axisConfigs = _tmp.axisConfigs ? _tmp.axisConfigs : "";
+        _tmp.tooltipConfigs = _tmp.tooltipConfigs ? _tmp.tooltipConfigs : null;
         filtered.push(_tmp);
       });
       this.filteredData = filtered;

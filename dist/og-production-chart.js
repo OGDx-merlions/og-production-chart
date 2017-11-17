@@ -57,6 +57,44 @@
 					}, null, null]
        * @property axisConfigs
        */axisConfigs:{type:Array,value:function value(){return[]}},/**
+       * Array of Tooltip Configurations
+       * Eg: [{
+						"lineColor": "#95a5ae",
+						"dashArray": "0,0",
+						"backgroundColor": "rgba(255,255,255,1)",
+						"stroke": "black",
+						"x": {
+							"label": "Date",
+							"suffix": "",
+							"prefix": "",
+							"timeFormat": "%d %b %y",
+							"color": "gray"
+						},
+						"y": {
+							"design": {
+								"label": "Design",
+								"suffix": "",
+								"prefix": ""
+							},
+							"actual": {
+								"label": "Actual",
+								"suffix": "",
+								"prefix": ""
+							},
+							"target": {
+								"label": "Target",
+								"suffix": "",
+								"prefix": ""
+							},
+							"forecast": {
+								"label": "Forecast",
+								"suffix": "",
+								"prefix": ""
+							}
+						}
+					}, null, null]
+       * @property tooltipConfigs
+       */tooltipConfigs:{type:Array,value:function value(){return[]}},/**
 			* Margins for the charts
 			Eg:
 			`{top: 20, right: 20, bottom: 30, left: 50}`
@@ -66,5 +104,5 @@
        * Event fired when the component is attached
        *
        * @event attached
-       */this.fire("attached",{})},_isMultipleData:function _isMultipleData(data){return data.length>1},_isSingleData:function _isSingleData(data){return data.length===1},_setMetaData:function _setMetaData(_new,_old){var _this=this;if(!_new||!_new.length){return _new}this.chartTypes=this.chartTypes?this.chartTypes:[];this.axisConfigs=this.axisConfigs?this.axisConfigs:[];_new.forEach(function(arr,idx){arr.chartType=_this.chartTypes.length>idx?_this.chartTypes[idx]:"";arr.chartType=arr.chartType?arr.chartType:"";arr.axisConfigs=_this.axisConfigs.length>idx?_this.axisConfigs[idx]:"";arr.axisConfigs=arr.axisConfigs?arr.axisConfigs:""});this.filteredData=_new},_filterDates:function _filterDates(dateRange,oldDateRange,data){var _this2=this;data=data?data:this.data;if(!data){return}var d3=Px.d3;this.rangeParse=d3.timeParse("%Y-%m-%dT%H:%M:%S.%LZ");var from=dateRange?this.rangeParse(dateRange.from):null;var to=dateRange?this.rangeParse(dateRange.to):null;var filtered=[];this.chartTypes=this.chartTypes?this.chartTypes:[];this.axisConfigs=this.axisConfigs?this.axisConfigs:[];data.forEach(function(arr,idx){var _tmp=null;if(dateRange&&from&&to){_tmp=arr.filter(function(_obj){if(!_obj.date){return false}var date=_obj.date.getTime?_obj.date:_this2.rangeParse(_obj.date);return date.getTime()>=from.getTime()&&date.getTime()<=to.getTime()})}else{_tmp=arr}_tmp.chartType=_this2.chartTypes.length>idx?_this2.chartTypes[idx]:"";_tmp.chartType=_tmp.chartType?_tmp.chartType:"";_tmp.axisConfigs=_this2.axisConfigs.length>idx?_this2.axisConfigs[idx]:"";_tmp.axisConfigs=_tmp.axisConfigs?_tmp.axisConfigs:"";filtered.push(_tmp)});this.filteredData=filtered}})})();
+       */this.fire("attached",{})},_isMultipleData:function _isMultipleData(data){return data.length>1},_isSingleData:function _isSingleData(data){return data.length===1},_setMetaData:function _setMetaData(_new,_old){var _this=this;if(!_new||!_new.length){return _new}this.chartTypes=this.chartTypes?this.chartTypes:[];this.axisConfigs=this.axisConfigs?this.axisConfigs:[];this.tooltipConfigs=this.tooltipConfigs?this.tooltipConfigs:[];_new.forEach(function(arr,idx){arr.chartType=_this.chartTypes.length>idx?_this.chartTypes[idx]:"";arr.chartType=arr.chartType?arr.chartType:"";arr.axisConfigs=_this.axisConfigs.length>idx?_this.axisConfigs[idx]:"";arr.axisConfigs=arr.axisConfigs?arr.axisConfigs:"";arr.tooltipConfigs=_this.tooltipConfigs.length>idx?_this.tooltipConfigs[idx]:null;arr.tooltipConfigs=arr.tooltipConfigs?arr.tooltipConfigs:null});this.filteredData=_new},_filterDates:function _filterDates(dateRange,oldDateRange,data){var _this2=this;data=data?data:this.data;if(!data){return}var d3=Px.d3;this.rangeParse=d3.timeParse("%Y-%m-%dT%H:%M:%S.%LZ");var from=dateRange?this.rangeParse(dateRange.from):null;var to=dateRange?this.rangeParse(dateRange.to):null;var filtered=[];this.chartTypes=this.chartTypes?this.chartTypes:[];this.axisConfigs=this.axisConfigs?this.axisConfigs:[];this.tooltipConfigs=this.tooltipConfigs?this.tooltipConfigs:[];data.forEach(function(arr,idx){var _tmp=null;if(dateRange&&from&&to){_tmp=arr.filter(function(_obj){if(!_obj.date){return false}var date=_obj.date.getTime?_obj.date:_this2.rangeParse(_obj.date);return date.getTime()>=from.getTime()&&date.getTime()<=to.getTime()})}else{_tmp=arr}_tmp.chartType=_this2.chartTypes.length>idx?_this2.chartTypes[idx]:"";_tmp.chartType=_tmp.chartType?_tmp.chartType:"";_tmp.axisConfigs=_this2.axisConfigs.length>idx?_this2.axisConfigs[idx]:"";_tmp.tooltipConfigs=_this2.tooltipConfigs.length>idx?_this2.tooltipConfigs[idx]:null;_tmp.axisConfigs=_tmp.axisConfigs?_tmp.axisConfigs:"";_tmp.tooltipConfigs=_tmp.tooltipConfigs?_tmp.tooltipConfigs:null;filtered.push(_tmp)});this.filteredData=filtered}})})();
 //# sourceMappingURL=og-production-chart.js.map
