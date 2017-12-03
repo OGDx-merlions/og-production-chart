@@ -1,0 +1,2306 @@
+{
+  "schema_version": "1.0.0",
+  "elements": [
+    {
+      "description": "",
+      "summary": "",
+      "path": "dist/production-chart.js",
+      "properties": [
+        {
+          "name": "width",
+          "type": "number",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 192
+            },
+            "end": {
+              "line": 0,
+              "column": 221
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "960"
+        },
+        {
+          "name": "height",
+          "type": "number",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 222
+            },
+            "end": {
+              "line": 0,
+              "column": 252
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "300"
+        },
+        {
+          "name": "chartType",
+          "type": "string",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 253
+            },
+            "end": {
+              "line": 0,
+              "column": 289
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "\"line\""
+        },
+        {
+          "name": "tooltipConfig",
+          "type": "Object",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 290
+            },
+            "end": {
+              "line": 0,
+              "column": 760
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "notify": true
+            }
+          },
+          "defaultValue": "{\"lineColor\":\"#95a5ae\",\"dashArray\":\"0,0\",\"backgroundColor\":\"rgba(255,255,255,1)\",\"stroke\":\"black\",\"x\":{\"label\":\"Date\",\"suffix\":\"\",\"prefix\":\"\",\"timeFormat\":\"%d %b %y\",\"color\":\"gray\"},\"y\":{\"design\":{\"label\":\"Design\",\"suffix\":\"\",\"prefix\":\"\"},\"actual\":{\"label\":\"Actual\",\"suffix\":\"\",\"prefix\":\"\"},\"target\":{\"label\":\"Target\",\"suffix\":\"\",\"prefix\":\"\"},\"forecast\":{\"label\":\"Forecast\",\"suffix\":\"\",\"prefix\":\"\"}}}"
+        },
+        {
+          "name": "axisConfig",
+          "type": "Object",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 761
+            },
+            "end": {
+              "line": 0,
+              "column": 1311
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "notify": true
+            }
+          },
+          "defaultValue": "{\"x\":{\"tickFormat\":\"\",\"inputTimeFormat\":\"%Y-%m-%dT%H:%M:%S.%LZ\",\"tickTimeFormat\":\"%d %b %y\",\"todayLabel\":\"Today\",\"historicalLabel\":\"Historical\",\"forecastLabel\":\"Forecast\",\"gridColor\":\"steelblue\"},\"y\":{\"tickFormat\":\".3s\",\"dotRadius\":0,\"start\":0,\"gridColor\":\"steelblue\",\"series\":{\"design\":{\"color\":\"rgba(237, 221, 70, 0.7)\",\"dashArray\":\"2,2\"},\"actual\":{\"color\":\"#5fbcf8\",\"historicalHighlightColor\":\"gray\"},\"target\":{\"color\":\"#f05c56\"},\"forecast\":{\"color\":\"rgba(164, 117, 237, 0.8)\"}}}}"
+        },
+        {
+          "name": "actualDispVal",
+          "type": "number",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 1312
+            },
+            "end": {
+              "line": 0,
+              "column": 1339
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        },
+        {
+          "name": "targetDispVal",
+          "type": "number",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 1340
+            },
+            "end": {
+              "line": 0,
+              "column": 1367
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        },
+        {
+          "name": "designDispVal",
+          "type": "number",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 1368
+            },
+            "end": {
+              "line": 0,
+              "column": 1395
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        },
+        {
+          "name": "forecastDispVal",
+          "type": "number",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 1396
+            },
+            "end": {
+              "line": 0,
+              "column": 1425
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        },
+        {
+          "name": "actualLegendLabel",
+          "type": "string",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 1426
+            },
+            "end": {
+              "line": 0,
+              "column": 1457
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        },
+        {
+          "name": "targetLegendLabel",
+          "type": "string",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 1458
+            },
+            "end": {
+              "line": 0,
+              "column": 1489
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        },
+        {
+          "name": "forecastLegendLabel",
+          "type": "string",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 1490
+            },
+            "end": {
+              "line": 0,
+              "column": 1523
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        },
+        {
+          "name": "designCapacityLegendLabel",
+          "type": "string",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 1524
+            },
+            "end": {
+              "line": 0,
+              "column": 1563
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        },
+        {
+          "name": "hideActualLegend",
+          "type": "boolean",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 1564
+            },
+            "end": {
+              "line": 0,
+              "column": 1607
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "false"
+        },
+        {
+          "name": "hideTargetLegend",
+          "type": "boolean",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 1608
+            },
+            "end": {
+              "line": 0,
+              "column": 1651
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "false"
+        },
+        {
+          "name": "hideForecastLegend",
+          "type": "boolean",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 1652
+            },
+            "end": {
+              "line": 0,
+              "column": 1697
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "false"
+        },
+        {
+          "name": "hideDesignCapacityLegend",
+          "type": "boolean",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 1698
+            },
+            "end": {
+              "line": 0,
+              "column": 1749
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "false"
+        },
+        {
+          "name": "legendLabels",
+          "type": "Array",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 1750
+            },
+            "end": {
+              "line": 0,
+              "column": 1836
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "observer": "\"_setLegendLabels\""
+            }
+          },
+          "defaultValue": "[]"
+        },
+        {
+          "name": "unit",
+          "type": "string",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 1837
+            },
+            "end": {
+              "line": 0,
+              "column": 1878
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "\"Metric Ton/day\""
+        },
+        {
+          "name": "axisKeys",
+          "type": "Array",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 1879
+            },
+            "end": {
+              "line": 0,
+              "column": 1982
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "notify": true
+            }
+          },
+          "defaultValue": "[\"actual\",\"target\",\"forecast\",\"design\"]"
+        },
+        {
+          "name": "data",
+          "type": "Array",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 1983
+            },
+            "end": {
+              "line": 0,
+              "column": 2052
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "observer": "\"_redraw\""
+            }
+          },
+          "defaultValue": "[]"
+        },
+        {
+          "name": "dateRange",
+          "type": "Object",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 2053
+            },
+            "end": {
+              "line": 0,
+              "column": 2121
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "notify": true
+            }
+          },
+          "defaultValue": "{}"
+        },
+        {
+          "name": "datePicker",
+          "type": "string",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 2122
+            },
+            "end": {
+              "line": 0,
+              "column": 2155
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "\"\""
+        },
+        {
+          "name": "margin",
+          "type": "Object",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 2156
+            },
+            "end": {
+              "line": 0,
+              "column": 2254
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "notify": true
+            }
+          }
+        },
+        {
+          "name": "wide",
+          "type": "boolean",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 2255
+            },
+            "end": {
+              "line": 0,
+              "column": 2329
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "notify": true,
+              "observer": "\"_resize\""
+            }
+          }
+        },
+        {
+          "name": "medium",
+          "type": "boolean",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 2330
+            },
+            "end": {
+              "line": 0,
+              "column": 2406
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "notify": true,
+              "observer": "\"_resize\""
+            }
+          }
+        },
+        {
+          "name": "small",
+          "type": "boolean",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 2407
+            },
+            "end": {
+              "line": 0,
+              "column": 2482
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "notify": true,
+              "observer": "\"_resize\""
+            }
+          }
+        }
+      ],
+      "methods": [
+        {
+          "name": "ready",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 2484
+            },
+            "end": {
+              "line": 0,
+              "column": 2628
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "draw",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 2629
+            },
+            "end": {
+              "line": 0,
+              "column": 3073
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "_toggleActual",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 3074
+            },
+            "end": {
+              "line": 0,
+              "column": 3464
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "_toggleTarget",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 3465
+            },
+            "end": {
+              "line": 0,
+              "column": 3855
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "_toggleForecast",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 3856
+            },
+            "end": {
+              "line": 0,
+              "column": 4525
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "_redraw",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 4526
+            },
+            "end": {
+              "line": 0,
+              "column": 4624
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "newData"
+            },
+            {
+              "name": "oldData"
+            }
+          ]
+        },
+        {
+          "name": "_setLegendLabels",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 4625
+            },
+            "end": {
+              "line": 0,
+              "column": 4873
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "labels"
+            }
+          ]
+        },
+        {
+          "name": "_compute",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 4874
+            },
+            "end": {
+              "line": 0,
+              "column": 4919
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "prop"
+            }
+          ]
+        },
+        {
+          "name": "isDatePickerBased",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 4920
+            },
+            "end": {
+              "line": 0,
+              "column": 5006
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "datePicker"
+            }
+          ]
+        },
+        {
+          "name": "isDateRangeBased",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 5007
+            },
+            "end": {
+              "line": 0,
+              "column": 5091
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "datePicker"
+            }
+          ]
+        },
+        {
+          "name": "_resize",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 5092
+            },
+            "end": {
+              "line": 0,
+              "column": 5901
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "_setDefaults",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 5902
+            },
+            "end": {
+              "line": 2,
+              "column": 1571
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "_setDefaultMargin",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 2,
+              "column": 1572
+            },
+            "end": {
+              "line": 2,
+              "column": 2317
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "_massageData",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 2,
+              "column": 2318
+            },
+            "end": {
+              "line": 2,
+              "column": 2529
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "data"
+            }
+          ]
+        },
+        {
+          "name": "_segregateData",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 2,
+              "column": 2530
+            },
+            "end": {
+              "line": 2,
+              "column": 3760
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "data"
+            }
+          ]
+        },
+        {
+          "name": "_prepareChartingArea",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 2,
+              "column": 3761
+            },
+            "end": {
+              "line": 2,
+              "column": 4095
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "_prepareAxes",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 2,
+              "column": 4096
+            },
+            "end": {
+              "line": 2,
+              "column": 4548
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "data"
+            }
+          ]
+        },
+        {
+          "name": "_setLegendDefaults",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 2,
+              "column": 4549
+            },
+            "end": {
+              "line": 2,
+              "column": 4834
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "_highlightHistorical",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 2,
+              "column": 4835
+            },
+            "end": {
+              "line": 2,
+              "column": 5173
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "data"
+            }
+          ]
+        },
+        {
+          "name": "_drawDesign",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 2,
+              "column": 5174
+            },
+            "end": {
+              "line": 2,
+              "column": 6048
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "data"
+            }
+          ]
+        },
+        {
+          "name": "_drawTarget",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 2,
+              "column": 6049
+            },
+            "end": {
+              "line": 2,
+              "column": 6534
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "data"
+            }
+          ]
+        },
+        {
+          "name": "_drawActual",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 2,
+              "column": 6535
+            },
+            "end": {
+              "line": 2,
+              "column": 7496
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "data"
+            }
+          ]
+        },
+        {
+          "name": "_drawForecast",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 2,
+              "column": 7497
+            },
+            "end": {
+              "line": 2,
+              "column": 9184
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "data"
+            }
+          ]
+        },
+        {
+          "name": "_drawAxes",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 2,
+              "column": 9185
+            },
+            "end": {
+              "line": 4,
+              "column": 442
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "data"
+            }
+          ]
+        },
+        {
+          "name": "_drawTimelineSeparators",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 4,
+              "column": 443
+            },
+            "end": {
+              "line": 4,
+              "column": 1199
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "data"
+            }
+          ]
+        },
+        {
+          "name": "_drawGridLines",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 4,
+              "column": 1200
+            },
+            "end": {
+              "line": 4,
+              "column": 1667
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "data"
+            }
+          ]
+        },
+        {
+          "name": "_drawTooltip",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 4,
+              "column": 1668
+            },
+            "end": {
+              "line": 4,
+              "column": 4837
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "data"
+            },
+            {
+              "name": "scope"
+            }
+          ]
+        },
+        {
+          "name": "_toggleDots",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 4,
+              "column": 4838
+            },
+            "end": {
+              "line": 4,
+              "column": 6260
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "data"
+            },
+            {
+              "name": "scope"
+            }
+          ]
+        }
+      ],
+      "staticMethods": [],
+      "demos": [],
+      "metadata": {},
+      "sourceRange": {
+        "start": {
+          "line": 0,
+          "column": 33
+        },
+        "end": {
+          "line": 4,
+          "column": 6261
+        }
+      },
+      "privacy": "public",
+      "superclass": "HTMLElement",
+      "attributes": [
+        {
+          "name": "width",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 192
+            },
+            "end": {
+              "line": 0,
+              "column": 221
+            }
+          },
+          "metadata": {},
+          "type": "number"
+        },
+        {
+          "name": "height",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 222
+            },
+            "end": {
+              "line": 0,
+              "column": 252
+            }
+          },
+          "metadata": {},
+          "type": "number"
+        },
+        {
+          "name": "chart-type",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 253
+            },
+            "end": {
+              "line": 0,
+              "column": 289
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "tooltip-config",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 290
+            },
+            "end": {
+              "line": 0,
+              "column": 760
+            }
+          },
+          "metadata": {},
+          "type": "Object"
+        },
+        {
+          "name": "axis-config",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 761
+            },
+            "end": {
+              "line": 0,
+              "column": 1311
+            }
+          },
+          "metadata": {},
+          "type": "Object"
+        },
+        {
+          "name": "actual-disp-val",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 1312
+            },
+            "end": {
+              "line": 0,
+              "column": 1339
+            }
+          },
+          "metadata": {},
+          "type": "number"
+        },
+        {
+          "name": "target-disp-val",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 1340
+            },
+            "end": {
+              "line": 0,
+              "column": 1367
+            }
+          },
+          "metadata": {},
+          "type": "number"
+        },
+        {
+          "name": "design-disp-val",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 1368
+            },
+            "end": {
+              "line": 0,
+              "column": 1395
+            }
+          },
+          "metadata": {},
+          "type": "number"
+        },
+        {
+          "name": "forecast-disp-val",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 1396
+            },
+            "end": {
+              "line": 0,
+              "column": 1425
+            }
+          },
+          "metadata": {},
+          "type": "number"
+        },
+        {
+          "name": "actual-legend-label",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 1426
+            },
+            "end": {
+              "line": 0,
+              "column": 1457
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "target-legend-label",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 1458
+            },
+            "end": {
+              "line": 0,
+              "column": 1489
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "forecast-legend-label",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 1490
+            },
+            "end": {
+              "line": 0,
+              "column": 1523
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "design-capacity-legend-label",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 1524
+            },
+            "end": {
+              "line": 0,
+              "column": 1563
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "hide-actual-legend",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 1564
+            },
+            "end": {
+              "line": 0,
+              "column": 1607
+            }
+          },
+          "metadata": {},
+          "type": "boolean"
+        },
+        {
+          "name": "hide-target-legend",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 1608
+            },
+            "end": {
+              "line": 0,
+              "column": 1651
+            }
+          },
+          "metadata": {},
+          "type": "boolean"
+        },
+        {
+          "name": "hide-forecast-legend",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 1652
+            },
+            "end": {
+              "line": 0,
+              "column": 1697
+            }
+          },
+          "metadata": {},
+          "type": "boolean"
+        },
+        {
+          "name": "hide-design-capacity-legend",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 1698
+            },
+            "end": {
+              "line": 0,
+              "column": 1749
+            }
+          },
+          "metadata": {},
+          "type": "boolean"
+        },
+        {
+          "name": "legend-labels",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 1750
+            },
+            "end": {
+              "line": 0,
+              "column": 1836
+            }
+          },
+          "metadata": {},
+          "type": "Array"
+        },
+        {
+          "name": "unit",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 1837
+            },
+            "end": {
+              "line": 0,
+              "column": 1878
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "axis-keys",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 1879
+            },
+            "end": {
+              "line": 0,
+              "column": 1982
+            }
+          },
+          "metadata": {},
+          "type": "Array"
+        },
+        {
+          "name": "data",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 1983
+            },
+            "end": {
+              "line": 0,
+              "column": 2052
+            }
+          },
+          "metadata": {},
+          "type": "Array"
+        },
+        {
+          "name": "date-range",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 2053
+            },
+            "end": {
+              "line": 0,
+              "column": 2121
+            }
+          },
+          "metadata": {},
+          "type": "Object"
+        },
+        {
+          "name": "date-picker",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 2122
+            },
+            "end": {
+              "line": 0,
+              "column": 2155
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "margin",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 2156
+            },
+            "end": {
+              "line": 0,
+              "column": 2254
+            }
+          },
+          "metadata": {},
+          "type": "Object"
+        },
+        {
+          "name": "wide",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 2255
+            },
+            "end": {
+              "line": 0,
+              "column": 2329
+            }
+          },
+          "metadata": {},
+          "type": "boolean"
+        },
+        {
+          "name": "medium",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 2330
+            },
+            "end": {
+              "line": 0,
+              "column": 2406
+            }
+          },
+          "metadata": {},
+          "type": "boolean"
+        },
+        {
+          "name": "small",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 0,
+              "column": 2407
+            },
+            "end": {
+              "line": 0,
+              "column": 2482
+            }
+          },
+          "metadata": {},
+          "type": "boolean"
+        }
+      ],
+      "events": [
+        {
+          "type": "CustomEvent",
+          "name": "tooltip-config-changed",
+          "description": "Fired when the `tooltipConfig` property changes.",
+          "metadata": {}
+        },
+        {
+          "type": "CustomEvent",
+          "name": "axis-config-changed",
+          "description": "Fired when the `axisConfig` property changes.",
+          "metadata": {}
+        },
+        {
+          "type": "CustomEvent",
+          "name": "axis-keys-changed",
+          "description": "Fired when the `axisKeys` property changes.",
+          "metadata": {}
+        },
+        {
+          "type": "CustomEvent",
+          "name": "date-range-changed",
+          "description": "Fired when the `dateRange` property changes.",
+          "metadata": {}
+        },
+        {
+          "type": "CustomEvent",
+          "name": "margin-changed",
+          "description": "Fired when the `margin` property changes.",
+          "metadata": {}
+        },
+        {
+          "type": "CustomEvent",
+          "name": "wide-changed",
+          "description": "Fired when the `wide` property changes.",
+          "metadata": {}
+        },
+        {
+          "type": "CustomEvent",
+          "name": "medium-changed",
+          "description": "Fired when the `medium` property changes.",
+          "metadata": {}
+        },
+        {
+          "type": "CustomEvent",
+          "name": "small-changed",
+          "description": "Fired when the `small` property changes.",
+          "metadata": {}
+        }
+      ],
+      "styling": {
+        "cssVariables": [],
+        "selectors": []
+      },
+      "slots": [],
+      "tagname": "production-chart"
+    },
+    {
+      "description": "REPLACE THIS TEXT WITH A COMPONENT DESCRIPTION\n\n### Usage\n\n     <og-production-chart\n        unit=\"Metric ton/day\"\n        width=\"960\"\n        height=\"300\"\n        legend-labels='[\"Actual\",\"Target\",\"Forecast\",\"Design\"]'\n        labels='[\"All\",\"Train 1\",\"Train 2\"]'\n        date-range='{\"from\":\"2016-04-03T03:37:25.000Z\",\"to\":\"2018-05-26T03:37:25.000Z\"}'\n        chart-types='[\"line\",\"area\",\"line\"]'\n        axis-configs='[{\"x\":{\"tickFormat\":\"\",\"inputTimeFormat\":\"%Y-%m-%dT%H:%M:%S.%LZ\",\"tickTimeFormat\":\"%d %b %y\",\"forecastLabel\":\"Forecast after applying Scenario 3\"},\"y\":{\"tickFormat\":\".3s\",\"hideGrid\":true,\"dotRadius\":0,\"start\":660,\"series\":{\"design\":{\"color\":\"rgba(237, 221, 70, 0.7)\",\"dashArray\":\"5,5\"},\"actual\":{\"color\":\"#5fbcf8\"},\"target\":{\"color\":\"#f05c56\"},\"forecast\":{\"color\":\"rgba(164, 117, 237, 0.8)\"}}}},null,null]'\n        data='[[{\"actual\":761.53,\"design\":770,\"target\":761,\"forecast\":0,\"date\":\"2017-07-17T16:00:00.000Z\"},{\"actual\":768.65,\"design\":770,\"target\":761,\"forecast\":0,\"date\":\"2017-07-18T16:00:00.000Z\"},{\"actual\":762.44,\"design\":770,\"target\":761,\"forecast\":0,\"date\":\"2017-07-19T16:00:00.000Z\"},{\"actual\":755.25,\"design\":770,\"target\":761,\"forecast\":0,\"date\":\"2017-07-20T16:00:00.000Z\"},{\"actual\":755.25,\"design\":770,\"target\":761,\"forecast\":0,\"date\":\"2017-07-21T16:00:00.000Z\"},{\"actual\":762.64,\"design\":770,\"target\":761,\"forecast\":0,\"date\":\"2017-07-22T16:00:00.000Z\"},{\"actual\":768.65,\"design\":770,\"target\":761,\"forecast\":0,\"date\":\"2017-07-23T16:00:00.000Z\"},{\"actual\":768.65,\"design\":770,\"target\":761,\"forecast\":0,\"date\":\"2017-07-24T16:00:00.000Z\"},{\"actual\":768.65,\"design\":770,\"target\":761,\"forecast\":0,\"date\":\"2017-07-25T16:00:00.000Z\"},{\"actual\":768.65,\"design\":770,\"target\":761,\"forecast\":0,\"date\":\"2017-07-26T16:00:00.000Z\"},{\"actual\":762,\"design\":770,\"target\":761,\"forecast\":0,\"date\":\"2017-07-27T16:00:00.000Z\"},{\"actual\":754.94,\"design\":770,\"target\":761,\"forecast\":0,\"date\":\"2017-07-28T16:00:00.000Z\"},{\"actual\":761.5,\"design\":770,\"target\":761,\"forecast\":0,\"date\":\"2017-07-29T16:00:00.000Z\"},{\"actual\":754.58,\"design\":770,\"target\":761,\"forecast\":0,\"date\":\"2017-07-30T16:00:00.000Z\"},{\"actual\":768.65,\"design\":770,\"target\":761,\"forecast\":0,\"date\":\"2017-07-31T16:00:00.000Z\"},{\"actual\":768.65,\"design\":770,\"target\":761,\"forecast\":0,\"date\":\"2017-08-01T16:00:00.000Z\"},{\"actual\":768.65,\"design\":770,\"target\":761,\"forecast\":0,\"date\":\"2017-08-02T16:00:00.000Z\"},{\"actual\":762.21,\"design\":770,\"target\":761,\"forecast\":0,\"date\":\"2017-08-03T16:00:00.000Z\"},{\"actual\":756.29,\"design\":770,\"target\":761,\"forecast\":0,\"date\":\"2017-08-04T16:00:00.000Z\"},{\"actual\":737.28,\"design\":770,\"target\":761,\"forecast\":0,\"date\":\"2017-08-05T16:00:00.000Z\"},{\"actual\":756.33,\"design\":770,\"target\":761,\"forecast\":0,\"date\":\"2017-08-06T16:00:00.000Z\"},{\"actual\":756.33,\"design\":770,\"target\":761,\"forecast\":0,\"date\":\"2017-08-07T16:00:00.000Z\"},{\"actual\":738.21,\"design\":770,\"target\":761,\"forecast\":0,\"date\":\"2017-08-08T16:00:00.000Z\"},{\"actual\":761.42,\"design\":770,\"target\":761,\"forecast\":0,\"date\":\"2017-08-09T16:00:00.000Z\"},{\"actual\":768.65,\"design\":770,\"target\":761,\"forecast\":0,\"date\":\"2017-08-10T16:00:00.000Z\"},{\"actual\":768.65,\"design\":770,\"target\":761,\"forecast\":0,\"date\":\"2017-08-11T16:00:00.000Z\"},{\"actual\":768.65,\"design\":770,\"target\":761,\"forecast\":0,\"date\":\"2017-08-12T16:00:00.000Z\"},{\"actual\":768.65,\"design\":770,\"target\":761,\"forecast\":0,\"date\":\"2017-08-13T16:00:00.000Z\"},{\"actual\":768.65,\"design\":770,\"target\":761,\"forecast\":0,\"date\":\"2017-08-14T16:00:00.000Z\"},{\"actual\":762.69,\"design\":770,\"target\":761,\"forecast\":0,\"date\":\"2017-08-15T16:00:00.000Z\"},{\"actual\":762.69,\"design\":770,\"target\":761,\"forecast\":0,\"date\":\"2017-08-16T16:00:00.000Z\"},{\"actual\":761.51,\"design\":770,\"target\":761,\"forecast\":0,\"date\":\"2017-08-17T16:00:00.000Z\"},{\"actual\":750.28,\"design\":770,\"target\":761,\"forecast\":0,\"date\":\"2017-08-18T16:00:00.000Z\"},{\"actual\":768.65,\"design\":770,\"target\":761,\"forecast\":0,\"date\":\"2017-08-19T16:00:00.000Z\"},{\"actual\":768.65,\"design\":770,\"target\":761,\"forecast\":0,\"date\":\"2017-08-20T16:00:00.000Z\"},{\"actual\":768.65,\"design\":770,\"target\":761,\"forecast\":0,\"date\":\"2017-08-21T16:00:00.000Z\"},{\"actual\":768.65,\"design\":770,\"target\":761,\"forecast\":0,\"date\":\"2017-08-22T16:00:00.000Z\"},{\"actual\":768.65,\"design\":770,\"target\":761,\"forecast\":0,\"date\":\"2017-08-23T16:00:00.000Z\"},{\"actual\":768.65,\"design\":770,\"target\":761,\"forecast\":0,\"date\":\"2017-08-24T16:00:00.000Z\"},{\"actual\":768.65,\"design\":770,\"target\":761,\"forecast\":0,\"date\":\"2017-08-25T16:00:00.000Z\"},{\"actual\":768.65,\"design\":770,\"target\":761,\"forecast\":0,\"date\":\"2017-08-26T16:00:00.000Z\"},{\"actual\":761.27,\"design\":770,\"target\":761,\"forecast\":0,\"date\":\"2017-08-27T16:00:00.000Z\"},{\"actual\":755.3,\"design\":770,\"target\":761,\"forecast\":0,\"date\":\"2017-08-28T16:00:00.000Z\"},{\"actual\":749.11,\"design\":770,\"target\":761,\"forecast\":0,\"date\":\"2017-08-29T16:00:00.000Z\"},{\"actual\":738.85,\"design\":770,\"target\":761,\"forecast\":0,\"date\":\"2017-08-30T16:00:00.000Z\"},{\"actual\":756.08,\"design\":770,\"target\":761,\"forecast\":0,\"date\":\"2017-08-31T16:00:00.000Z\"},{\"actual\":756.9,\"design\":770,\"target\":761,\"forecast\":0,\"date\":\"2017-09-01T16:00:00.000Z\"},{\"actual\":738.49,\"design\":770,\"target\":761,\"forecast\":0,\"date\":\"2017-09-02T16:00:00.000Z\"},{\"actual\":732.26,\"design\":770,\"target\":761,\"forecast\":0,\"date\":\"2017-09-03T16:00:00.000Z\"},{\"actual\":761.4,\"design\":770,\"target\":761,\"forecast\":0,\"date\":\"2017-09-04T16:00:00.000Z\"},{\"actual\":768.65,\"design\":770,\"target\":761,\"forecast\":0,\"date\":\"2017-09-05T16:00:00.000Z\"},{\"actual\":762.02,\"design\":770,\"target\":761,\"forecast\":0,\"date\":\"2017-09-06T16:00:00.000Z\"},{\"actual\":762.02,\"design\":770,\"target\":761,\"forecast\":0,\"date\":\"2017-09-07T16:00:00.000Z\"},{\"actual\":762.83,\"design\":770,\"target\":761,\"forecast\":0,\"date\":\"2017-09-08T16:00:00.000Z\"},{\"actual\":755.56,\"design\":770,\"target\":761,\"forecast\":0,\"date\":\"2017-09-09T16:00:00.000Z\"},{\"actual\":755.56,\"design\":770,\"target\":761,\"forecast\":0,\"date\":\"2017-09-10T16:00:00.000Z\"},{\"actual\":755.74,\"design\":770,\"target\":761,\"forecast\":0,\"date\":\"2017-09-11T16:00:00.000Z\"},{\"actual\":768.65,\"design\":770,\"target\":761,\"forecast\":0,\"date\":\"2017-09-12T16:00:00.000Z\"},{\"actual\":762.44,\"design\":770,\"target\":761,\"forecast\":0,\"date\":\"2017-09-13T16:00:00.000Z\"},{\"actual\":762.44,\"design\":770,\"target\":740,\"forecast\":0,\"date\":\"2017-09-14T16:00:00.000Z\"},{\"actual\":755.1,\"design\":770,\"target\":740,\"forecast\":0,\"date\":\"2017-09-15T16:00:00.000Z\"},{\"actual\":762.37,\"design\":770,\"target\":740,\"forecast\":0,\"date\":\"2017-09-16T16:00:00.000Z\"},{\"actual\":749.64,\"design\":770,\"target\":740,\"forecast\":0,\"date\":\"2017-09-17T16:00:00.000Z\"},{\"actual\":724.05,\"design\":770,\"target\":740,\"forecast\":0,\"date\":\"2017-09-18T16:00:00.000Z\"},{\"actual\":738.06,\"design\":770,\"target\":740,\"forecast\":0,\"date\":\"2017-09-19T16:00:00.000Z\"},{\"actual\":738.06,\"design\":770,\"target\":740,\"forecast\":0,\"date\":\"2017-09-20T16:00:00.000Z\"},{\"actual\":755.07,\"design\":770,\"target\":740,\"forecast\":0,\"date\":\"2017-09-21T16:00:00.000Z\"},{\"actual\":755.07,\"design\":770,\"target\":740,\"forecast\":0,\"date\":\"2017-09-22T16:00:00.000Z\"},{\"actual\":755.07,\"design\":770,\"target\":740,\"forecast\":0,\"date\":\"2017-09-23T16:00:00.000Z\"},{\"actual\":761.88,\"design\":770,\"target\":740,\"forecast\":0,\"date\":\"2017-09-24T16:00:00.000Z\"},{\"actual\":749.51,\"design\":770,\"target\":740,\"forecast\":0,\"date\":\"2017-09-25T16:00:00.000Z\"},{\"actual\":730.24,\"design\":770,\"target\":740,\"forecast\":0,\"date\":\"2017-09-26T16:00:00.000Z\"},{\"actual\":718.27,\"design\":770,\"target\":740,\"forecast\":0,\"date\":\"2017-09-27T16:00:00.000Z\"},{\"actual\":719.08,\"design\":770,\"target\":740,\"forecast\":0,\"date\":\"2017-09-28T16:00:00.000Z\"},{\"actual\":738.16,\"design\":770,\"target\":740,\"forecast\":0,\"date\":\"2017-09-29T16:00:00.000Z\"},{\"actual\":731.6,\"design\":770,\"target\":740,\"forecast\":0,\"date\":\"2017-09-30T16:00:00.000Z\"},{\"actual\":719.31,\"design\":770,\"target\":740,\"forecast\":0,\"date\":\"2017-10-01T16:00:00.000Z\"},{\"actual\":731.49,\"design\":770,\"target\":740,\"forecast\":0,\"date\":\"2017-10-02T16:00:00.000Z\"},{\"actual\":712.28,\"design\":770,\"target\":740,\"forecast\":0,\"date\":\"2017-10-03T16:00:00.000Z\"},{\"actual\":720.41,\"design\":770,\"target\":740,\"forecast\":0,\"date\":\"2017-10-04T16:00:00.000Z\"},{\"actual\":750.48,\"design\":770,\"target\":740,\"forecast\":0,\"date\":\"2017-10-05T16:00:00.000Z\"},{\"actual\":755.67,\"design\":770,\"target\":740,\"forecast\":0,\"date\":\"2017-10-06T16:00:00.000Z\"},{\"actual\":738.69,\"design\":770,\"target\":740,\"forecast\":0,\"date\":\"2017-10-07T16:00:00.000Z\"},{\"actual\":738.69,\"design\":770,\"target\":740,\"forecast\":0,\"date\":\"2017-10-08T16:00:00.000Z\"},{\"actual\":738.69,\"design\":770,\"target\":740,\"forecast\":0,\"date\":\"2017-10-09T16:00:00.000Z\"},{\"actual\":738.69,\"design\":770,\"target\":740,\"forecast\":0,\"date\":\"2017-10-10T16:00:00.000Z\"},{\"actual\":738.69,\"design\":770,\"target\":740,\"forecast\":0,\"date\":\"2017-10-11T16:00:00.000Z\"},{\"actual\":731.54,\"design\":770,\"target\":740,\"forecast\":0,\"date\":\"2017-10-12T16:00:00.000Z\"},{\"actual\":718.89,\"design\":770,\"target\":740,\"forecast\":0,\"date\":\"2017-10-13T16:00:00.000Z\"},{\"actual\":725.54,\"design\":770,\"target\":740,\"forecast\":725.54,\"date\":\"2017-10-14T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":705.71,\"forecast\":706.7240146,\"date\":\"2017-10-15T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":705.71,\"forecast\":706.7240146,\"date\":\"2017-10-16T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":705.71,\"forecast\":706.7240146,\"date\":\"2017-10-17T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":705.71,\"forecast\":706.7240146,\"date\":\"2017-10-18T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":705.71,\"forecast\":706.7240146,\"date\":\"2017-10-19T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":705.71,\"forecast\":706.7240146,\"date\":\"2017-10-20T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":705.71,\"forecast\":706.7240146,\"date\":\"2017-10-21T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":705.71,\"forecast\":706.7240146,\"date\":\"2017-10-22T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":705.71,\"forecast\":705.8139188,\"date\":\"2017-10-23T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":705.71,\"forecast\":705.8139188,\"date\":\"2017-10-24T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":705.71,\"forecast\":705.8139188,\"date\":\"2017-10-25T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":705.71,\"forecast\":705.8139188,\"date\":\"2017-10-26T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":705.71,\"forecast\":705.8139188,\"date\":\"2017-10-27T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":705.71,\"forecast\":705.8139188,\"date\":\"2017-10-28T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":705.71,\"forecast\":705.8139188,\"date\":\"2017-10-29T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":705.71,\"forecast\":705.1451951,\"date\":\"2017-10-30T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":705.71,\"forecast\":705.1451951,\"date\":\"2017-10-31T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":705.71,\"forecast\":705.1451951,\"date\":\"2017-11-01T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":705.71,\"forecast\":705.1451951,\"date\":\"2017-11-02T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":705.71,\"forecast\":705.1451951,\"date\":\"2017-11-03T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":705.71,\"forecast\":704.5770467,\"date\":\"2017-11-04T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":705.71,\"forecast\":704.5770467,\"date\":\"2017-11-05T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":705.71,\"forecast\":704.5770467,\"date\":\"2017-11-06T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":705.71,\"forecast\":704.5770467,\"date\":\"2017-11-07T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":705.71,\"forecast\":704.5770467,\"date\":\"2017-11-08T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":705.71,\"forecast\":703.9832999,\"date\":\"2017-11-09T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":705.71,\"forecast\":703.9832999,\"date\":\"2017-11-10T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":705.71,\"forecast\":703.9832999,\"date\":\"2017-11-11T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":705.71,\"forecast\":703.9832999,\"date\":\"2017-11-12T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":705.71,\"forecast\":703.9832999,\"date\":\"2017-11-13T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":668.36,\"forecast\":665.4409952,\"date\":\"2017-11-14T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":668.36,\"forecast\":665.4409952,\"date\":\"2017-11-15T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":668.36,\"forecast\":664.7576632,\"date\":\"2017-11-16T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":668.36,\"forecast\":664.7576632,\"date\":\"2017-11-17T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":668.36,\"forecast\":664.7576632,\"date\":\"2017-11-18T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":668.36,\"forecast\":664.7576632,\"date\":\"2017-11-19T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":668.36,\"forecast\":664.7576632,\"date\":\"2017-11-20T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":668.36,\"forecast\":664.1315985,\"date\":\"2017-11-21T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":668.36,\"forecast\":664.1315985,\"date\":\"2017-11-22T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":668.36,\"forecast\":664.1315985,\"date\":\"2017-11-23T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":668.36,\"forecast\":661.0131882,\"date\":\"2017-11-24T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":668.36,\"forecast\":661.0131882,\"date\":\"2017-11-25T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":668.36,\"forecast\":661.0131882,\"date\":\"2017-11-26T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":668.36,\"forecast\":661.0131882,\"date\":\"2017-11-27T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":668.36,\"forecast\":661.0131882,\"date\":\"2017-11-28T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":668.36,\"forecast\":659.9979799,\"date\":\"2017-11-29T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":668.36,\"forecast\":659.9979799,\"date\":\"2017-11-30T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":668.36,\"forecast\":659.9979799,\"date\":\"2017-12-01T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":668.36,\"forecast\":659.9979799,\"date\":\"2017-12-02T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":668.36,\"forecast\":659.9979799,\"date\":\"2017-12-03T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":668.36,\"forecast\":659.9979799,\"date\":\"2017-12-04T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":668.36,\"forecast\":659.9979799,\"date\":\"2017-12-05T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":668.36,\"forecast\":659.9979799,\"date\":\"2017-12-06T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":668.36,\"forecast\":659.9979799,\"date\":\"2017-12-07T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":668.36,\"forecast\":659.9979799,\"date\":\"2017-12-08T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":668.36,\"forecast\":659.3083831,\"date\":\"2017-12-09T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":668.36,\"forecast\":659.3083831,\"date\":\"2017-12-10T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":668.36,\"forecast\":659.3083831,\"date\":\"2017-12-11T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":668.36,\"forecast\":659.3083831,\"date\":\"2017-12-12T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":668.36,\"forecast\":659.3083831,\"date\":\"2017-12-13T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":668.36,\"forecast\":659.3083831,\"date\":\"2017-12-14T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":690.95,\"forecast\":679.3213864,\"date\":\"2017-12-15T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":690.95,\"forecast\":679.3213864,\"date\":\"2017-12-16T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":690.95,\"forecast\":678.6144213,\"date\":\"2017-12-17T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":690.95,\"forecast\":678.6144213,\"date\":\"2017-12-18T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":690.95,\"forecast\":678.6144213,\"date\":\"2017-12-19T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":690.95,\"forecast\":678.6144213,\"date\":\"2017-12-20T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":690.95,\"forecast\":678.6144213,\"date\":\"2017-12-21T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":690.95,\"forecast\":677.992834,\"date\":\"2017-12-22T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":690.95,\"forecast\":677.992834,\"date\":\"2017-12-23T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":690.95,\"forecast\":677.992834,\"date\":\"2017-12-24T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":690.95,\"forecast\":677.992834,\"date\":\"2017-12-25T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":690.95,\"forecast\":677.992834,\"date\":\"2017-12-26T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":690.95,\"forecast\":677.992834,\"date\":\"2017-12-27T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":690.95,\"forecast\":677.4015762,\"date\":\"2017-12-28T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":690.95,\"forecast\":677.4015762,\"date\":\"2017-12-29T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":690.95,\"forecast\":677.4015762,\"date\":\"2017-12-30T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":690.95,\"forecast\":677.4015762,\"date\":\"2017-12-31T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":690.95,\"forecast\":677.4015762,\"date\":\"2018-01-01T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":690.95,\"forecast\":677.4015762,\"date\":\"2018-01-02T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":690.95,\"forecast\":677.0642504,\"date\":\"2018-01-03T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":690.95,\"forecast\":677.0642504,\"date\":\"2018-01-04T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":690.95,\"forecast\":677.0642504,\"date\":\"2018-01-05T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":690.95,\"forecast\":677.0642504,\"date\":\"2018-01-06T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":690.95,\"forecast\":677.0642504,\"date\":\"2018-01-07T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":690.95,\"forecast\":677.0642504,\"date\":\"2018-01-08T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":690.95,\"forecast\":677.0642504,\"date\":\"2018-01-09T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":690.95,\"forecast\":677.0642504,\"date\":\"2018-01-10T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":690.95,\"forecast\":677.0642504,\"date\":\"2018-01-11T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":690.95,\"forecast\":677.0642504,\"date\":\"2018-01-12T16:00:00.000Z\"},{\"actual\":0,\"design\":704,\"target\":690.95,\"forecast\":677.0642504,\"date\":\"2018-01-13T16:00:00.000Z\"}],[{\"date\":\"2017-04-24T16:00:00.000Z\",\"actual\":12960,\"target\":12950,\"forecast\":0,\"design\":13960},{\"date\":\"2017-04-25T16:00:00.000Z\",\"actual\":12889,\"target\":11938,\"forecast\":0,\"design\":13960},{\"date\":\"2017-04-26T16:00:00.000Z\",\"actual\":11897,\"target\":12959,\"forecast\":0,\"design\":13960},{\"date\":\"2017-04-27T16:00:00.000Z\",\"actual\":13905,\"target\":11906,\"forecast\":0,\"design\":13960},{\"date\":\"2017-04-28T16:00:00.000Z\",\"actual\":13882,\"target\":11950,\"forecast\":0,\"design\":13960},{\"date\":\"2017-04-29T16:00:00.000Z\",\"actual\":13944,\"target\":13906,\"forecast\":13944,\"design\":13960},{\"date\":\"2017-04-30T16:00:00.000Z\",\"actual\":13954,\"target\":12913,\"forecast\":12950,\"design\":13960},{\"date\":\"2017-05-01T16:00:00.000Z\",\"actual\":12928,\"target\":12454,\"forecast\":11950,\"design\":13960}],[{\"date\":\"2017-04-24T16:00:00.000Z\",\"actual\":11960,\"target\":12950,\"forecast\":0,\"design\":13960},{\"date\":\"2017-04-25T16:00:00.000Z\",\"actual\":11889,\"target\":12938,\"forecast\":0,\"design\":13960},{\"date\":\"2017-04-26T16:00:00.000Z\",\"actual\":11897,\"target\":12959,\"forecast\":0,\"design\":13960},{\"date\":\"2017-04-27T16:00:00.000Z\",\"actual\":10905,\"target\":11906,\"forecast\":0,\"design\":13960},{\"date\":\"2017-04-28T16:00:00.000Z\",\"actual\":12882,\"target\":10950,\"forecast\":0,\"design\":13960},{\"date\":\"2017-04-29T16:00:00.000Z\",\"actual\":12944,\"target\":12906,\"forecast\":12944,\"design\":13960},{\"date\":\"2017-04-30T16:00:00.000Z\",\"actual\":10954,\"target\":12913,\"forecast\":12950,\"design\":13960},{\"date\":\"2017-05-01T16:00:00.000Z\",\"actual\":9928,\"target\":12954,\"forecast\":12950,\"design\":13960}]]'>\n      </og-production-chart>",
+      "summary": "",
+      "path": "dist/og-production-chart.js",
+      "properties": [
+        {
+          "name": "labels",
+          "type": "Array",
+          "description": "This property is a list of tab labels",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 4,
+              "column": 8
+            },
+            "end": {
+              "line": 4,
+              "column": 85
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "[\"All\",\"Train 1\",\"Train 2\"]"
+        },
+        {
+          "name": "unit",
+          "type": "string",
+          "description": "Unit for Y-Axis values",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 8,
+              "column": 8
+            },
+            "end": {
+              "line": 8,
+              "column": 49
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "\"Metric ton/day\""
+        },
+        {
+          "name": "width",
+          "type": "number",
+          "description": "Chart Width",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 12,
+              "column": 8
+            },
+            "end": {
+              "line": 12,
+              "column": 37
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "960"
+        },
+        {
+          "name": "height",
+          "type": "number",
+          "description": "Chart Height",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 16,
+              "column": 8
+            },
+            "end": {
+              "line": 16,
+              "column": 38
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "300"
+        },
+        {
+          "name": "legendLabels",
+          "type": "Array",
+          "description": "The Actual, Target and design values to be displayed in the legend",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 21,
+              "column": 8
+            },
+            "end": {
+              "line": 21,
+              "column": 103
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "[\"Actual\",\"Target\",\"Forecast\",\"Design\"]"
+        },
+        {
+          "name": "data",
+          "type": "Array",
+          "description": "This property is an Array of tab data.\n\t\t\tMember of each tab data looks like this\n\t\t\t`{\"date\":\"2017-05-01T16:00:00.000Z\",\"actual\":\"11960\",\"target\":\"12950\",\"design\":\"13960\"}`",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 27,
+              "column": 8
+            },
+            "end": {
+              "line": 27,
+              "column": 82
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "observer": "\"_setMetaData\""
+            }
+          },
+          "defaultValue": "[]"
+        },
+        {
+          "name": "datePicker",
+          "type": "string",
+          "description": "The Date to show in Datepicker. If provided, dateRange will be ignored\n\t\t\tEg: \"2017-04-03T03:37:25.000Z\"",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 32,
+              "column": 8
+            },
+            "end": {
+              "line": 32,
+              "column": 32
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        },
+        {
+          "name": "dateRange",
+          "type": "Object",
+          "description": "The Date range to filter the data. Format as specified in the px-rangepicker\n\t\t\tEg:\n\t\t\t`{\"from\":\"2017-04-03T03:37:25.000Z\",\"to\":\"2017-10-26T03:37:25.000Z\"}`",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 38,
+              "column": 8
+            },
+            "end": {
+              "line": 38,
+              "column": 88
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "observer": "\"_filterDates\""
+            }
+          },
+          "defaultValue": "{}"
+        },
+        {
+          "name": "chartTypes",
+          "type": "Array",
+          "description": "Array of chart Types.\nEg: [\"line\", \"area\", \"line\"]",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 42,
+              "column": 9
+            },
+            "end": {
+              "line": 42,
+              "column": 65
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "[]"
+        },
+        {
+          "name": "axisConfigs",
+          "type": "Array",
+          "description": "Array of Axis Configurations\nEg: [{\n\t\t\t\t\t\t\"x\": {\n\t\t\t\t\t\t\t\"tickFormat\": \"\",\n\t\t\t\t\t\t\t\"inputTimeFormat\": \"%Y-%m-%dT%H:%M:%S.%LZ\",\n\t\t\t\t\t\t\t\"tickTimeFormat\": \"%d %b %y\",\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\"y\": {\n\t\t\t\t\t\t\t\"tickFormat\": \".3s\",\n\t\t\t\t\t\t\t\"hideGrid\": true,\n\t\t\t\t\t\t\t\"dotRadius\": 0,\n\t\t\t\t\t\t\t\"start\": 600\n\t\t\t\t\t\t}\n\t\t\t\t\t}, null, null]",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 58,
+              "column": 9
+            },
+            "end": {
+              "line": 58,
+              "column": 66
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "[]"
+        },
+        {
+          "name": "tooltipConfigs",
+          "type": "Array",
+          "description": "Array of Tooltip Configurations\nEg: [{\n\t\t\t\t\t\t\"lineColor\": \"#95a5ae\",\n\t\t\t\t\t\t\"dashArray\": \"0,0\",\n\t\t\t\t\t\t\"backgroundColor\": \"rgba(255,255,255,1)\",\n\t\t\t\t\t\t\"stroke\": \"black\",\n\t\t\t\t\t\t\"x\": {\n\t\t\t\t\t\t\t\"label\": \"Date\",\n\t\t\t\t\t\t\t\"suffix\": \"\",\n\t\t\t\t\t\t\t\"prefix\": \"\",\n\t\t\t\t\t\t\t\"timeFormat\": \"%d %b %y\",\n\t\t\t\t\t\t\t\"color\": \"gray\"\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\"y\": {\n\t\t\t\t\t\t\t\"design\": {\n\t\t\t\t\t\t\t\t\"label\": \"Design\",\n\t\t\t\t\t\t\t\t\"suffix\": \"\",\n\t\t\t\t\t\t\t\t\"prefix\": \"\"\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\"actual\": {\n\t\t\t\t\t\t\t\t\"label\": \"Actual\",\n\t\t\t\t\t\t\t\t\"suffix\": \"\",\n\t\t\t\t\t\t\t\t\"prefix\": \"\"\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\"target\": {\n\t\t\t\t\t\t\t\t\"label\": \"Target\",\n\t\t\t\t\t\t\t\t\"suffix\": \"\",\n\t\t\t\t\t\t\t\t\"prefix\": \"\"\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\"forecast\": {\n\t\t\t\t\t\t\t\t\"label\": \"Forecast\",\n\t\t\t\t\t\t\t\t\"suffix\": \"\",\n\t\t\t\t\t\t\t\t\"prefix\": \"\"\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t}, null, null]",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 96,
+              "column": 9
+            },
+            "end": {
+              "line": 96,
+              "column": 69
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "[]"
+        },
+        {
+          "name": "margin",
+          "type": "Object",
+          "description": "Margins for the charts\n\t\t\tEg:\n\t\t\t`{top: 20, right: 20, bottom: 30, left: 50}`",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 102,
+              "column": 8
+            },
+            "end": {
+              "line": 102,
+              "column": 61
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "{}"
+        },
+        {
+          "name": "selected",
+          "type": "number",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 102,
+              "column": 62
+            },
+            "end": {
+              "line": 102,
+              "column": 92
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "0"
+        },
+        {
+          "name": "filteredData",
+          "type": "Array",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 102,
+              "column": 93
+            },
+            "end": {
+              "line": 102,
+              "column": 151
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "[]"
+        }
+      ],
+      "methods": [
+        {
+          "name": "attached",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 102,
+              "column": 153
+            },
+            "end": {
+              "line": 102,
+              "column": 259
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "_notifyAttached",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 102,
+              "column": 260
+            },
+            "end": {
+              "line": 106,
+              "column": 34
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "_isMultipleData",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 106,
+              "column": 35
+            },
+            "end": {
+              "line": 106,
+              "column": 103
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "data"
+            }
+          ]
+        },
+        {
+          "name": "_isSingleData",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 106,
+              "column": 104
+            },
+            "end": {
+              "line": 106,
+              "column": 170
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "data"
+            }
+          ]
+        },
+        {
+          "name": "_setMetaData",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 106,
+              "column": 171
+            },
+            "end": {
+              "line": 106,
+              "column": 870
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "_new"
+            },
+            {
+              "name": "_old"
+            }
+          ]
+        },
+        {
+          "name": "_filterDates",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 106,
+              "column": 871
+            },
+            "end": {
+              "line": 106,
+              "column": 2075
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "dateRange"
+            },
+            {
+              "name": "oldDateRange"
+            },
+            {
+              "name": "data"
+            }
+          ]
+        }
+      ],
+      "staticMethods": [],
+      "demos": [
+        {
+          "url": "index.html",
+          "description": ""
+        }
+      ],
+      "metadata": {},
+      "sourceRange": {
+        "start": {
+          "line": 0,
+          "column": 33
+        },
+        "end": {
+          "line": 106,
+          "column": 2076
+        }
+      },
+      "privacy": "public",
+      "superclass": "HTMLElement",
+      "attributes": [
+        {
+          "name": "labels",
+          "description": "This property is a list of tab labels",
+          "sourceRange": {
+            "start": {
+              "line": 4,
+              "column": 8
+            },
+            "end": {
+              "line": 4,
+              "column": 85
+            }
+          },
+          "metadata": {},
+          "type": "Array"
+        },
+        {
+          "name": "unit",
+          "description": "Unit for Y-Axis values",
+          "sourceRange": {
+            "start": {
+              "line": 8,
+              "column": 8
+            },
+            "end": {
+              "line": 8,
+              "column": 49
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "width",
+          "description": "Chart Width",
+          "sourceRange": {
+            "start": {
+              "line": 12,
+              "column": 8
+            },
+            "end": {
+              "line": 12,
+              "column": 37
+            }
+          },
+          "metadata": {},
+          "type": "number"
+        },
+        {
+          "name": "height",
+          "description": "Chart Height",
+          "sourceRange": {
+            "start": {
+              "line": 16,
+              "column": 8
+            },
+            "end": {
+              "line": 16,
+              "column": 38
+            }
+          },
+          "metadata": {},
+          "type": "number"
+        },
+        {
+          "name": "legend-labels",
+          "description": "The Actual, Target and design values to be displayed in the legend",
+          "sourceRange": {
+            "start": {
+              "line": 21,
+              "column": 8
+            },
+            "end": {
+              "line": 21,
+              "column": 103
+            }
+          },
+          "metadata": {},
+          "type": "Array"
+        },
+        {
+          "name": "data",
+          "description": "This property is an Array of tab data.\n\t\t\tMember of each tab data looks like this\n\t\t\t`{\"date\":\"2017-05-01T16:00:00.000Z\",\"actual\":\"11960\",\"target\":\"12950\",\"design\":\"13960\"}`",
+          "sourceRange": {
+            "start": {
+              "line": 27,
+              "column": 8
+            },
+            "end": {
+              "line": 27,
+              "column": 82
+            }
+          },
+          "metadata": {},
+          "type": "Array"
+        },
+        {
+          "name": "date-picker",
+          "description": "The Date to show in Datepicker. If provided, dateRange will be ignored\n\t\t\tEg: \"2017-04-03T03:37:25.000Z\"",
+          "sourceRange": {
+            "start": {
+              "line": 32,
+              "column": 8
+            },
+            "end": {
+              "line": 32,
+              "column": 32
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "date-range",
+          "description": "The Date range to filter the data. Format as specified in the px-rangepicker\n\t\t\tEg:\n\t\t\t`{\"from\":\"2017-04-03T03:37:25.000Z\",\"to\":\"2017-10-26T03:37:25.000Z\"}`",
+          "sourceRange": {
+            "start": {
+              "line": 38,
+              "column": 8
+            },
+            "end": {
+              "line": 38,
+              "column": 88
+            }
+          },
+          "metadata": {},
+          "type": "Object"
+        },
+        {
+          "name": "chart-types",
+          "description": "Array of chart Types.\nEg: [\"line\", \"area\", \"line\"]",
+          "sourceRange": {
+            "start": {
+              "line": 42,
+              "column": 9
+            },
+            "end": {
+              "line": 42,
+              "column": 65
+            }
+          },
+          "metadata": {},
+          "type": "Array"
+        },
+        {
+          "name": "axis-configs",
+          "description": "Array of Axis Configurations\nEg: [{\n\t\t\t\t\t\t\"x\": {\n\t\t\t\t\t\t\t\"tickFormat\": \"\",\n\t\t\t\t\t\t\t\"inputTimeFormat\": \"%Y-%m-%dT%H:%M:%S.%LZ\",\n\t\t\t\t\t\t\t\"tickTimeFormat\": \"%d %b %y\",\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\"y\": {\n\t\t\t\t\t\t\t\"tickFormat\": \".3s\",\n\t\t\t\t\t\t\t\"hideGrid\": true,\n\t\t\t\t\t\t\t\"dotRadius\": 0,\n\t\t\t\t\t\t\t\"start\": 600\n\t\t\t\t\t\t}\n\t\t\t\t\t}, null, null]",
+          "sourceRange": {
+            "start": {
+              "line": 58,
+              "column": 9
+            },
+            "end": {
+              "line": 58,
+              "column": 66
+            }
+          },
+          "metadata": {},
+          "type": "Array"
+        },
+        {
+          "name": "tooltip-configs",
+          "description": "Array of Tooltip Configurations\nEg: [{\n\t\t\t\t\t\t\"lineColor\": \"#95a5ae\",\n\t\t\t\t\t\t\"dashArray\": \"0,0\",\n\t\t\t\t\t\t\"backgroundColor\": \"rgba(255,255,255,1)\",\n\t\t\t\t\t\t\"stroke\": \"black\",\n\t\t\t\t\t\t\"x\": {\n\t\t\t\t\t\t\t\"label\": \"Date\",\n\t\t\t\t\t\t\t\"suffix\": \"\",\n\t\t\t\t\t\t\t\"prefix\": \"\",\n\t\t\t\t\t\t\t\"timeFormat\": \"%d %b %y\",\n\t\t\t\t\t\t\t\"color\": \"gray\"\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\"y\": {\n\t\t\t\t\t\t\t\"design\": {\n\t\t\t\t\t\t\t\t\"label\": \"Design\",\n\t\t\t\t\t\t\t\t\"suffix\": \"\",\n\t\t\t\t\t\t\t\t\"prefix\": \"\"\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\"actual\": {\n\t\t\t\t\t\t\t\t\"label\": \"Actual\",\n\t\t\t\t\t\t\t\t\"suffix\": \"\",\n\t\t\t\t\t\t\t\t\"prefix\": \"\"\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\"target\": {\n\t\t\t\t\t\t\t\t\"label\": \"Target\",\n\t\t\t\t\t\t\t\t\"suffix\": \"\",\n\t\t\t\t\t\t\t\t\"prefix\": \"\"\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\"forecast\": {\n\t\t\t\t\t\t\t\t\"label\": \"Forecast\",\n\t\t\t\t\t\t\t\t\"suffix\": \"\",\n\t\t\t\t\t\t\t\t\"prefix\": \"\"\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t}, null, null]",
+          "sourceRange": {
+            "start": {
+              "line": 96,
+              "column": 9
+            },
+            "end": {
+              "line": 96,
+              "column": 69
+            }
+          },
+          "metadata": {},
+          "type": "Array"
+        },
+        {
+          "name": "margin",
+          "description": "Margins for the charts\n\t\t\tEg:\n\t\t\t`{top: 20, right: 20, bottom: 30, left: 50}`",
+          "sourceRange": {
+            "start": {
+              "line": 102,
+              "column": 8
+            },
+            "end": {
+              "line": 102,
+              "column": 61
+            }
+          },
+          "metadata": {},
+          "type": "Object"
+        },
+        {
+          "name": "selected",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 102,
+              "column": 62
+            },
+            "end": {
+              "line": 102,
+              "column": 92
+            }
+          },
+          "metadata": {},
+          "type": "number"
+        },
+        {
+          "name": "filtered-data",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 102,
+              "column": 93
+            },
+            "end": {
+              "line": 102,
+              "column": 151
+            }
+          },
+          "metadata": {},
+          "type": "Array"
+        }
+      ],
+      "events": [
+        {
+          "type": "CustomEvent",
+          "name": "attached",
+          "description": "attached",
+          "metadata": {}
+        }
+      ],
+      "styling": {
+        "cssVariables": [],
+        "selectors": []
+      },
+      "slots": [],
+      "tagname": "og-production-chart"
+    }
+  ]
+}
