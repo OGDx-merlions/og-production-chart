@@ -85,7 +85,12 @@
 							"series": {
 								"design": {
 									"color": "rgba(237, 221, 70, 0.7)",
-                  "dashArray": "2,2"
+									"dashArray": "2,2",
+									"axis": {
+										"start": 0,
+										"position": "right",
+										"padding": "1rem"
+									}
 								},
 								"actual": {
 									"color": "#5fbcf8",
@@ -407,7 +412,7 @@
     },
     
     _setDefaultMargin() {
-			this.margin = this.margin || {top: 20, right: 20, bottom: 30, left: 50};
+			this.margin = this.margin || {top: 20, right: 70, bottom: 30, left: 50};
       this.margin.top = this.margin.top ? this.margin.top : 20;
       this.margin.right = this.margin.right ? this.margin.right : 20;
       this.margin.bottom = this.margin.bottom ? this.margin.bottom : 30;
@@ -481,11 +486,19 @@
 					 			"translate(" + this.margin.left + "," + this.margin.top + ")");
 		},
 		_prepareAxes(data) {
-			let d3 = Px.d3;
+			let d3 = Px.d3, me = this;
 			this.x = d3.scaleTime().range([0, this.adjustedWidth]);
 			this.y = d3.scaleLinear().range([this.adjustedHeight, 0]).clamp(true);
 			let yMax = d3.max(data, function(d) {
-				return Math.max(d.actual, d.target, d.forecast, d.design); });
+				const arr = [];
+				["actual", "target", "forecast", "design"].forEach((key) => {
+					if(me.axisConfig.y.series[key] && 
+							!me.axisConfig.y.series[key].axis) {
+						arr.push(d[key]);
+					}
+				});
+				return Math.max.apply(me, arr); 
+			});
 			let yMin = this.axisConfig.y.start;
 			if(!yMin) {
 				if(yMin != 0) {
@@ -496,6 +509,25 @@
 
 			this.x.domain(d3.extent(data, function(d) { return d.date; })).nice(d3.timeDay);
 			this.y.domain([yMin, yMax]).nice(6);
+			["actual", "target", "forecast", "design"].forEach((key) => {
+				me.y[key] = me.y;
+				if(me.axisConfig.y.series[key] && 
+						!me.axisConfig.y.series[key].axis) {
+					let yMax = d3.max(data, function(d) {
+						return d[key];
+					});
+					let yMin = me.axisConfig.y.series[key].start;
+					if(!yMin) {
+						if(yMin != 0) {
+							yMin = yMax/2;
+						}
+					}
+					yMin = +yMin;
+					me.y[key].domain([yMin, yMax]).nice(6);
+				} else {
+					me.y[key].domain([yMin, yMax]).nice(6);
+				}	
+			});
 		},
 		_setLegendDefaults() {
 			this.set("hideActualLegend", this.actualData.length === 0);
@@ -517,7 +549,7 @@
 				.style("pointer-events", "none");
 		},
 		_drawDesign(data) {
-			let x= this.x, y=this.y, me = this, d3 = Px.d3;
+			let x= this.x, y=this.y.design ? this.y.design : this.y, me = this, d3 = Px.d3;
 
 			if(this.designData.length) {
 				let area = d3.area()
@@ -551,7 +583,7 @@
 			}
 		},
 		_drawTarget(data) {
-			let x= this.x, y=this.y, me = this, d3 = Px.d3;
+			let x= this.x, y=this.y.target ? this.y.target : this.y, me = this, d3 = Px.d3;
 			let targetChart = d3.line()
 				.x(function(d) { return x(d.date); })
 				.y(function(d) { return y(d[me.axisKeys[1]]); });
@@ -567,7 +599,7 @@
 			}
 		},
 		_drawActual(data) {
-			let x= this.x, y=this.y, me = this, d3 = Px.d3;
+			let x= this.x, y=this.y.actual ? this.y.actual : this.y, me = this, d3 = Px.d3;
 			this.actualArea = d3.area()
 				.x(function(d) { return x(d.date); })
 				.y(function(d) { return y(d[me.axisKeys[0]]); });
@@ -599,7 +631,7 @@
 			}
 		},
 		_drawForecast(data) {
-			let x= this.x, y=this.y, me = this, d3 = Px.d3;
+			let x= this.x, y=this.y.forecast ? this.y.forecast : this.y, me = this, d3 = Px.d3;
 			let forecastLine = d3.line()
 					.x(function(d) { return x(d.date); })
 					.y(function(d) { return y(d[me.axisKeys[2]]); });
@@ -688,17 +720,41 @@
 					.call(_xAxis);
 
       // Add the Y Axis
-      this.yAxis = d3.axisLeft(y);
-			let _yAxis = this.yAxis;
-			if(this.axisConfig.y.ticks) {
-				_yAxis.ticks(this.axisConfig.y.ticks);
-			}
-			if(this.axisConfig.y.tickFormat) {
-				_yAxis.tickFormat(d3.format(this.axisConfig.y.tickFormat));
-			}
-			this.svg.append("g")
-					.attr("class", "y-axis")
-					.call(_yAxis);
+			let axesDirDrawn = [];
+      ["actual", "design", "target", "forecast"].forEach((key) => {
+				let _axis = me.axisConfig.y.series[key].axis || {};
+				let axisDir =  _axis.position ? _axis.position.toLowerCase() : "left";
+				let padding = _axis.padding ? _axis.padding : 0;
+				if(axesDirDrawn.indexOf(axisDir) === -1) {
+					me.yAxis = axisDir === 'left' ? d3.axisLeft(y) : d3.axisRight(y);
+					let _yAxis = me.yAxis;
+					if(me.axisConfig.y.ticks) {
+						_yAxis.ticks(me.axisConfig.y.ticks);
+					}
+					if(me.axisConfig.y.tickFormat) {
+						_yAxis.tickFormat(d3.format(me.axisConfig.y.tickFormat));
+					}
+					if(axisDir === 'right') {
+						me.svg.append("g")
+							.attr("class", "y-axis")
+							.attr("transform", "translate( " + me.adjustedWidth + ", 0 )")
+							.style("padding", padding)
+							.call(_yAxis);
+						me.svg.append("text")
+							.attr("transform", "rotate(-90)")
+							.attr("x", -me.margin.right)
+							.attr("y", me.adjustedWidth + me.margin.left/2)
+							.attr("dy", "1em")
+							.attr("class", "yaxis-label")
+							.text(_axis.unit || me.unit);
+					} else {
+						me.svg.append("g")
+							.attr("class", "y-axis")
+							.style("padding", padding)
+							.call(_yAxis);
+					}
+				}
+			});
 
 			this.svg.append("text")
 					.attr("transform", "rotate(-90)")

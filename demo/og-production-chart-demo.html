@@ -44,6 +44,7 @@
           legend-labels="{{props.legendLabels.value}}" labels="{{props.labels.value}}"
           date-picker="{{props.datePicker.value}}"
           chart-types="{{props.chartTypes.value}}" axis-configs="{{props.axisConfigs.value}}"
+          tooltip-configs="{{props.tooltipConfigs.value}}"
           unit="{{props.unit.value}}" margin="{{props.margin.value}}">
         </og-production-chart>
       </px-demo-component>
@@ -249,7 +250,114 @@
 				type: Object,
 				defaultValue: {top: 20, right: 20, bottom: 30, left: 50},
         inputType: 'code:JSON'
-			},
+      },
+      tooltipConfigs: {
+        type: Array,
+        inputType: 'code:JSON',
+        defaultValue: [{
+						"lineColor": "#95a5ae",
+						"dashArray": "0,0",
+						"backgroundColor": "rgba(255,255,255,1)",
+						"stroke": "black",
+						"x": {
+							"label": "Date",
+							"suffix": "",
+							"prefix": "",
+							"timeFormat": "%d %b %y",
+							"color": "gray"
+						},
+						"y": {
+							"design": {
+								"label": "Design",
+								"suffix": "",
+								"prefix": ""
+							},
+							"actual": {
+								"label": "Actual",
+								"suffix": "",
+								"prefix": ""
+							},
+							"target": {
+								"label": "Target",
+								"suffix": "",
+								"prefix": ""
+							},
+							"forecast": {
+								"label": "Forecast",
+								"suffix": "",
+								"prefix": ""
+							}
+						}
+					}, {
+						"lineColor": "#95a5ae",
+						"dashArray": "0,0",
+						"backgroundColor": "rgba(255,255,255,1)",
+						"stroke": "black",
+						"x": {
+							"label": "Date",
+							"suffix": "",
+							"prefix": "",
+							"timeFormat": "%d %b %y",
+							"color": "gray"
+						},
+						"y": {
+							"design": {
+								"label": "Design",
+								"suffix": "",
+								"prefix": ""
+							},
+							"actual": {
+								"label": "Actual",
+								"suffix": "",
+								"prefix": ""
+							},
+							"target": {
+								"label": "Target",
+								"suffix": "",
+								"prefix": ""
+							},
+							"forecast": {
+								"label": "Forecast",
+								"suffix": "",
+								"prefix": ""
+							}
+						}
+					}, {
+						"lineColor": "#95a5ae",
+						"dashArray": "0,0",
+						"backgroundColor": "rgba(255,255,255,1)",
+						"stroke": "black",
+						"x": {
+							"label": "Date",
+							"suffix": "",
+							"prefix": "",
+							"timeFormat": "%d %b %y",
+							"color": "gray"
+						},
+						"y": {
+							"design": {
+								"label": "Design",
+								"suffix": "",
+								"prefix": ""
+							},
+							"actual": {
+								"label": "Actual",
+								"suffix": "",
+								"prefix": ""
+							},
+							"target": {
+								"label": "Target",
+								"suffix": "",
+								"prefix": ""
+							},
+							"forecast": {
+								"label": "Forecast",
+								"suffix": "",
+								"prefix": ""
+							}
+						}
+					}]
+      },
       axisConfigs: {
         type: Array,
         defaultValue: [{
@@ -281,7 +389,12 @@
               "series": {
 								"design": {
 									"color": "rgba(237, 221, 70, 0.7)",
-                  "dashArray": "5,5"
+                  "dashArray": "5,5",
+                  "axis": {
+										"start": 0,
+										"position": "right",
+										"unit": "bbl/day"
+									}
 								},
 								"actual": {
 									"color": "rgba(95, 188, 248, 0.6)",
