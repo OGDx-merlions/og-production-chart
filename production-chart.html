@@ -48,22 +48,22 @@
             <div class="flex flex__item flex--col u-pr++ zeta legend-unit actual" 
               id="legend-actual" hidden$="{{_compute(hideActualLegend)}}" style$="border-color:{{actualCol}}">
               <span class="flex flex--top muted text">{{actualLegendLabel}}</span>
-              <span class="flex flex--top text">{{actualDispVal}} {{unit}}</span>
+              <span class="flex flex--top text">{{actualDispVal}} {{actualUnit}}</span>
             </div>
             <div class="flex flex__item flex--col u-pr++ zeta legend-unit target" 
               id="legend-target" hidden$="{{_compute(hideTargetLegend)}}" style$="border-color:{{targetCol}}">
               <span class="flex flex--top muted text">{{targetLegendLabel}}</span>
-              <span class="flex flex--top text">{{targetDispVal}} {{unit}}</span>
+              <span class="flex flex--top text">{{targetDispVal}} {{targetUnit}}</span>
             </div>
             <div class="flex flex__item flex--col u-pr++ zeta legend-unit forecast" 
               id="legend-forecast" hidden$="{{_compute(hideForecastLegend)}}" style$="border-color:{{forecastCol}}">
               <span class="flex flex--top muted text">{{forecastLegendLabel}}</span>
-              <span class="flex flex--top text">{{forecastDispVal}} {{unit}}</span>
+              <span class="flex flex--top text">{{forecastDispVal}} {{forecastUnit}}</span>
             </div>
             <div class="flex flex__item flex--col u-pr++ zeta legend-unit design" 
               id="legend-design" hidden$="{{_compute(hideDesignCapacityLegend)}}" style$="border-color:{{designCol}}">
               <span class="flex flex--top muted text">{{designCapacityLegendLabel}}</span>
-              <span class="flex flex--top text">{{designDispVal}} {{unit}}</span>
+              <span class="flex flex--top text">{{designDispVal}} {{designUnit}}</span>
             </div>
           </div>
         </div>
