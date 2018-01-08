@@ -202,7 +202,8 @@
 				notify: true,
 				value() {
 					return {top: 20, right: 20, bottom: 30, left: 50};
-				}
+				},
+				observer: '_redraw'
 			},
 			wide: {
 				type: Boolean,
@@ -756,9 +757,10 @@
 						_yAxis.tickFormat(d3.format(tickFormat));
 					}
 					if(axisDir === 'right') {
+            let _transformX = me.adjustedWidth;
 						me.svg.append("g")
 							.attr("class", "y-axis")
-							.attr("transform", "translate( " + me.adjustedWidth + ", 0 )")
+							.attr("transform", "translate( " + _transformX + ", 0 )")
 							.style("padding", padding)
 							.call(_yAxis);
 						me.svg.append("text")
