@@ -202,6 +202,7 @@
 		},
 
     attached() {
+      const d3 = Px.d3;
       this.rangeParse = d3.timeParse("%Y-%m-%dT%H:%M:%S.%LZ");
       this._notifyAttached();
     },
